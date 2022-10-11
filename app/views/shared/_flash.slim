@@ -1,0 +1,2 @@
+- flash.each do |key, message|
+  = content_tag :div, raw(message), class: "alert alert-#{alert_manager(key)}", role: "alert"

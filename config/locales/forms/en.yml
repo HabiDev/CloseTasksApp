@@ -1,0 +1,9 @@
+en:
+  navbar:
+    brand: CloseTasksApp
+    home_link: Home
+    about_link: About
+    contact_link: Contacts
+    sign_in: Sign in
+    sign_out: Sign out
+    aria_label: Navigation switch

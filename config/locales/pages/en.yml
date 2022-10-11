@@ -1,0 +1,12 @@
+en:
+  home:
+    title: Home
+  about:
+    title: About
+  contact:
+    title: Contact
+  shared:
+    errors:
+      header:
+        one: "Error %{count} detected"
+        other: "Errors %{count} detected"

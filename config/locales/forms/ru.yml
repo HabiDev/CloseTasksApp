@@ -1,0 +1,9 @@
+ru:
+  navbar:
+    brand: CloseTasksApp
+    home_link: Главная
+    about_link: О нас
+    contact_link: Контакты
+    sign_in: Войти
+    sign_out: Выйти
+    aria_label: Переключатель навигации 

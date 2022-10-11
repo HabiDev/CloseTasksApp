@@ -1,0 +1,15 @@
+ru:
+  home:
+    title: Главная
+  about:
+    title: О нас
+  contact:
+    title: Контакты
+  shared:
+    errors:
+      header:
+        few: "Выявлено %{count} ошибки"
+        many: "Выявлено %{count} ошибок"
+        one: "Выявлено %{count} ошибка"
+        other: "Выявлено %{count} ошибок"
+
