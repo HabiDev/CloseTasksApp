@@ -1,19 +1,21 @@
 aside.bd-sidebar
-  nav#bd-docs-nav.collapse.bd-links aria-label=t('sidebar.completed_tasks')
+  nav#bd-docs-nav.collapse.bd-links aria-label=t('sidebar.completed_tasks')          
+    = link_to t('sidebar.reset'), completed_tasks_path, data: { turbo_frame: 'completed_tasks' }
+    hr.m-1.p-1
     ul.list-unstyled.mb-0.py-3.pt-md-1
       li.mb-1
-        button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#completed-tasks-collapse" aria-expanded="false"]
+        button.btn.d-inline-flex.align-items-center.rounded.collapsed data-bs-toggle="collapse" data-bs-target="#completed-tasks-collapse" aria-expanded="false"
           = t('sidebar.completed_tasks')
-        #completed-tasks-collapse.collapse
+        #completed-tasks-collapse.collapse.show
           ul.list-unstyled.fw-normal.pb-1
             li
-              = link_to t('sidebar.date_today'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_day, created_at_lteq: (DateTime.now).end_of_day } )
+              = link_to t('sidebar.date_today'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_day, created_at_lteq: (DateTime.now).end_of_day } ), data: { turbo_frame: 'completed_tasks' }
             li
-              = link_to t('sidebar.date_week'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_week, created_at_lteq: (DateTime.now).end_of_week })
+              = link_to t('sidebar.date_week'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_week, created_at_lteq: (DateTime.now).end_of_week }), data: { turbo_frame: 'completed_tasks' }
             li
-              = link_to t('sidebar.date_month'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_month, created_at_lteq: (DateTime.now).end_of_month })
+              = link_to t('sidebar.date_month'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_month, created_at_lteq: (DateTime.now).end_of_month }), data: { turbo_frame: 'completed_tasks' }
             li
-              = link_to t('sidebar.date_year'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_year, created_at_lteq: (DateTime.now).end_of_year })
+              = link_to t('sidebar.date_year'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_year, created_at_lteq: (DateTime.now).end_of_year }), data: { turbo_frame: 'completed_tasks' }
       li.mb-1
         button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#performers-collapse" aria-expanded="false"]
           = t('sidebar.performers')
@@ -21,7 +23,9 @@ aside.bd-sidebar
           ul.list-unstyled.fw-normal.pb-1
             - @users.each do |user|  
               li 
-                = link_to user.profile.full_name, completed_tasks_path(q: { user_id_eq: user.id })
+                = link_to user.profile.full_name, completed_tasks_path(q: { user_id_eq: user.id }), data: { turbo_frame: 'completed_tasks' }
+                span.badge.rounded-pill.bg-secondary
+                  = completed_tasks_count(user)
       li.mb-1
         button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#divisions-collapse" aria-expanded="false"]
           = t('sidebar.divisions') 
@@ -29,7 +33,9 @@ aside.bd-sidebar
           ul.list-unstyled.fw-normal.pb-1
             - @divisions.each do |division|  
               li 
-                = link_to division.name, completed_tasks_path(q: { division_id_eq: division.id })
+                = link_to division.name, completed_tasks_path(q: { division_id_eq: division.id }), data: { turbo_frame: 'completed_tasks' }
+                span.badge.rounded-pill.bg-secondary
+                  = completed_tasks_count(division)
       li.mb-1
         button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#categories-collapse" aria-expanded="false"]
           = t('sidebar.categories') 
@@ -37,8 +43,9 @@ aside.bd-sidebar
           ul.list-unstyled.fw-normal.pb-1
             - @categories.each do |category|  
               li 
-                = link_to category.name, completed_tasks_path(q: { sub_category_id_eq: category.id })
-      hr.m-1.p-1
-      = link_to t('sidebar.reset'), completed_tasks_path
+                = link_to category.name, completed_tasks_path(q: { sub_category_id_eq: category.id }), data: { turbo_frame: 'completed_tasks' }
+                span.badge.rounded-pill.bg-secondary
+                  = completed_tasks_count(category)
+
  
  

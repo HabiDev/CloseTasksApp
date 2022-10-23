@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_23_212740) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sub_categories_count", default: 0, null: false
   end
 
   create_table "completed_tasks", force: :cascade do |t|
@@ -36,6 +37,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "profiles_count", default: 0, null: false
+    t.integer "sub_departments_count", default: 0, null: false
+    t.integer "divisions_count", default: 0, null: false
   end
 
   create_table "divisions", force: :cascade do |t|
@@ -49,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "completed_tasks_count", default: 0, null: false
     t.index ["department_id"], name: "index_divisions_on_department_id"
   end
 
@@ -56,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
     t.string "name", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "profiles_count", default: 0, null: false
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -77,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "completed_tasks_count", default: 0, null: false
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
@@ -85,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
     t.bigint "department_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "profiles_count", default: 0, null: false
     t.index ["department_id"], name: "index_sub_departments_on_department_id"
   end
 
@@ -103,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_22_175949) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "completed_tasks_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
