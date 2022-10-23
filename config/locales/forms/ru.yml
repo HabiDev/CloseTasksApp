@@ -28,6 +28,12 @@ ru:
     performers: По исполнителям
     divisions: По объектам
     categories: По категориям работ
+    date_today: На сегодня
+    date_month: За месяц
+    date_week:  За неделю
+    date_year:  За год
+    all_tasks: Все
+    reset:  Показать все
   notice:
     record_create: Запись удачно создан.
     record_destroy: Запись удален.

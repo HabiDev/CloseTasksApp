@@ -4,14 +4,16 @@ class CompletedTasksController < ApplicationController
   
   def index
     # authorize User
-    # @q = User.includes(:profile).where(admin: false).search(params[:q])
-    # @q.sorts = ['profile_surname asc', 'created_at desc'] if @q.sorts.empty?
-    # completed_tasks = @q.result(disinct: true)
-    if current_user.user?
-      @completed_tasks =current_user.completed_tasks.ordered.created_date(1.day.ago)
+    if current_user.user?      
+      @q = CompletedTask.includes(:user, :profile, :categories, :sub_categories, :division).where(user_id: current_user).ransack(params[:q])
     else
-      @completed_tasks = CompletedTask.ordered
+      @q = CompletedTask.ransack(params[:q])
     end
+    @q.sorts = ['created_at desc', 'profile_fullname asc'] if @q.sorts.empty?
+    @completed_tasks = @q.result(disinct: true)  
+    @users = User.all
+    @divisions = Division.all
+    @categories = SubCategory.all
   end
 
   def new
