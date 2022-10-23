@@ -6,6 +6,49 @@ ru:
         restrict_dependent_destroy:
           has_one: 'Невозможно удалить запись, так как существует зависимость: %{record}'
           has_many: 'Невозможно удалить запись, так как существуют зависимости: %{record}'
+    enums:
+      user:
+        type_roles:
+          admin: Администратор
+          guide: Руководство
+          moderator: Модератор
+          user: Пользователь
+    attributes:
+      user:        
+        type_role: Роль в системе
+        email: E-mail
+        password:
+        password: Пароль
+        password_confirmation: Подтверждение пароля        
+      profile:
+        full_name: Фамилия Имя Отчество
+        mobile: Телефон
+        sub_department_id: Подразделение
+        position_id: Должность
+      profile/sub_departments:
+        name: Подразделение
+      profile/positions:
+        name: Должность
+      department:
+        name: Отдел
+      sub_department:
+        name: Подразделение
+        department_id: Отдел
+      position:
+        name: Должность
+      division:
+        name: Наименование
+        address: Адрес(местонахождения)
+        department_id: Тип обьекта
+        email: E-mail
+        photo: Фото объекта
+        active: Действующий объект
+      completed_task:
+        division_id: Объект
+        sub_category_id: Проделанная работа
+        user_id: Исполнитель
+        comment: Описание работ
+
   date:
     abbr_day_names:
     - Вс
@@ -265,4 +308,5 @@ ru:
       default: "%a, %d %b %Y, %H:%M:%S %z"
       long: "%d %B %Y, %H:%M"
       short: "%d %b, %H:%M"
+      full:  "%a, %d %b %Y, %H:%M:%S"
     pm: вечера

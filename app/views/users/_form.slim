@@ -1,0 +1,25 @@
+= simple_form_for(@user, html: { class: "row g-2" }) do |f|
+  = f.error_notification
+  .row
+    .col-12.col-md-6
+      = f.input :email, required: true, autofocus: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.email')}", disabled: !f.object.new_record?
+    .col-12.col-md-6
+      = f.input :type_role, collection: enum_options_for_select(User, :type_role), required: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.type_role')}", disabled: !f.object.new_record?
+  - if f.object.new_record?
+    .row 
+      .col-12.col-md-6
+        = f.input :password, required: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.password')}"
+        - if @minimum_password_length 
+          = content_tag :em, "#{t('devise.shared.minimum_password_length.many', count: @minimum_password_length)}" 
+      .col-12.col-md-6
+        = f.input :password_confirmation, required: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.password_confirmation')}"
+  .row
+    = f.simple_fields_for :profile, @user.profile || @user.build_profile do |profile|
+      = render 'profile_fields', m: profile
+  hr
+  .row 
+    .col-12.col-md-12.text-end
+      span.p-2
+        = f.submit "#{t('submit.save')}", class: "btn btn-primary"
+      span
+        = link_to "#{t('submit.cancel')}", users_path, class: "btn btn-primary"

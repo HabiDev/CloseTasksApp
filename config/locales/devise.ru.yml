@@ -103,7 +103,7 @@ ru:
         title: Редактировать %{resource}
         unhappy: Разочарованы?
         update: Обновить
-        we_need_your_current_password_to_confirm_your_changes: введите текущий пароль для подтверждения изменений
+        we_need_your_current_password_to_confirm_your_changes: введите текущий пароль для подтверждения изменений      
       new:
         sign_up: Регистрация
       submit:
@@ -118,8 +118,8 @@ ru:
     sessions:
       already_signed_out: Выход из системы уже выполнен.
       new:
-        log_in: Войти в CardBonusApp
-        sign_in: Войти
+        log_in: Войдите, используя Ваш аккаунт
+        sign_in: Войдите, используя Ваш аккаунт
       submit:
         sign_in: Войти
       signed_in: Вход в систему выполнен.
@@ -144,6 +144,11 @@ ru:
       send_instructions: В течение нескольких минут вы получите письмо с инструкциями по разблокировке учетной записи.
       send_paranoid_instructions: Если ваша учетная запись существует, то в течение нескольких минут вы получите письмо с инструкциями по ее разблокировке.
       unlocked: Ваша учетная запись разблокирована. Теперь вы можете войти в систему.
+    placeholder:
+      email: Введите E-mail
+      password: Введите пароль
+      password_confirmation: Повторите пароль
+      type_role: Тип пользователя
   errors:
     messages:
       already_confirmed: уже подтверждён. Пожалуйста, попробуйте войти в систему

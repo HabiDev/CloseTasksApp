@@ -7,4 +7,5 @@ module ApplicationHelper
   def alert_manager(key)
     ALERTS[key.to_sym] || key
   end
+
 end

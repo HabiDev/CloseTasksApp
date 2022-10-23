@@ -1,0 +1,24 @@
+.container
+  .row
+    .col-9.col-md-10
+      h2.text-right
+        b 
+        = t('completed_tasks.title_list')
+    .col-3.col-md-2.text-end
+      = link_to "#{t('button.new')}",  new_completed_task_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: dom_id(CompletedTask.new) }
+    hr
+      .row
+        - unless current_user.user?
+          .col-12.col-md-3
+            = render 'completed_tasks/navigation'
+          .col-12.col-md-9
+            .row
+              = turbo_frame_tag CompletedTask.new
+              = turbo_frame_tag "completed_tasks"
+                = render @completed_tasks
+        - else 
+          .col-12.col-md-12
+            .row
+              = turbo_frame_tag CompletedTask.new
+              = turbo_frame_tag "completed_tasks"
+                = render @completed_tasks

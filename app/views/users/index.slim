@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-9.col-md-10
+      h2.text-right
+        b 
+        = t('users.title_list')
+    .col-3.col-md-2.text-end
+      = link_to "#{t('button.new')}",  new_user_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: dom_id(User.new) }
+    hr
+      .row
+        = turbo_frame_tag User.new
+        
+        = turbo_frame_tag "users"
+          = render @users

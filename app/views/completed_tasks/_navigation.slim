@@ -1,0 +1,36 @@
+aside.bd-sidebar
+  nav#bd-docs-nav.collapse.bd-links aria-label=t('sidebar.completed_tasks')
+    ul.list-unstyled.mb-0.py-3.pt-md-1
+      li.mb-1
+        button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#completed-tasks-collapse" aria-expanded="false"]
+          = t('sidebar.completed_tasks')
+        #completed-tasks-collapse.collapse
+          ul.list-unstyled.fw-normal.pb-1.small
+            li
+              a.d-inline-flex.align-items-center.rounded[href="/docs/5.0/getting-started/introduction/" title="Начните работу с Bootstrap"]
+                | Вступление
+      li.mb-1
+        button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#performers-collapse" aria-expanded="false"]
+          = t('sidebar.performers')
+        #performers-collapse.collapse
+          ul.list-unstyled.fw-normal.pb-1.small
+            li
+              a.d-inline-flex.align-items-center.rounded[href="/docs/5.0/customize/overview/" title="Настройка и расширение"]
+                | Обзор           
+      li.mb-1
+        button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#divisions-collapse" aria-expanded="false"]
+          = t('sidebar.divisions') 
+        #divisions-collapse.collapse
+          ul.list-unstyled.fw-normal.pb-1.small
+            li
+              a.d-inline-flex.align-items-center.rounded[href="/docs/5.0/layout/breakpoints/" title="Контрольные точки"]
+                | Контрольные точки
+      li.mb-1
+        button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#categories-collapse" aria-expanded="false"]
+          = t('sidebar.categories') 
+        #categories-collapse.collapse
+          ul.list-unstyled.fw-normal.pb-1.small
+            li
+              a.d-inline-flex.align-items-center.rounded[href="/docs/5.0/layout/breakpoints/" title="Контрольные точки"]
+                | Контрольные точки
+ 

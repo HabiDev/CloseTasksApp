@@ -14,7 +14,8 @@ html
           = render 'layouts/header'
       main
         .col.m-2
-          = render 'shared/flash', flash: flash
+          #flash.flash
+            = render 'shared/flash', flash: flash
           = yield
       footer.fixed-bottom
         = render 'layouts/footer'

@@ -1,9 +1,6 @@
-.container.bg-light.p-5
-  h1.display-4
-    | Welcome CloseTaskApp.
-  p.lead
-    | This is a jumbotron created using the bootstrap 5
-  hr.my-2
-  p
-    | It uses utility classes for typography and spacing to space content out within the larger container.
+- if user_signed_in?
+  .container 
+    .row
+      .col-12.col-md-2
+        = link_to "#{t('caption.completed_task')}", completed_tasks_path, class: "btn btn-primary"
 

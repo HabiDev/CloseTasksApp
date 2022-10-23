@@ -1,0 +1,22 @@
+= simple_form_for @division do |f|
+  = f.error_notification
+  .row
+    .col-12.col-md-8
+      = f.input :name, required: true, autofocus: true, class: 'form-control form-control-sm' 
+  .row
+    .col-12.col-md-10
+      = f.input :address, required: true, autofocus: true, class: 'form-control form-control-sm' 
+  .row 
+    .col-12.col-md-6
+      = f.input :department_id, collection: Department.all, label_method: :name, value_method: :id, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
+    .col-12.col-md-4
+      = f.input :email, required: true, autofocus: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.email')}"
+    .col-12.col-md-12
+      = f.input :active, required: true, autofocus: true, class: 'form-control form-control-sm'    
+  hr
+  .row 
+    .col-12.col-md-12.text-end
+      span.p-2
+        = f.submit "#{t('submit.save')}", class: "btn btn-primary"
+      span
+        = link_to "#{t('submit.cancel')}", divisions_path, class: "btn btn-primary"

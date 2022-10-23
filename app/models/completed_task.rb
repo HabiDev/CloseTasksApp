@@ -1,0 +1,13 @@
+class CompletedTask < ApplicationRecord
+  belongs_to :division
+  belongs_to :user
+  belongs_to :sub_category, class_name: 'SubCategory', foreign_key: :sub_category_id
+
+  validates :division_id, :user_id, :sub_category_id, presence: true
+
+  broadcasts_to ->(completed_task) { "completed_tasks" }, inserts_by: :prepend
+
+  scope :ordered, -> { order(created_at: :desc) }  
+
+  scope :created_date, -> (shares_at) { where(created_at: shares_at.beginning_of_day..shares_at.end_of_day) }
+end

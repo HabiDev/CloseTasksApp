@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-9.col-md-10
+      h2.text-right
+        b 
+        = t('divisions.title')
+    .col-3.col-md-2.text-end
+      = link_to "#{t('button.new')}",  new_division_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: dom_id(Division.new) }
+    hr
+    .row
+      = turbo_frame_tag Division.new 
+  
+      = turbo_frame_tag "divisions", class: "row row-cols-1 row-cols-md-3 g-1"
+        = render @divisions

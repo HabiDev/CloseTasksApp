@@ -1,0 +1,17 @@
+= simple_form_for @completed_task do |f|
+  = f.error_notification
+  .row
+    .col-12.col-md-8
+      = f.input :division_id, collection: Division.all, label_method: :name, value_method: :id, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm' 
+  .row
+    .col-12.col-md-10
+      = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
+  .row 
+    .col-12.col-md-12
+      = f.input :comment, autofocus: true, class: 'form-control form-control-sm'
+  .row 
+    .col-12.col-md-12.text-end
+      span.p-2
+        = f.submit "#{t('submit.save')}", class: "btn btn-primary"
+      span
+        = link_to "#{t('submit.cancel')}", completed_tasks_path, class: "btn btn-primary"

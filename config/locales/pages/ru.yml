@@ -5,6 +5,17 @@ ru:
     title: О нас
   contact:
     title: Контакты
+  completed_tasks:
+    title_list: Перечень проделанных работ
+    title: Проделенные работы
+  users:
+    title: Сотрудники
+    title_list: Перечень сотрудников
+  resource: 
+    create: Создание
+    edit: Редактирование
+  divisions:
+    title: Подразделения
   shared:
     errors:
       header:
@@ -12,4 +23,3 @@ ru:
         many: "Выявлено %{count} ошибок"
         one: "Выявлено %{count} ошибка"
         other: "Выявлено %{count} ошибок"
-

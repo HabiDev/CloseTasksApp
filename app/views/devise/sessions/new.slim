@@ -1,0 +1,19 @@
+.container
+  .row.justify-content-center.align-items-center
+    .col-sm-12.col-md-4.mt-5
+      .card.shadow.p-3.mb-5.bg-white.rounded
+        .card-header.bg-transparent.p-2.auth-text
+          .card-title.h5.font-weight-bold.text-center.auth-text
+            = t('devise.sessions.new.log_in')
+        .card-body.pb-0.auth-section
+          = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "row g-2", data: { turbo: 'false' } }) do |f|
+            .form-group
+              = f.label :email, class: 'visually-hidden'
+              i.bi.bi-envelope-fill.icon
+              = f.input_field :email, required: true, autofocus: true, class: 'form-control', placeholder: "#{t('devise.placeholder.email')}"
+            .form-group
+              = f.label :password, class: 'visually-hidden'
+              i.bi.bi-lock-fill.icon
+              = f.input_field :password, required: true, class: 'form-control', placeholder: "#{t('devise.placeholder.password')}"
+            = f.input :remember_me, as: :boolean, class: 'form-control' if devise_mapping.rememberable?
+            = f.submit "#{t('devise.sessions.submit.sign_in')}", class: "btn btn-primary mt-2 mb-2"

@@ -1,0 +1,21 @@
+= turbo_frame_tag completed_task
+  .col-12.col-md-12.m-2
+    .card.border-info
+      .card-body.p-2
+        .row
+          .col-10.col-md-11
+            h5.card-title
+              = completed_task.sub_category.name
+          .col-2.col-md-1
+            = render 'completed_tasks/control', completed_task: completed_task
+        .row
+          .col-12.col-md-12
+            h6.card-subtitle.mb-2.text-muted.small
+              = completed_task.division.name
+        - unless current_user.user?
+          hr.p-0.mt-1.mb-1           
+          .row            
+            span.col-12.col-md-12.small.text-muted.text-end 
+              em
+                = completed_info(completed_task)
+

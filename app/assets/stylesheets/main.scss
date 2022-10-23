@@ -1,0 +1,33 @@
+.form-group .icon {
+  font-size: 18px;
+  position: absolute;
+  left: 18px;
+  top: 6px;
+  color: #afb3bb;
+}
+
+.form-control.auth {
+  padding-left: 30px;
+}
+
+.auth-section .form-group, .auth-module .form-group {
+  position: relative;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.auth-section .form-control {
+  padding-left: 40px;
+}
+
+.card-title.auth-text {
+
+  color: $gray-700
+
+}
+
+.nav-link:focus {
+  outline: 0;
+}

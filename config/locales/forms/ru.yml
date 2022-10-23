@@ -7,3 +7,30 @@ ru:
     sign_in: Войти
     sign_out: Выйти
     aria_label: Переключатель навигации 
+  button:
+    new: Добавить
+    edit: Редактировать
+    show: Показать
+    destroy: Удалить
+    back: Назад
+  submit:
+    create: Создать
+    update: Обновить
+    cancel: Отмена
+    save: Сохранить
+  caption:
+    current_sign_in: в системе
+    last_sign_in: последний сеанс
+    completed_task: Проделанные работы
+    performer: Исп.
+  sidebar:
+    completed_tasks: Проделанные работы 
+    performers: По исполнителям
+    divisions: По объектам
+    categories: По категориям работ
+  notice:
+    record_create: Запись удачно создан.
+    record_destroy: Запись удален.
+    record_edit: Запись откоректировано.
+    record_destroy_errors: Запись не может быть удалена. Иммеются связанные записи.
+    confirm: Вы дествительно хотите удалить запись?

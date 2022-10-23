@@ -1,0 +1,19 @@
+.container
+  .row.justify-content-center.pt-5
+    .col-sm-12.col-md-12
+      .card.shadow.p-3.mb-5.bg-white.rounded
+        .card-header.bg-transparent.p-2
+          span.card-title.text-primary.h5.font-weight-bold Сведения о сотрудника
+          = link_to "<i class='fa fa-times'></i>".html_safe, users_path, class: 'btn btn-outline-danger btn-sm float-right'
+        .card-body.pb-0
+          .col-sm-12.col-md-12
+            .row.pt-3
+              .col-sm-12.col-md-6
+                span.text-info.font-weight-bold
+                  =  "email"
+                span.text-secondary
+                  = @user.email
+              .row
+                .col-sm-12.col-md-12
+                  hr
+                  / = link_to "Изменить данные сотрудника",  edit_user_path(@user), class: "btn btn-outline-info btn-sm float-right"

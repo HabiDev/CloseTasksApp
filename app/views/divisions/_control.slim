@@ -1,0 +1,9 @@
+h5.text-end          
+  .dropdown
+    a#dopdownMenuLink.nav-link aria-expanded="false" aria-haspopup="true" data-bs-toggle="dropdown" href="#"
+      i.bi.bi-three-dots-vertical
+    ul.dropdown-menu.dropdown-menu-end aria-labelledby="dopdownMenuLink"
+      li
+        = link_to t('button.edit'), edit_division_path(division), class: "dropdown-item"
+      li
+        = link_to t('button.destroy'), division, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 
