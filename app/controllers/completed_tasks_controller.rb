@@ -5,7 +5,10 @@ class CompletedTasksController < ApplicationController
   def index
     # authorize User
     if current_user.user?      
-      @q = CompletedTask.includes(:user, :sub_category, :division).where(user_id: current_user).ransack(params[:q])
+      @q = CompletedTask.includes(:user, :sub_category, :division)
+                        .where(user_id: current_user)
+                        .created_date(Date.today)
+                        .ransack(params[:q])
     else
       @q = CompletedTask.includes(:user, :sub_category, :division).ransack(params[:q])
     end
@@ -70,7 +73,6 @@ class CompletedTasksController < ApplicationController
   private
 
   def set_completed_task
-
     @completed_task = CompletedTask.find(params[:id])
   end
 
