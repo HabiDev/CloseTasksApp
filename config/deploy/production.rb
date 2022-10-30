@@ -68,6 +68,7 @@ branch = 'master'
 roles = ['web', 'app', 'db', 'production']
 
 set :deployer_user, deploy_user
+set :use_sudo, true
 set :branch, branch
 server "#{deploy_user}@#{main_server}",
        port: ssh_port,

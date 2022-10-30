@@ -29,7 +29,7 @@ end
 # For example: /var/www/apps/Application/shared/.
 append :linked_files,
        'config/database.yml',
-       'Procfile',
+       'Procfile.dev',
        '.env',
        'config/master.key'
 
