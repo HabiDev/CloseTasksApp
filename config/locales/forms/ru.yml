@@ -1,4 +1,6 @@
 ru:
+  app:
+    title: Информационная система
   navbar:
     brand: CloseTasksApp
     home_link: Главная
