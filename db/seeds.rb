@@ -48,7 +48,6 @@ Position.create(name: 'Электрик')
 Position.create(name: 'Инженер-техник')
 
 Category.create(name: 'Закупка, доставка ТМЦ')
-Category.create(name: 'Монтажные работы')
 Category.create(name: 'Отопление')
 Category.create(name: 'Прочие работы')
 Category.create(name: 'Работы по кровли')
