@@ -11,7 +11,10 @@
         .row
           .col-12.col-md-12
             h6.card-subtitle.mb-2.text-muted.small
-              = completed_task.division.name
+              = completed_task.division.name 
+            p.small.p-0.m-0
+              i.bi.bi-hourglass-split
+              = time_task(completed_task)
         - unless current_user.user?
           hr.p-0.mt-1.mb-1           
           .row            

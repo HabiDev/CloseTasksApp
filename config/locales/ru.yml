@@ -47,6 +47,8 @@ ru:
         division_id: Объект
         sub_category_id: Проделанная работа
         user_id: Исполнитель
+        time_start: Время начало
+        time_end: Время окончания
         comment: Описание работ
 
   date:
@@ -309,4 +311,5 @@ ru:
       long: "%d %B %Y, %H:%M"
       short: "%d %b, %H:%M"
       full:  "%a, %d %b %Y, %H:%M:%S"
+      mini: "%H:%M"
     pm: вечера
