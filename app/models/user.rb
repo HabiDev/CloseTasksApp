@@ -12,6 +12,6 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :profile, allow_destroy: true
 
-  broadcasts_to ->(user) { "users" }, inserts_by: :prepend
+  # broadcasts_to ->(user) { "users" }, inserts_by: :prepend
 
 end

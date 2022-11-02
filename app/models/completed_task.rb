@@ -9,7 +9,7 @@ class CompletedTask < ApplicationRecord
 
   validates :division_id, :user_id, :sub_category_id, :time_start, :time_end, presence: true
 
-  broadcasts_to ->(completed_task) { "completed_tasks" }, inserts_by: :prepend
+  # broadcasts_to ->(completed_task) { "completed_tasks" }, inserts_by: :prepend
 
   scope :ordered, -> { order(created_at: :desc) }  
 

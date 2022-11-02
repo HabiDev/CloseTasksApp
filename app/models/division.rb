@@ -5,7 +5,7 @@ class Division < ApplicationRecord
 
   validates :name, :email, :department_id, :address, presence: true
 
-  broadcasts_to ->(division) { "divisions" }, inserts_by: :prepend
+  # broadcasts_to ->(division) { "divisions" }, inserts_by: :prepend
 
   scope :ordered, -> { order(name: :asc) }
 
