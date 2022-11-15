@@ -8,6 +8,6 @@ class Profile < ApplicationRecord
 
   validates :full_name, :mobile, :sub_department_id, :position_id, presence: true
 
-  scope :default, -> { order(full_name: :asc) }
+  default_scope { order(full_name: :asc) }
 
 end

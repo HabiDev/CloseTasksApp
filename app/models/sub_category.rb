@@ -5,5 +5,5 @@ class SubCategory < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :default, -> { order(name: :asc) }
+  default_scope { order(name: :asc) }
 end

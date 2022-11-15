@@ -7,7 +7,7 @@ class Division < ApplicationRecord
 
   # broadcasts_to ->(division) { "divisions" }, inserts_by: :prepend
 
-  scope :ordered, -> { order(name: :asc) }
+  default_scope { order(name: :asc) }
 
-  scope :default, -> { order(name: :asc) }
+  scope :ordered, -> { order(name: :asc) }
 end

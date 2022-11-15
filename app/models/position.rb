@@ -1,5 +1,5 @@
 class Position < ApplicationRecord
   has_many :profiles, dependent: :destroy
 
-  scope :default, -> { order(name: :asc) }
+  default_scope { order(name: :asc) }
 end
