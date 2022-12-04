@@ -111,6 +111,18 @@ namespace :deploy do
     end
   end
 
+  desc "reload the database with seed data"
+  task :seed do
+    on roles(:all) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:seed'
+        end
+      end
+    end
+  end
+
+
   desc 'Foreman init'
   task :foreman_init do
     on roles(:all) do
@@ -124,7 +136,7 @@ namespace :deploy do
                 foreman_temp.to_s,
                 "-a #{fetch(:application)}",
                 "-u #{fetch(:deployer_user)}",
-                "-f #{current_path}/Procfile"
+                "-f #{current_path}/Procfile.dev"
       end
       execute "chmod 640 #{foreman_temp}/#{fetch(:application)}*"
       sudo "rm -rf /etc/systemd/system/#{fetch(:application)}*"
