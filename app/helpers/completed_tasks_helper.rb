@@ -10,6 +10,10 @@ module CompletedTasksHelper
     " (#{l(completed_task.time_start, format: :mini)}-#{l(completed_task.time_end, format: :mini)})"    
   end
 
+  def task_time_mini(completed_task)
+    "#{l(completed_task.time_start, format: :mini)}-#{l(completed_task.time_end, format: :mini)}"
+  end
+
   def completed_tasks_count(resource)    
     resource.completed_tasks_count if resource.completed_tasks_count > 0
   end

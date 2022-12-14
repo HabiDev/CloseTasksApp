@@ -12,11 +12,16 @@ class CompletedTasksController < ApplicationController
     else
       @q = CompletedTask.includes(:user, :sub_category, :division).ransack(params[:q])
     end
+    @completed_taskss = @q.result(disinct: true).includes(:user, :sub_category, :division)
     @q.sorts = ['created_at desc', 'profile_fullname asc'] if @q.sorts.empty?
     @completed_tasks = @q.result(disinct: true).includes(:user, :sub_category, :division) 
     @users = User.all
     @divisions = Division.all
     @categories = SubCategory.all
+    respond_to do |format|
+      format.html
+      format.zip { respond_with_zipped_tasks }
+    end
   end
 
   def new
@@ -71,6 +76,22 @@ class CompletedTasksController < ApplicationController
   end
 
   private
+
+  def respond_with_zipped_tasks    
+    users = User.where(id: (@completed_tasks.pluck(:user_id).uniq))
+    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+      users.each do |user|
+        zos.put_next_entry "#{user.profile.full_name}.xlsx"
+        zos.print render_to_string(
+          layout: false, handlers: [:axlsx], formats: [:xlsx],
+          template: 'completed_tasks/tasks_user',
+          locals: { tasks: @completed_tasks.where(user_id: user.id).reorder(:created_at, :time_start), user: user }
+        )
+      end
+    end
+    compressed_filestream.rewind
+    send_data compressed_filestream.read, filename: 'report_tasks.zip'    
+  end
 
   def set_completed_task
     @completed_task = CompletedTask.find(params[:id])

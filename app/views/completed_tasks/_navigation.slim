@@ -46,6 +46,21 @@ aside.bd-sidebar
                 = link_to category.name, completed_tasks_path(q: { sub_category_id_eq: category.id }), data: { turbo_frame: 'completed_tasks' }
                 span.badge.rounded-pill.bg-secondary
                   = completed_tasks_count(category)
+        li.mb-1
+          button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#reports-collapse" aria-expanded="false"]
+            = t('sidebar.reports') 
+          #reports-collapse.collapse
+            ul.list-unstyled.fw-normal.pb-1
+              li
+                = link_to t('sidebar.date_today'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_day, created_at_lteq: (DateTime.now).end_of_day }, format: :zip)
+              li
+                = link_to t('sidebar.date_week'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_week, created_at_lteq: (DateTime.now).end_of_week }, format: :zip)
+              li
+                = link_to t('sidebar.date_month'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_month, created_at_lteq: (DateTime.now).end_of_month }, format: :zip)
+              li
+                = link_to t('sidebar.last_month'), completed_tasks_path(q: { created_at_gteq: 1.month.ago.beginning_of_month, created_at_lteq: 1.month.ago.end_of_month }, format: :zip)
+              li
+                = link_to t('sidebar.date_year'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_year, created_at_lteq: (DateTime.now).end_of_year }, format: :zip)
 
  
  

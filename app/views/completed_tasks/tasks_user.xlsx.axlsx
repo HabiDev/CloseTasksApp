@@ -1,0 +1,18 @@
+wb = xlsx_package.workbook
+
+wb_style = wb.styles
+header = wb_style.add_style bg_color: 'ADD8E6', b: true, alignment: { wrap_text: true,  horizontal: :center, vertical: :center }
+wrap_text = wb_style.add_style alignment: { horizontal: :left, vertical: :center }
+row_aligment = wb_style.add_style alignment: { horizontal: :center, vertical: :center }
+
+wb.add_worksheet(name: "Report") do |sheet|
+  sheet.add_row ["Сотрудник: #{user.profile.full_name}"], height: 40, b: true, style: wrap_text
+  sheet.add_row ["№ п/п", "Дата", "Время", "Торговый объект", "Проделанная работа"], style: header, height: 30
+  number = 1
+  tasks.each do |task|
+    sheet.add_row [number, task.created_at, task_time_mini(task), task.division.name, task.sub_category.name]
+    number += 1
+  end
+  sheet.col_style 2, row_aligment, row_offset: 2
+  sheet.column_widths 4, 12, nil, nil, nil
+end

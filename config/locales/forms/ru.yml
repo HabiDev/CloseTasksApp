@@ -32,13 +32,16 @@ ru:
     categories: По категориям работ
     date_today: На сегодня
     date_month: За месяц
+    last_month: За предыдущий месяц
     date_week:  За неделю
     date_year:  За год
     all_tasks: Все
     reset:  Показать все
+    reports: Отчет
   notice:
     record_create: Запись удачно создан.
     record_destroy: Запись удален.
     record_edit: Запись откоректировано.
     record_destroy_errors: Запись не может быть удалена. Иммеются связанные записи.
+    export_record_not_found: Нет данных для выгрузки.
     confirm: Вы дествительно хотите удалить запись?
