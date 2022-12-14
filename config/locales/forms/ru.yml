@@ -26,6 +26,14 @@ ru:
     completed_task: Проделанные работы
     performer: Исп.
   sidebar:
+    panels:
+      title: Справочники системы
+      settings: Настройки
+      position: Должности
+      categories: Категории
+      sub_categories: Подкатегории
+      departments: Структура
+      sub_departments: Подразделения
     completed_tasks: Проделанные работы 
     performers: По исполнителям
     divisions: По объектам

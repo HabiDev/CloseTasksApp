@@ -1,0 +1,55 @@
+aside.bd-sidebar
+  nav#bd-docs-nav.collapse.bd-links aria-label=t('sidebar.panels.title') 
+    h5 
+      = t('sidebar.panels.settings')         
+    / = link_to t('sidebar.reset'), completed_tasks_path, data: { turbo_frame: 'completed_tasks' }
+    hr.m-1.p-1
+    ul.list-unstyled.mb-0.py-3.pt-md-1
+      li.mb-1
+        button.btn.d-inline-flex.align-items-center.rounded.collapsed data-bs-toggle="collapse" data-bs-target="#catalog-collapse" aria-expanded="false"
+          = t('sidebar.panels.title')
+        #catalog-collapse.collapse.show
+          ul.list-unstyled.fw-normal.pb-1
+            li
+              = link_to t('sidebar.panels.position'), '#', data: { turbo_frame: 'completed_tasks' }
+            li
+              = link_to t('sidebar.panels.categories'), '#', data: { turbo_frame: 'completed_tasks' }
+            li
+              = link_to t('sidebar.panels.sub_categories'), '#', data: { turbo_frame: 'completed_tasks' }
+            li
+              = link_to t('sidebar.panels.departments'), '#', data: { turbo_frame: 'completed_tasks' }
+            li
+              = link_to t('sidebar.panels.sub_departments'), '#', data: { turbo_frame: 'completed_tasks' }
+      / li.mb-1
+      /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#performers-collapse" aria-expanded="false"]
+      /     = t('sidebar.performers')
+      /   #performers-collapse.collapse
+      /     ul.list-unstyled.fw-normal.pb-1
+      /       - @users.each do |user|  
+      /         li 
+      /           = link_to user.profile.full_name, completed_tasks_path(q: { user_id_eq: user.id }), data: { turbo_frame: 'completed_tasks' }
+      /           span.badge.rounded-pill.bg-secondary
+      /             = completed_tasks_count(user)
+      / li.mb-1
+      /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#divisions-collapse" aria-expanded="false"]
+      /     = t('sidebar.divisions') 
+      /   #divisions-collapse.collapse
+      /     ul.list-unstyled.fw-normal.pb-1
+      /       - @divisions.each do |division|  
+      /         li 
+      /           = link_to division.name, completed_tasks_path(q: { division_id_eq: division.id }), data: { turbo_frame: 'completed_tasks' }
+      /           span.badge.rounded-pill.bg-secondary
+      /             = completed_tasks_count(division)
+      / li.mb-1
+      /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#categories-collapse" aria-expanded="false"]
+      /     = t('sidebar.categories') 
+      /   #categories-collapse.collapse
+      /     ul.list-unstyled.fw-normal.pb-1
+      /       - @categories.each do |category|  
+      /         li 
+      /           = link_to category.name, completed_tasks_path(q: { sub_category_id_eq: category.id }), data: { turbo_frame: 'completed_tasks' }
+      /           span.badge.rounded-pill.bg-secondary
+      /             = completed_tasks_count(category)
+
+ 
+ 

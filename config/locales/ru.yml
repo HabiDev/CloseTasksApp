@@ -1,6 +1,7 @@
 ru:
   activerecord:
     errors:
+      access_denied: "В доступе отказано!"
       messages:
         record_invalid: 'Возникли ошибки: %{errors}'
         restrict_dependent_destroy:
