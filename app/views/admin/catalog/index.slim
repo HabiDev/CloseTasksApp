@@ -1,0 +1,12 @@
+.row
+  .col-12.col-md-12.text-end.p-3
+    = link_to "#{t('button.new')}", [:new, :admin, @resource_name.to_sym], class: "btn btn-outline-success btn-sm", data: { turbo_frame: dom_id(@model.new) }
+.row 
+  .col-12.col-md-12
+    = turbo_frame_tag @model.new
+    #resp-table
+      #resp-table-header
+        .table-header-cell.col-11.col-md-11
+          = t("#{@resources.model_name.human}")
+      = turbo_frame_tag "resp-table-body"
+        = render partial: 'resource', collection: @resources

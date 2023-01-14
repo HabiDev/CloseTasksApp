@@ -11,15 +11,15 @@ aside.bd-sidebar
         #catalog-collapse.collapse.show
           ul.list-unstyled.fw-normal.pb-1
             li
-              = link_to t('sidebar.panels.position'), '#', data: { turbo_frame: 'completed_tasks' }
+              = link_to t('sidebar.panels.position'), admin_positions_path, data: { turbo_frame: 'catalogs' }
             li
-              = link_to t('sidebar.panels.categories'), '#', data: { turbo_frame: 'completed_tasks' }
+              = link_to t('sidebar.panels.categories'), admin_categories_path, data: { turbo_frame: 'catalogs' }
             li
-              = link_to t('sidebar.panels.sub_categories'), '#', data: { turbo_frame: 'completed_tasks' }
+              = link_to t('sidebar.panels.sub_categories'), admin_sub_categories_path, data: { turbo_frame: 'catalogs' }
             li
-              = link_to t('sidebar.panels.departments'), '#', data: { turbo_frame: 'completed_tasks' }
+              = link_to t('sidebar.panels.departments'), admin_departments_path, data: { turbo_frame: 'catalogs' }
             li
-              = link_to t('sidebar.panels.sub_departments'), '#', data: { turbo_frame: 'completed_tasks' }
+              = link_to t('sidebar.panels.sub_departments'), admin_sub_departments_path, data: { turbo_frame: 'catalogs' }
       / li.mb-1
       /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#performers-collapse" aria-expanded="false"]
       /     = t('sidebar.performers')

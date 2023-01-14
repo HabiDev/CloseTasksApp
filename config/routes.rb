@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   resources :completed_tasks, except: %w(show)
 
   namespace :admin do
-    root 'panels#index'
+    root 'panels#home'
+    resources :positions,  
+              :categories, 
+              :departments, 
+              :sub_categories, 
+              :sub_departments, except: %w(show)
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

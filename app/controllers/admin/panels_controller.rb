@@ -1,6 +1,6 @@
 class Admin::PanelsController < Admin::BaseController
 
-  def index 
+  def home
   end
 
 end

@@ -14,6 +14,17 @@ ru:
           guide: Руководство
           moderator: Модератор
           user: Пользователь
+    models:
+      user: Сотрудники
+      profile: Профили
+      position: Должности
+      department: Структура
+      sub_department: Отделы
+      category: Категория
+      sub_category: Подкатегория
+      division: Подразделения
+      completed_task: Выполненные задачи
+
     attributes:
       user:        
         type_role: Роль в системе
@@ -30,11 +41,16 @@ ru:
         name: Подразделение
       profile/positions:
         name: Должность
-      department:
+      department: 
         name: Отдел
-      sub_department:
+      sub_department: 
         name: Подразделение
         department_id: Отдел
+      category:
+        name: Категория
+      sub_category:
+        name: Подкатегория
+        category_id: Категория
       position:
         name: Должность
       division:

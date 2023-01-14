@@ -1,0 +1,13 @@
+.container
+  = simple_form_for [:admin, @resource] do |f|
+    = f.error_notification
+    .row
+      .col-12.col-md-8
+        = f.input :name, required: true, autofocus: true, class: 'form-control form-control-sm' 
+    hr
+    .row 
+      .col-12.col-md-12.text-end.p-3
+        span.p-2
+          = f.submit "#{t('submit.save')}", class: "btn btn-primary"
+        span
+          = link_to "#{t('submit.cancel')}", [:admin, @resource.model_name.plural.to_sym], class: "btn btn-primary"
