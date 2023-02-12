@@ -79,11 +79,8 @@ ru:
     date_year:  За год
     all: Все
     reset:  Показать все
-<<<<<<< HEAD
     reports: Отчет
-=======
     from: От
->>>>>>> AdminPages
   notice:
     record_create: Запись удачно создан.
     record_destroy: Запись удален.
