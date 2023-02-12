@@ -7,7 +7,7 @@ class DivisionsController < ApplicationController
     # @q = User.includes(:profile).where(admin: false).search(params[:q])
     # @q.sorts = ['profile_surname asc', 'created_at desc'] if @q.sorts.empty?
     # @divisions = @q.result(disinct: true)
-    @divisions = Division.ordered
+    @pagy, @divisions = pagy(Division.ordered, items: mobile_device? ? 3 : 12 )
   end
 
   def new

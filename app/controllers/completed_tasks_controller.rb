@@ -14,7 +14,7 @@ class CompletedTasksController < ApplicationController
     end
     @completed_taskss = @q.result(disinct: true).includes(:user, :sub_category, :division)
     @q.sorts = ['created_at desc', 'profile_fullname asc'] if @q.sorts.empty?
-    @completed_tasks = @q.result(disinct: true).includes(:user, :sub_category, :division) 
+    @pagy, @completed_tasks = pagy(@q.result(disinct: true).includes(:user, :sub_category, :division), items: mobile_device? ? 3 : 10)   
     @users = User.all
     @divisions = Division.all
     @categories = SubCategory.all

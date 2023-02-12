@@ -23,11 +23,23 @@
 }
 
 .card-title.auth-text {
-
   color: $gray-700
-
 }
 
 .nav-link:focus {
   outline: 0;
+}
+
+.card {
+  border-radius: 1em;
+}
+
+.fa-stack{
+  position:absolute;
+  right:2%;
+  top:5%;
+  font-size:50%;
+  padding:.6em;
+  border-radius:999px;
+  background:rgba(255,0,0,1);
 }

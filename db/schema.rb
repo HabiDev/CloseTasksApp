@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_01_150222) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_190419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,7 +56,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_150222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "completed_tasks_count", default: 0, null: false
+    t.integer "tasks_count", default: 0, null: false
     t.index ["department_id"], name: "index_divisions_on_department_id"
+  end
+
+  create_table "performed_works", force: :cascade do |t|
+    t.bigint "sub_category_id", null: false
+    t.bigint "task_id", null: false
+    t.time "time_start", null: false
+    t.time "time_end", null: false
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sub_category_id"], name: "index_performed_works_on_sub_category_id"
+    t.index ["task_id"], name: "index_performed_works_on_task_id"
   end
 
   create_table "positions", force: :cascade do |t|
@@ -64,6 +77,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_150222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "profiles_count", default: 0, null: false
+  end
+
+  create_table "priorities", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.integer "limit_day", default: 3, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "tasks_count", default: 0, null: false
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -86,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_150222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "completed_tasks_count", default: 0, null: false
+    t.integer "performed_works_count", default: 0, null: false
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
@@ -96,6 +118,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_150222) do
     t.datetime "updated_at", null: false
     t.integer "profiles_count", default: 0, null: false
     t.index ["department_id"], name: "index_sub_departments_on_department_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.bigint "division_id", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.string "description", null: false
+    t.bigint "priority_id", default: 0, null: false
+    t.bigint "executor_id", default: 0, null: false
+    t.bigint "author_id", default: 0, null: false
+    t.datetime "execution_limit_at", null: false
+    t.datetime "close_at"
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "performed_works_count", default: 0, null: false
+    t.index ["author_id"], name: "index_tasks_on_author_id"
+    t.index ["division_id"], name: "index_tasks_on_division_id"
+    t.index ["executor_id"], name: "index_tasks_on_executor_id"
+    t.index ["priority_id"], name: "index_tasks_on_priority_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,6 +155,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_150222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "completed_tasks_count", default: 0, null: false
+    t.integer "author_tasks_count", default: 0, null: false
+    t.integer "executor_tasks_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
@@ -122,9 +165,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_150222) do
   add_foreign_key "completed_tasks", "sub_categories"
   add_foreign_key "completed_tasks", "users"
   add_foreign_key "divisions", "departments"
+  add_foreign_key "performed_works", "sub_categories"
+  add_foreign_key "performed_works", "tasks"
   add_foreign_key "profiles", "positions"
   add_foreign_key "profiles", "sub_departments"
   add_foreign_key "profiles", "users"
   add_foreign_key "sub_categories", "categories"
   add_foreign_key "sub_departments", "departments"
+  add_foreign_key "tasks", "divisions"
+  add_foreign_key "tasks", "priorities"
+  add_foreign_key "tasks", "users", column: "author_id"
+  add_foreign_key "tasks", "users", column: "executor_id"
 end

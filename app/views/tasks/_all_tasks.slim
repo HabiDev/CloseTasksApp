@@ -1,0 +1,25 @@
+li.mb-1
+  button.btn.d-inline-flex.align-items-center.rounded.collapsed data-bs-toggle="collapse" data-bs-target="#all-tasks-collapse" aria-expanded="false"
+    = t('sidebar.tasks.all_tasks')
+  #all-tasks-collapse.collapse
+    ul.list-unstyled.fw-normal.pb-1
+      li
+        = link_to t('sidebar.reset'), tasks_path, data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.registred'), tasks_path(q: { status_eq: 0 }), data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.in_work'), tasks_path(q: { status_eq: 1 }), data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.in_approval'), tasks_path(q: { status_eq: 3 }), data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.in_rework'), tasks_path(q: { status_eq: 4 }), data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.executed'), tasks_path(q: { status_eq: 6 }), data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.not_executed'), tasks_path(q: { status_eq: 7 }), data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.expired'), tasks_path(q: { close_at_not_null: '0', execution_limit_at_lt: DateTime.now.beginning_of_day }), data: { turbo_frame: 'tasks_list' }
+      li
+        = link_to t('sidebar.tasks.delayed'), tasks_path(q: { status_eq: 8 }), data: { turbo_frame: 'tasks_list' }
+
+      = render partial: 'nav_child', locals: { is_author: true, visible: 'all'}

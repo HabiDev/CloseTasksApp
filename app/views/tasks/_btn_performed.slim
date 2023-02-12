@@ -1,0 +1,6 @@
+.small.small
+  - if task.registred? || !task.performed_works.present?
+    = link_to t('button.close'), "#", class: "btn btn-primary btn-sm", data: { action: "modal-task#hideModal" }
+  - if (task.in_work? || @task.in_rework?) && task.performed_works.present?
+    = link_to t('button.send_agree'), approval_task_path(task), class: "btn btn-success btn-sm",
+              data: { turbo_method: :patch, action: "modal-task#hideModal" }

@@ -2,10 +2,10 @@
   = f.error_notification
   .row
     .col-12.col-md-8
-      = f.input :division_id, collection: Division.all, label_method: :name, value_method: :id, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm' 
+      = f.input :division_id, collection: Division.all, label_method: :name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-division-completed", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
   .row
     .col-12.col-md-10
-      = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
+      = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-completed", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
   .row
     .col-12.col-md-3
       = f.input :time_start, required: true, autofocus: true, class: 'form-control form-control-sm'

@@ -2,19 +2,30 @@ ru:
   app:
     title: Информационная система
   navbar:
-    brand: CloseTasksApp
+    brand: На главную
     home_link: Главная
     about_link: О нас
     contact_link: Контакты
+    tasks: Заявки
     sign_in: Войти
     sign_out: Выйти
     aria_label: Переключатель навигации 
   button:
     new: Добавить
     edit: Редактировать
-    show: Показать
+    show: Просмотр
     destroy: Удалить
     back: Назад
+    close: Закрыть
+    send_agree: Отправить на согласование
+    execute:
+      executed: Добавить работу
+      rework: На доработку
+      agree: Принять
+      delayed: Отложить
+      canceled: Отменить
+
+
   submit:
     create: Создать
     update: Обновить
@@ -24,8 +35,39 @@ ru:
     current_sign_in: в системе
     last_sign_in: последний сеанс
     completed_task: Проделанные работы
+    performed_works: Выполненные работы
     performer: Исп.
   sidebar:
+    panels:
+      title: Справочники системы
+      settings: Настройки
+      position: Должности
+      categories: Категории
+      sub_categories: Подкатегории
+      departments: Структура
+      sub_departments: Подразделения
+      statuses: Статусы
+      priorities: Приоритеты
+    tasks:
+      title: Заявки
+      all_tasks: Все заявки
+      my_tasks: Мои заявки
+      priorities: Приоритет
+      executors: Исполнители
+      divisions: Подразделения
+      status: Статус
+      registred: Новые
+      in_work: В работе 
+      registred_inwork: Новые/В работе 
+      in_approval: На согл-нии 
+      in_rework: В дораб-ке
+      agree: Согласованные 
+      executed: Исполнено
+      not_executed: Не исполнено
+      delayed: Отложен
+      expired: Просрочен
+      canceled: Отменен
+      all: Все
     completed_tasks: Проделанные работы 
     performers: По исполнителям
     divisions: По объектам
@@ -35,9 +77,13 @@ ru:
     last_month: За предыдущий месяц
     date_week:  За неделю
     date_year:  За год
-    all_tasks: Все
+    all: Все
     reset:  Показать все
+<<<<<<< HEAD
     reports: Отчет
+=======
+    from: От
+>>>>>>> AdminPages
   notice:
     record_create: Запись удачно создан.
     record_destroy: Запись удален.

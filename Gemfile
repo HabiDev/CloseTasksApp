@@ -72,12 +72,17 @@ gem 'active_link_to'
 # gem counter_culture
 gem 'counter_culture'
 
+<<<<<<< HEAD
 # Export XLSX
 gem 'caxlsx'
 gem 'caxlsx_rails'
 
 # RubyZip
 gem 'rubyzip'
+=======
+#pagy
+gem 'pagy'
+>>>>>>> AdminPages
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

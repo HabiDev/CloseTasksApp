@@ -5,6 +5,8 @@ ru:
     title: О нас
   contact:
     title: Контакты
+  panels:
+    title: Панель администратора
   completed_tasks:
     title_list: Перечень проделанных работ
     title: Проделенные работы

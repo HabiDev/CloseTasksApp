@@ -1,0 +1,6 @@
+.container
+  = turbo_frame_tag "modal"
+    h1.h3.modal-header
+      = t('resource.edit')     
+    .modal-body
+      = render 'tasks/form', task: @task

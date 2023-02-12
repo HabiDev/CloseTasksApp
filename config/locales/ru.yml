@@ -1,6 +1,7 @@
 ru:
   activerecord:
     errors:
+      access_denied: "В доступе отказано!"
       messages:
         record_invalid: 'Возникли ошибки: %{errors}'
         restrict_dependent_destroy:
@@ -13,11 +14,35 @@ ru:
           guide: Руководство
           moderator: Модератор
           user: Пользователь
+      task:
+        statuses:
+          registred: Зарегистрирован 
+          in_work: В работе 
+          in_approval: На согласовании 
+          in_rework: На доработке
+          agree: Согласован 
+          executed: Исполнено
+          not_executed: Не исполнено
+          delayed: Отложен
+          canceled: Отменен
+    models:
+      user: Сотрудники
+      profile: Профили
+      position: Должности
+      department: Структура
+      sub_department: Отделы
+      category: Категория
+      sub_category: Подкатегория
+      division: Подразделения
+      completed_task: Выполненные задачи
+      status: Статус
+      task: Заявка
+      priority: Приоритет
+      performed_work: Выполненная работа
     attributes:
       user:        
         type_role: Роль в системе
         email: E-mail
-        password:
         password: Пароль
         password_confirmation: Подтверждение пароля        
       profile:
@@ -29,11 +54,16 @@ ru:
         name: Подразделение
       profile/positions:
         name: Должность
-      department:
+      department: 
         name: Отдел
-      sub_department:
+      sub_department: 
         name: Подразделение
         department_id: Отдел
+      category:
+        name: Категория
+      sub_category:
+        name: Подкатегория
+        category_id: Категория
       position:
         name: Должность
       division:
@@ -43,14 +73,34 @@ ru:
         email: E-mail
         photo: Фото объекта
         active: Действующий объект
+      status:
+        name: Наименование
+      priority:
+        name: Наименование
+        limit_day: Срок исполнения(в днях)
+      task:
+        division_id: Подразделение
+        priority_id: Приоритет 
+        status: Статус
+        description: Описание
+        executor_id: Исполнитель
+        author_id: Cоздал
+        execution_limit_at: Срок испол.     
+        close_at: Заявка закрыта
+        created_at: Дата
       completed_task:
-        division_id: Объект
+        division_id: Подразделение
         sub_category_id: Проделанная работа
         user_id: Исполнитель
         time_start: Время начало
         time_end: Время окончания
         comment: Описание работ
-
+      performed_work:
+        sub_category_id: Проделанная работа
+        task_id: Заявка
+        time_start: Время начало
+        time_end: Время окончания
+        comment: Дополнения
   date:
     abbr_day_names:
     - Вс
@@ -312,4 +362,6 @@ ru:
       short: "%d %b, %H:%M"
       full:  "%a, %d %b %Y, %H:%M:%S"
       mini: "%H:%M"
+      normal: "%d %b %Y"
+      small: "%d.%m.%Y"
     pm: вечера

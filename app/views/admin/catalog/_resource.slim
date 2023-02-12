@@ -1,0 +1,27 @@
+= turbo_frame_tag resource, class: 'resp-table-row'
+  .table-body-cell
+    .row
+      .col-11.col-md-11
+        = resource.name
+      .col-1.col-md-1
+        = render 'control', resource: resource
+
+
+
+
+/ tr
+/   td
+/     .row
+/       .col-11.col-md-11
+/         = turbo_frame_tag position
+/           = position.name
+/           .col-1.col-md-1
+/             = render 'control', position: position
+
+  /   = link_to [:edit, record], data: { toggle: 'tooltip', placement: 'bottom' },
+  /       title: "Корректировка данных" do
+  /     span.fa.fa-pencil-alt.edit-button
+  / - if policy(record).destroy? && record.can_destroy?
+  /   = link_to record, method: :delete, data: { confirm: "Вы действительно хотите удалить текущию запись?",
+  /       toggle: 'tooltip', placement: 'bottom' }, title: "Удалить запись" do
+  /         span.far.fa-trash-alt.edit-button

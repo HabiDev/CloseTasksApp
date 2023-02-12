@@ -1,0 +1,28 @@
+.col-12
+  .btn-group.btn-group-sm.my-1    
+    = link_to tasks_path(q: { status_lteq: 1 } ), class: "btn btn-outline-secondary"
+      = t('sidebar.tasks.registred_inwork')
+        / span.fa-stack.fa-5x.has-badge
+      = show_badge(current_user.tasks.registred) 
+      = show_badge(Task.task_executors(current_user).in_work)
+      = show_badge(Task.task_executors(current_user).registred)
+    = link_to tasks_path(q: { status_eq: 3 } ), class: "btn btn-outline-secondary text-truncate"
+      = t('sidebar.tasks.in_approval')
+      = show_badge(current_user.tasks.in_approval)
+    = link_to tasks_path(q: { status_eq: 4 } ), class: "btn btn-outline-secondary text-truncate"
+      = t('sidebar.tasks.in_rework')
+      = show_badge(Task.task_executors(current_user).in_rework)
+.col-12
+  .btn-group.btn-group-sm.my-1.mx-auto
+    = link_to t('sidebar.tasks.executed'), tasks_path(q: { status_eq: 6 } ), class: "btn btn-outline-secondary"
+    = link_to tasks_path(q: { status_eq: 7 } ), class: "btn btn-outline-secondary"
+      = t('sidebar.tasks.not_executed')
+      = show_badge(Task.task_executors(current_user).not_executed)
+      = show_badge(current_user.tasks.not_executed)
+    = link_to tasks_path(q: { status_eq: 8 } ), class: "btn btn-outline-secondary"
+      = t('sidebar.tasks.delayed')
+      = show_badge(Task.task_executors(current_user).delayed)
+      = show_badge(current_user.tasks.delayed) 
+    = link_to tasks_path, class: "btn btn-outline-secondary"
+      = t('sidebar.tasks.all')
+hr.mt-2.mb-1

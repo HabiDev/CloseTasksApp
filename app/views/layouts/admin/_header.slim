@@ -1,0 +1,37 @@
+nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-primary
+  .container-fluid
+    = link_to t('navbar.brand'), admin_root_path, class: "navbar-brand"
+    button.navbar-toggler aria-controls="navbarNavDropdown" aria-expanded="false" aria-label=("#{t('navbar.aria_label')}") data-bs-target="#navbarNavDropdown" data-bs-toggle="collapse" type="button" 
+      span.navbar-toggler-icon
+    #navbarNavDropdown.collapse.navbar-collapse
+      ul.navbar-nav.ms-auto
+        / li.nav-item
+        /   a.nav-link.active aria-current="page" href="#" 
+        /     = t('navbar.home_link')
+        / li.nav-item
+        /   a.nav-link href="#"  
+        /     = t('navbar.about_link') 
+        - if user_signed_in? 
+          -if current_user.admin?    
+            li.nav-item.dropdown
+              a#navbarDropdownMenuLink.nav-link.dropdown-toggle aria-expanded="false" data-bs-toggle="dropdown" href="#" role="button" 
+                = current_user.email
+              .dropdown-menu aria-labelledby="navbarDropdownMenuLink"
+                - if current_user.admin? || current_user.guide?
+                  = link_to t('divisions.title'), divisions_path, class: "dropdown-item"
+                - if current_user.admin? || current_user.guide?
+                  = link_to t('users.title'), users_path, class: "dropdown-item" 
+          li.nav-item
+            = link_to t('navbar.tasks'), tasks_path, class: "nav-link"                
+          li.nav-item
+            = link_to t('navbar.sign_out'), destroy_user_session_path, class: "nav-link"
+        - else
+          li.nav-item
+            = link_to t('navbar.sign_in'), new_user_session_path, class: "nav-link"
+
+
+
+
+
+   
+ 

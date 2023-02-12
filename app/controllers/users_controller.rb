@@ -7,11 +7,11 @@ class UsersController < ApplicationController
     # @q = User.includes(:profile).where(admin: false).search(params[:q])
     # @q.sorts = ['profile_surname asc', 'created_at desc'] if @q.sorts.empty?
     # @users = @q.result(disinct: true)
-    @users = User.all
+    @pagy, @users = pagy(User.all, items: mobile_device? ? 3 : 10) 
   end
 
   def new
-    # authorize User
+    # authorize Users
     #@user = User.new(password: 'UserBlock', password_confirmation: 'UserBlock', locked_at: DateTime.now)
     @user = User.new
     @user.build_profile
