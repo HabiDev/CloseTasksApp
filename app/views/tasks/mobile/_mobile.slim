@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-8 
+      h5 
+        = t('sidebar.tasks.title')  
+    .col-4.text-end.mb-3
+        = link_to "#{t('button.new')}",  new_task_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: "modal" }
+  .row 
+      = render 'tasks/mobile/btn_nav'
+  .row 
+    .col-12 
+      = turbo_frame_tag "tasks_list"
+      = turbo_frame_tag "tasks"
+        = render partial: "tasks/mobile/task", collection: @tasks

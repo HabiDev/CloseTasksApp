@@ -1,0 +1,73 @@
+= turbo_frame_tag "modal_task"
+  .modal-header
+    h4#modalTaskLabel.modal-title.fw-bold.lh-1
+      = "#{@task.model_name.human}  (#{@task.priority.name})"           
+    button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]
+  .modal-body
+    .card.shadow-sm.p-0.mb-3.bg-white.rounded-9
+      .card-body.pt-1.pb-1                
+        .col-12.text-end.lh-1
+          span.small.fst-italic.fw-bold.text-muted
+            span.small
+              = "#{@task.class.human_attribute_name(:created_at)}: "
+            span.fw-normal.lh-1.small
+              = l(@task.created_at, format: :normal)
+          .row
+            span.small.fst-italic.fw-bold.text-muted
+              span.small
+                = "#{@task.class.human_attribute_name(:status)}: "
+              span.fw-normal.lh-1.small
+                = enum_l(@task, :status)  
+          .row
+            span.small.fst-italic.fw-bold.text-muted
+              small.lh-1
+                = "#{@task.class.human_attribute_name(:author_id)}: "
+              span.fst-italic.fw-normal.lh-1.small
+                = @task.author.full_name 
+          hr.mt-1.mb-1
+        .row
+          .col-12.lh-1
+            spam.fw-bold.small
+              = "#{t('sidebar.from')}: "
+              span.fw-normal.small
+                = @task.division.name                        
+            .row.mx-1
+              .col-12.lh-1
+                span.small.fst-italic.fw-bold
+                  small
+                    = "#{@task.class.human_attribute_name(:description)}: "
+              .col-12.lh-1
+                span.small.fst-italic
+                  small
+                    = @task.description
+              hr.mt-1.mb-1            
+        .row
+          .col-12.text-end.lh-1                
+            span.small.fst-italic.fw-bold
+              small
+                = "#{@task.class.human_attribute_name(:executor_id)}: "
+              span.fst-italic.fw-normal.small
+                = @task.executor.full_name
+          .col-12.text-end.lh-1
+            span.small.fst-italic.fw-bold
+              small
+                = "#{@task.class.human_attribute_name(:execution_limit_at)}: "
+              span.fst-italic.fw-normal.small
+                = l(@task.execution_limit_at, format: :normal)
+            hr.mt-1.mb-2
+        - if !@task.close_at.present?
+          .row
+            = render 'tasks/btn_executor'
+        .row
+          .col-12.mt-2.lh-1          
+            = turbo_frame_tag PerformedWork.new  
+            - if @performed_works.present?
+              span.d-block.small.fw-bold.text-muted.p-2
+                = t('caption.performed_works')                 
+            = turbo_frame_tag "performed_works"                 
+              = render @performed_works
+    .row
+      .col-12.col-md-12.text-end.lh-1
+        = turbo_frame_tag "performed_btn"
+          = render "btn_performed", task: @task
+          

@@ -1,7 +1,7 @@
 class Admin::BaseController < ApplicationController
 
-  layout 'admin'
-  
+  layout -> { turbo_frame_request? ? false : "admin" }
+
   before_action :authenticate_user!
   before_action :admin_required!
   before_action :get_instance, only: [:show, :edit, :update, :destroy]

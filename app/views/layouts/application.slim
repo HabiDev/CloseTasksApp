@@ -18,6 +18,14 @@ html
           #flash.flash
             = render 'shared/flash', flash: flash
           = yield
-      / footer
-      /   = render 'layouts/footer'
+          #modalNewEdit.modal[data-controller="modal" data-modal-target="modalNewEdit" data-action="turbo:frame-load->modal#open turbo:submit-end->modal#close"]
+            .modal-dialog.modal-lg
+              .modal-content
+                = turbo_frame_tag "modal"
+          #modalTask.modal[tabindex="-1" data-controller="modal-task" data-modal-task-target="modalTask" data-action="turbo:frame-load->modal-task#open"]
+            .modal-dialog.modal-lg
+              .modal-content
+                = turbo_frame_tag "modal_task"
+            / footer
+            /   = render 'layouts/footer'
   

@@ -20,7 +20,9 @@ nav.navbar.sticky-top.navbar-expand-lg.navbar-dark.bg-primary
                 - if current_user.admin? || current_user.guide?
                   = link_to t('divisions.title'), divisions_path, class: "dropdown-item"
                 - if current_user.admin? || current_user.guide?
-                  = link_to t('users.title'), users_path, class: "dropdown-item"                
+                  = link_to t('users.title'), users_path, class: "dropdown-item" 
+          li.nav-item
+            = link_to t('navbar.task'), tasks_path, class: "nav-link"                
           li.nav-item
             = link_to t('navbar.sign_out'), destroy_user_session_path, class: "nav-link"
         - else

@@ -13,17 +13,12 @@
 #resp-table-header {
   display: table-header-group;
   // background-color: rgb(7, 7, 7);
-  background: $teal-700;
-  font-weight: bold;
-  font-size: 20px;
+
+
 }
 
 .table-header-cell {
-  display: table-cell;
-  padding: 10px 10px;
-  text-align: center;
-  color: white;
-  border: 1px solid white;
+  display: table-cell;  
 }
 
 // #resp-table-header .table-header-cell:first-child {
@@ -58,6 +53,42 @@
 
 .table-body-cell {
   display: table-cell;
+  padding: 2px 3px 2px 0px;
+  // margin: 0;
+  // border-bottom: 1px solid rgb(126, 122, 122); 
+}
+
+.fixed-table {
+  table-layout: fixed;
+}
+
+.tblhead-default > * {
+  background: $teal-700;
+  font-weight: bold;
+  font-size: 20px;
   padding: 5px;
-  // border-bottom: 1px solid rgb(126, 122, 122);   
+  text-align: center;
+  color: white;
+  //border: 1px solid white;
+}
+
+.tblhead-resp > * {
+  //background: $teal-700;
+  border-bottom-width: 1px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #212529;
+  vertical-align: top;
+  text-align: left;
+  // border-color: #5586b8;
+  border-bottom-color: currentColor;
+  padding: 10px 0px;
+  // border-style: solid;
+  border-bottom-style: solid;
+  
+}
+.tblbody-resp > * {
+  border-bottom-width: 1px;  
+  border-bottom-color: rgb(187, 187, 187);
+  border-bottom-style: solid;
 }

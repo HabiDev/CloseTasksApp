@@ -1,0 +1,23 @@
+= simple_form_for @performed_work do |f|
+  = f.error_notification    
+  .row
+    .col-12.col-12
+      = f.input :task_id, as: :hidden, class: 'form-control form-control-sm'
+  .row
+    .col-12.col-md-12
+      / = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
+      = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-work", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
+  .row
+    .col-12.col-md-3
+      = f.input :time_start, required: true, autofocus: true, class: 'form-control form-control-sm'
+    .col-12.col-md-3
+      = f.input :time_end, required: true, autofocus: true, class: 'form-control form-control-sm'
+  .row 
+    .col-12.col-md-12
+      = f.input :comment, autofocus: true, class: 'form-control form-control-sm'
+  .row 
+    .col-12.text-end
+      span.p-2
+        = f.submit "#{t('submit.save')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
+      span
+        = link_to "#{t('submit.cancel')}", task_path(@task), class: "btn btn-primary"

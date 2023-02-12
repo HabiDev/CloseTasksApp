@@ -1,0 +1,14 @@
+.container
+  - if mobile_device?
+    .row
+      = render "tasks/mobile/mobile", tasks: @tasks
+  -else
+    .row
+      - unless current_user.user?
+        .col-12.col-md-3
+          = render 'tasks/navigation'
+        .col-12.col-md-9
+          = render 'list_task'
+      - else 
+        .col-12.col-md-12
+          = render 'list_task'

@@ -5,7 +5,7 @@
   .col-12.col-md-12
     = turbo_frame_tag @model.new
     #resp-table
-      #resp-table-header
+      #resp-table-header.tblhead-default
         .table-header-cell.col-11.col-md-11
           = t("#{@resources.model_name.human}")
       = turbo_frame_tag "resp-table-body"

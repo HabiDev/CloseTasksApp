@@ -1,0 +1,20 @@
+= turbo_frame_tag performed_work 
+  = content_tag(:div, class: "bd-callout bd-callout-info shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
+    .row
+      .col-11.small.lh-1
+        span.small.fst-italic.text-muted
+          small
+            = performed_info(performed_work)            
+      .col-1.text-end.px-2.lh-1.small
+        = render 'performed_works/control', performed_work: performed_work
+      .row.mx-1
+        .col-12.lh-1
+          span.small.fw-bold
+            span.small
+              = performed_work.sub_category.name
+    .row.mt-1
+      .col-12.small.text-end.text-muted.lh-1
+        span.small
+          i.bi.bi-hourglass-split.small
+            = time_work(performed_work)
+
