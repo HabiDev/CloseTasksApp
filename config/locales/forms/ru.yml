@@ -2,7 +2,7 @@ ru:
   app:
     title: Информационная система
   navbar:
-    brand: CloseTasksApp
+    brand: На главную
     home_link: Главная
     about_link: О нас
     contact_link: Контакты
@@ -67,6 +67,7 @@ ru:
       delayed: Отложен
       expired: Просрочен
       canceled: Отменен
+      all: Все
     completed_tasks: Проделанные работы 
     performers: По исполнителям
     divisions: По объектам

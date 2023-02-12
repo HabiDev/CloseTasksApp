@@ -4,7 +4,7 @@ class Admin::CatalogController < Admin::BaseController
   before_action :get_instance, only: [:show, :edit, :update, :destroy]
 
   def index
-    @resources = model_class.all
+    @pagy, @resources = pagy(model_class.all, items: mobile_device? ? 3 : 10) 
     @model = model_class
     @resource_name = self.controller_name.singularize
     render template: "admin/catalog/index"

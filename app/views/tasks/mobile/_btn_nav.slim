@@ -23,4 +23,6 @@
       = t('sidebar.tasks.delayed')
       = show_badge(Task.task_executors(current_user).delayed)
       = show_badge(current_user.tasks.delayed) 
+    = link_to tasks_path, class: "btn btn-outline-secondary"
+      = t('sidebar.tasks.all')
 hr.mt-2.mb-1

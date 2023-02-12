@@ -12,3 +12,4 @@
       = turbo_frame_tag "tasks_list"
       = turbo_frame_tag "tasks"
         = render partial: "tasks/mobile/task", collection: @tasks
+        == pagy_bootstrap_nav(@pagy) if @tasks&.exists?

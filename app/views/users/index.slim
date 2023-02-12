@@ -12,3 +12,5 @@
         
         = turbo_frame_tag "users"
           = render @users
+          .row.mt-3
+            == pagy_bootstrap_nav(@pagy) if @users&.exists?

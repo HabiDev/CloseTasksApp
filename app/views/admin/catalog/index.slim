@@ -10,3 +10,5 @@
           = t("#{@resources.model_name.human}")
       = turbo_frame_tag "resp-table-body"
         = render partial: 'resource', collection: @resources
+        .row.mt-3
+          == pagy_bootstrap_nav(@pagy) if @resources&.exists?

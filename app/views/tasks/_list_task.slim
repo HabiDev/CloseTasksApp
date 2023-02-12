@@ -18,3 +18,5 @@
             = t("#{@tasks.model.human_attribute_name(:status)}")  
         = turbo_frame_tag "resp-table-body"
           = render @tasks
+          .row.mt-3
+            == pagy_bootstrap_nav(@pagy) if @tasks&.exists?

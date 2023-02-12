@@ -7,7 +7,7 @@ class Admin::BaseController < ApplicationController
   before_action :get_instance, only: [:show, :edit, :update, :destroy]
 
   def index
-    @resources = model_class.all
+    @pagy, @resources = pagy(model_class.all items: mobile_device? ? 3 : 10) 
     @model = model_class
   end
 

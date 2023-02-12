@@ -13,7 +13,7 @@ class TasksController < ApplicationController
       @q = Task.includes(:author, :priority, :division).ransack(params[:q])
     end
     @q.sorts = ['created_at desc', 'priority_id asc', 'division_name asc'] if @q.sorts.empty?
-    @tasks = @q.result(disinct: true).includes(:author, :priority, :division) 
+    @pagy, @tasks = pagy(@q.result(disinct: true).includes(:author, :priority, :division), items: mobile_device? ? 3 : 10) 
     @users = User.all
     @divisions = Division.all
     @priorities = Priority.all
@@ -94,8 +94,7 @@ class TasksController < ApplicationController
   private
 
   def partial_device
-    agent = request.user_agent
-    if agent =~ /Mobile/
+    if mobile_device?
       'tasks/mobile/task'
     else
       'tasks/task'

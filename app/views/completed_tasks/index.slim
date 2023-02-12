@@ -16,9 +16,13 @@
               = turbo_frame_tag CompletedTask.new
               = turbo_frame_tag "completed_tasks"
                 = render @completed_tasks
+                .row.mt-3
+                  == pagy_bootstrap_nav(@pagy) if @completed_tasks&.exists?
         - else 
           .col-12.col-md-12
             .row
               = turbo_frame_tag CompletedTask.new
               = turbo_frame_tag "completed_tasks"
                 = render @completed_tasks
+                .row.mt-3
+                  == pagy_bootstrap_nav(@pagy) if @completed_tasks&.exists?

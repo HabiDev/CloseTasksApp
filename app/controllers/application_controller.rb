@@ -1,5 +1,8 @@
-class ApplicationController < ActionController::Base
-  
+class ApplicationController < ActionController::Base  
+  include Pagy::Backend  
+
+  helper_method :mobile_device?
+
   protect_from_forgery with: :exception
   # after_action :home_path
 
@@ -19,6 +22,11 @@ class ApplicationController < ActionController::Base
     else
       root_path
     end
+  end
+
+  def mobile_device?
+    agent = request.user_agent
+    return true if agent =~ /Mobile/
   end
 
 end
