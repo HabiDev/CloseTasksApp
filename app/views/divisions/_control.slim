@@ -5,5 +5,5 @@ h5.text-end
     ul.dropdown-menu.dropdown-menu-end aria-labelledby="dopdownMenuLink"
       li
         = link_to t('button.edit'), edit_division_path(division), class: "dropdown-item"
-      li
-        = link_to t('button.destroy'), division, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 
+      / li
+      /   = link_to t('button.destroy'), division, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 
