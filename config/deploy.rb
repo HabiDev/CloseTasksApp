@@ -13,9 +13,11 @@ set :rvm_ruby_string, fetch(:rvm_ruby_version)
 
 set :application, "CloseTasksApp"
 set :repo_url, "https://github.com/HabiDev/CloseTasksApp.git"
-set :git_http_username, 'HabiDev'
-ask(:github_token, "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", echo: false)
-set :git_http_password, fetch((:github_token))
+# set :git_http_username, 'HabiDev'
+# set :git_http_password, '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'
+# set :git_http_username, 'HabiDev'
+# ask(:github_token, "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", echo: false)
+# set :git_http_password, fetch((:github_token))
 set :deploy_to, "/var/www/apps/#{fetch(:application)}"
 
 # Tell to Capistrano about a 'foreman' gem.
