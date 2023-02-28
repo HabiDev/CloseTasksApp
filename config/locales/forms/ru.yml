@@ -75,7 +75,7 @@ ru:
     date_today: На сегодня
     date_month: За месяц
     last_month: За предыдущий месяц
-    date_week:  За неделю
+    date_week:  За текущую неделю
     date_year:  За год
     all: Все
     reset:  Показать все

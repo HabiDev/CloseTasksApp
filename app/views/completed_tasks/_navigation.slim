@@ -52,6 +52,8 @@ aside.bd-sidebar
           #reports-collapse.collapse
             ul.list-unstyled.fw-normal.pb-1
               li
+                = link_to t('sidebar.all'), completed_tasks_path(format: :zip)
+              li
                 = link_to t('sidebar.date_today'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_day, created_at_lteq: (DateTime.now).end_of_day }, format: :zip)
               li
                 = link_to t('sidebar.date_week'), completed_tasks_path(q: { created_at_gteq: (DateTime.now).beginning_of_week, created_at_lteq: (DateTime.now).end_of_week }, format: :zip)
