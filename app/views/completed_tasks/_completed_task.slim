@@ -2,23 +2,30 @@
   .col-12.col-md-12.m-2
     .card.border-info
       .card-body.p-2
-        .row
+        .row.p-1
           .col-10.col-md-11
             h5.card-title
               = completed_task.sub_category.name
           .col-2.col-md-1
             = render 'completed_tasks/control', completed_task: completed_task
         .row
-          .col-12.col-md-12
-            h6.card-subtitle.mb-2.text-muted.small
+          .col-12.col-md-9
+            h6.card-subtitle.mb-2.text-muted.small.mx-3
               = completed_task.division.name 
-            p.small.p-0.m-0
-              i.bi.bi-hourglass-split
-              = time_task(completed_task)
-        - unless current_user.user?
-          hr.p-0.mt-1.mb-1           
-          .row            
-            span.col-12.col-md-12.small.text-muted.text-end 
+        - if completed_task.comment.present?
+          .row
+            .col-12.col-md-12.small
+              p.mx-3.mb-0
+                = "#{completed_task.class.human_attribute_name(:comment)}:"
+              p.mx-4.px-2.mt-0.mb-0.text-muted
+                = completed_task.comment
+        hr.p-0.mt-1.mb-1           
+        .row.small.px-2
+          span.col-12.col-md-4.small.text-muted
+            i.bi.bi-stopwatch.px-1
+            = time_task(completed_task)
+          - unless current_user.user?         
+            span.col-12.col-md-8.small.text-muted.text-end 
               em
                 = completed_info(completed_task)
 
