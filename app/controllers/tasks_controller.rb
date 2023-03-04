@@ -26,7 +26,7 @@ class TasksController < ApplicationController
 
   def show
     # authorize @division
-    @task.looked! unless current_user.author_of?(@task)
+    @task.looked! unless current_user.author_of?(@task) || !current_user.executor_of?(@task)
     @performed_works = @task.performed_works
   end
 

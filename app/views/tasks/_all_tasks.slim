@@ -22,4 +22,4 @@ li.mb-1
       li
         = link_to t('sidebar.tasks.delayed'), tasks_path(q: { status_eq: 8 }), data: { turbo_frame: 'tasks_list' }
 
-      = render partial: 'nav_child', locals: { is_author: true, visible: 'all'}
+      = render partial: 'nav_child', locals: { is_author: false, visible: 'all'}
