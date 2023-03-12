@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, except: [ :index, :new, :create]
+  before_action :set_priority, only: [ :create, :update]
   
   def index
     # authorize User
@@ -55,7 +56,7 @@ class TasksController < ApplicationController
   end  
 
   def create
-    @task = current_user.tasks.build(task_params.merge(status: :registred))   # Not the final implementation!
+    @task = current_user.tasks.build(task_params.merge(status: :registred, priority: @priority))   # Not the final implementation!
       # authorize @division   
     respond_to do |format|
       if @task.save
@@ -70,7 +71,7 @@ class TasksController < ApplicationController
   def update
     # authorize @division    
     respond_to do |format|
-      if @task.update(task_params)
+      if @task.update(task_params.merge(priority: @priority))
         format.html { redirect_to tasks_path, notice: t('notice.record_edit') }
         format.turbo_stream
       else
@@ -101,6 +102,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def set_priority
+    @priority = Category.find(task_params[:category_id]).priority
+  end
+
 
   def set_task
     @task = Task.find(params[:id])
@@ -112,7 +117,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:division_id, :executor_id, :priority_id, :description)
+    params.require(:task).permit(:division_id, :executor_id, :category_id, :description)
   end
 
 end

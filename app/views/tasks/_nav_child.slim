@@ -9,8 +9,8 @@ li.ps-3
             = link_to user.profile.full_name, tasks_path(q: { executor_id_eq: user, author_id_eq: current_user }), data: { turbo_frame: 'tasks_list' }
           - else 
             = link_to user.profile.full_name, tasks_path(q: { executor_id_eq: user }), data: { turbo_frame: 'tasks_list' }
-          span.badge.rounded-pill.bg-secondary
-            = user.executor_tasks_count if user.executor_tasks_count > 0
+            span.badge.rounded-pill.bg-secondary
+              = user.executor_tasks_count if user.executor_tasks_count > 0
 li.ps-3
   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="##{visible}-divisions-collapse" aria-expanded="false"]
     = t('sidebar.tasks.divisions') 
@@ -22,8 +22,8 @@ li.ps-3
             = link_to division.name, tasks_path(q: { division_id_eq: division.id, author_id_eq: current_user }), data: { turbo_frame: 'tasks_list' }
           - else
             = link_to division.name, tasks_path(q: { division_id_eq: division.id }), data: { turbo_frame: 'tasks_list' }
-          = content_tag(:span, id: "task_count", class: "badge rounded-pill bg-secondary")
-            = tasks_count(division)
+            = content_tag(:span, id: "task_count", class: "badge rounded-pill bg-secondary")
+              = tasks_count(division)
 li.ps-3
   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="##{visible}-priorities-collapse" aria-expanded="false"]
     = t('sidebar.tasks.priorities') 
@@ -35,5 +35,5 @@ li.ps-3
             = link_to priority.name, tasks_path(q: { priority_id_eq: priority.id, author_id_eq: current_user }), data: { turbo_frame: 'tasks_list' }
           - else 
             = link_to priority.name, tasks_path(q: { priority_id_eq: priority.id }), data: { turbo_frame: 'tasks_list' }
-          span.badge.rounded-pill.bg-secondary
-            = tasks_count(priority)
+            span.badge.rounded-pill.bg-secondary
+              = tasks_count(priority)

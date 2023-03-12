@@ -61,6 +61,7 @@ ru:
         department_id: Отдел
       category:
         name: Категория
+        priority_id: Приоритет
       sub_category:
         name: Подкатегория
         category_id: Категория
@@ -81,6 +82,7 @@ ru:
       task:
         division_id: Подразделение
         priority_id: Приоритет 
+        category_id: Категория
         status: Статус
         description: Описание
         executor_id: Исполнитель

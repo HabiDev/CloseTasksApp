@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_190419) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_12_153923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_190419) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sub_categories_count", default: 0, null: false
+    t.bigint "priority_id", default: 3, null: false
+    t.index ["priority_id"], name: "index_categories_on_priority_id"
   end
 
   create_table "completed_tasks", force: :cascade do |t|
@@ -133,7 +135,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_190419) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "performed_works_count", default: 0, null: false
+    t.bigint "category_id", default: 1, null: false
     t.index ["author_id"], name: "index_tasks_on_author_id"
+    t.index ["category_id"], name: "index_tasks_on_category_id"
     t.index ["division_id"], name: "index_tasks_on_division_id"
     t.index ["executor_id"], name: "index_tasks_on_executor_id"
     t.index ["priority_id"], name: "index_tasks_on_priority_id"
@@ -161,6 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_190419) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "categories", "priorities"
   add_foreign_key "completed_tasks", "divisions"
   add_foreign_key "completed_tasks", "sub_categories"
   add_foreign_key "completed_tasks", "users"
@@ -172,6 +177,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_190419) do
   add_foreign_key "profiles", "users"
   add_foreign_key "sub_categories", "categories"
   add_foreign_key "sub_departments", "departments"
+  add_foreign_key "tasks", "categories"
   add_foreign_key "tasks", "divisions"
   add_foreign_key "tasks", "priorities"
   add_foreign_key "tasks", "users", column: "author_id"

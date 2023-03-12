@@ -4,7 +4,7 @@
     .col-12.col-md-8
       = f.input :division_id, collection: Division.all, label_method: :name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-division-task", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: 'bootstrap-5' } }
     .col-12.col-md-4
-      = f.input :priority_id, collection: Priority.all, label_method: :name, value_method: :id, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'    
+      = f.input :category_id, collection: Category.all, label_method: :name, value_method: :id, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'    
   .row
     .col-12.col-md-8
       = f.input :executor_id, collection: User.list_all(current_user), label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'

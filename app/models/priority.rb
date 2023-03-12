@@ -1,6 +1,7 @@
 class Priority < ApplicationRecord
   has_many :tasks, dependent: :destroy
-
+  has_many :categories, dependent: :destroy
+  
   validates :name, :limit_day, presence: true
 
   default_scope { order(name: :asc) }
