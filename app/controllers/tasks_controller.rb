@@ -18,6 +18,7 @@ class TasksController < ApplicationController
     @users = User.all
     @divisions = Division.all
     @priorities = Priority.all
+    @count_tasks = @q.result.count
   end
 
   def new

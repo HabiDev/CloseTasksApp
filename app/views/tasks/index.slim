@@ -6,6 +6,7 @@
     .row
       - unless current_user.user?
         .col-12.col-md-3
+          / = render 'tasks/search_form'
           = render 'tasks/navigation'
         .col-12.col-md-9
           = render 'list_task'

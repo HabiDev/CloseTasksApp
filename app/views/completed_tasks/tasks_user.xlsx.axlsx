@@ -5,13 +5,12 @@ header = wb_style.add_style bg_color: 'ADD8E6', b: true, alignment: { wrap_text:
 wrap_text = wb_style.add_style alignment: { horizontal: :left, vertical: :center }
 row_aligment = wb_style.add_style alignment: { horizontal: :center, vertical: :center }
 
-wb.add_worksheet(name: "Report") do |sheet|
-  sheet.add_row ["Сотрудник: #{user.profile.full_name}"], height: 40, b: true, style: wrap_text
-  sheet.add_row ["№ п/п", "Дата", "Время", "Торговый объект", "Проделанная работа", "Коментарий"], style: header, height: 30
+wb.add_worksheet(name: "Report") do |sheet|  
+  sheet.add_row ["№ п/п", "Дата", "Время", "Сотрудник", "Торговый объект", "Проделанная работа", "Коментарий"], style: header, height: 30
   sheet.page_setup.fit_to width: 1, height: 999
   number = 1
   tasks.each do |task|
-    sheet.add_row [number, task.created_at, task_time_mini(task), task.division.name, task.sub_category.name, task.comment]
+    sheet.add_row [number, task.created_at, task_time_mini(task), task.user.full_name, task.division.name, task.sub_category.name, task.comment]
     number += 1
   end
   sheet.col_style 2, row_aligment, row_offset: 2

@@ -1,11 +1,12 @@
 .container
   .row
-    .col-9.col-md-10
+    .col-6.col-md-8
       h2.text-right
         b 
         = t('completed_tasks.title_list')
-    .col-3.col-md-2.text-end
-      = link_to "#{t('button.new')}",  new_completed_task_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: dom_id(CompletedTask.new) }
+    .col-3.col-md-4.text-end
+      = link_to t('sidebar.panels.report_xls'), report_xls_path(format: :zip), class: "btn btn-outline-primary btn-sm mx-1"    
+      = link_to "#{t('button.new')}",  new_completed_task_path, class: "btn btn-outline-success btn-sm mx-1", data: { turbo_frame: dom_id(CompletedTask.new) }
     hr
       .row
         - unless current_user.user?

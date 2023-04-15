@@ -1,6 +1,6 @@
 class CompletedTasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_completed_task, except: [ :index, :new, :create]
+  before_action :set_completed_task, except: [ :index, :new, :create, :report_xls]
   
   def index
     # authorize User
@@ -13,17 +13,18 @@ class CompletedTasksController < ApplicationController
       @q = CompletedTask.includes(:user, :sub_category, :division).ransack(params[:q])
     end
    
-    @q.sorts = ['created_at desc', 'profile_fullname asc'] if @q.sorts.empty?
-    @report_tasks = @q.result(disinct: true).includes(:user, :sub_category, :division)
+    @q.sorts = ['created_at desc', 'profile_fullname asc'] if @q.sorts.empty?    
     @pagy, @completed_tasks = pagy(@q.result(disinct: true).includes(:user, :sub_category, :division), items: mobile_device? ? 3 : 10)   
     @users = User.all
     @divisions = Division.all
     @categories = SubCategory.all
+    @count_completed_tasks = @q.result.count 
+    $report_tasks = @q.result(disinct: true).includes(:user, :sub_category, :division)  
 
-    respond_to do |format|
-      format.html
-      format.zip { respond_with_zipped_tasks }
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.zip { respond_with_zipped_tasks }
+    # end
   end
 
   def new
@@ -77,19 +78,26 @@ class CompletedTasksController < ApplicationController
     end
   end
 
+  def report_xls
+    @report_tasks = $report_tasks
+    respond_to do |format|
+      format.zip { respond_with_zipped_tasks }
+    end
+  end
+
   private
 
-  def respond_with_zipped_tasks    
-    users = User.where(id: (@report_tasks.pluck(:user_id).uniq))
+  def respond_with_zipped_tasks  
+    # users = User.where(id: ( @report_tasks.pluck(:user_id).uniq))
     compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-      users.each do |user|
-        zos.put_next_entry "user_#{user.id}.xlsx"
-        zos.print render_to_string(
-          layout: false, handlers: [:axlsx], formats: [:xlsx],
-          template: 'completed_tasks/tasks_user',
-          locals: { tasks: @report_tasks.where(user_id: user.id).reorder(:created_at, :time_start), user: user }
-        )
-      end
+      # users.each do |user|
+      zos.put_next_entry "task_#{DateTime.now}.xlsx"
+      zos.print render_to_string(
+        layout: false, handlers: [:axlsx], formats: [:xlsx],
+        template: 'completed_tasks/tasks_user',
+        locals: { tasks:  @report_tasks.reorder(:created_at, :time_start) }
+      )
+      # end
     end
     compressed_filestream.rewind
     send_data compressed_filestream.read, filename: 'report_tasks.zip'    

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :users
   resources :divisions
   resources :completed_tasks, except: %w(show)
+  get :report_xls, action: :report_xls, controller: 'completed_tasks'
   resources :tasks do
     patch 'approval', on: :member, defaults: { format: :turbo_stream }
     patch 'rework', on: :member, defaults: { format: :turbo_stream }

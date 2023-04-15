@@ -1,6 +1,6 @@
 ru:
   app:
-    title: Информационная система
+    title: Информационная система    
   navbar:
     brand: На главную
     home_link: Главная
@@ -31,6 +31,8 @@ ru:
     update: Обновить
     cancel: Отмена
     save: Сохранить
+    search: Найти
+    clear: Сбросить
   caption:
     current_sign_in: в системе
     last_sign_in: последний сеанс
@@ -48,6 +50,7 @@ ru:
       sub_departments: Подразделения
       statuses: Статусы
       priorities: Приоритеты
+      report_xls: Выгрузить в Excel
     tasks:
       title: Заявки
       all_tasks: Все заявки
@@ -68,6 +71,7 @@ ru:
       expired: Просрочен
       canceled: Отменен
       all: Все
+      find: Найдено
     completed_tasks: Проделанные работы 
     performers: По исполнителям
     divisions: По объектам

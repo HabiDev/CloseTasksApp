@@ -11,7 +11,10 @@
   .row
     .col-12.col-md-12
       = f.input :description, as: :text, required: true, autofocus: true, class: 'form-control form-control-sm'
-  .row 
+  / .row
+  /   .col-12.col-md-12
+  /     = f.input :created_at, as: :string, required: true, autofocus: true, class: 'form-control-sm', input_html: { data: { controller: 'flatpickr' } }
+  .row  
     .col-12.col-md-12.text-end
       span.p-2
         = f.submit "#{t('submit.save')}", class: "btn btn-primary"

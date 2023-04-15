@@ -5,6 +5,7 @@ class CompletedTask < ApplicationRecord
   counter_culture :sub_category
   counter_culture :user
   counter_culture :division
+  has_many :category, through: :sub_category
 
 
   validates :division_id, :user_id, :sub_category_id, :time_start, :time_end, presence: true

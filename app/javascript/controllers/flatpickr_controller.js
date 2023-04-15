@@ -1,0 +1,24 @@
+import { Controller } from "@hotwired/stimulus"
+import flatpickr from "flatpickr";
+import $ from "jquery";
+
+import { Russian } from "flatpickr/dist/l10n/ru.js";
+
+// Connects to data-controller="flatpickr"
+ 
+export default class extends Controller {
+  connect() {
+    var config = {
+      locale: Russian,
+      defaultDate: "null",
+      // altInput: true,
+      dateFormat: "d.m.Y",
+      altFormat: "d.m.Y"
+      // altInput: true,
+    }
+    flatpickr("#start_search_date", config)
+    flatpickr("#end_search_date", config)
+    // $("#start_search_date").flatpickr(config);
+    // $("#end_search_date").flatpickr(config);
+  }
+}
