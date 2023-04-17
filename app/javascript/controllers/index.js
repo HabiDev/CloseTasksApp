@@ -16,5 +16,8 @@ application.register("modal", ModalController)
 import ModalTaskController from "./modal_task_controller"
 application.register("modal-task", ModalTaskController)
 
+import ModalMissionController from "./modal_mission_controller"
+application.register("modal-mission", ModalMissionController)
+
 import Select2Controller from "./select2_controller"
 application.register("select2", Select2Controller)

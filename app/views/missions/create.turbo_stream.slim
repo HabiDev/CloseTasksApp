@@ -1,0 +1,4 @@
+- unless mobile_device?
+  = turbo_stream.prepend "resp-table-body", @mission
+- else
+  = turbo_stream.prepend "missions", partial: "mission/mobile/mission", locals: { mission: @mission}

@@ -1,0 +1,17 @@
+.container
+  - if mobile_device?
+    .row
+      = render "missions/mobile/mobile", missions: @missions
+  -else
+    .row
+      - unless current_user.user?
+        .col-12.col-md-3
+          = render 'missions/navigation'
+        .col-12.col-md-9
+          = render 'list_mission'
+      - else 
+        .col-12.col-md-12
+          = render 'list_mission'
+
+            
+    

@@ -1,0 +1,36 @@
+= turbo_frame_tag mission, class: 'resp-table-row tblbody-resp'
+  .table-body-cell
+    .col-12
+      span.small.d-block.font-weight-bold
+        = l(mission.created_at, format: :small)
+      = content_tag(:span, class: "d-block small text-truncate text-#{class_priority(mission.mission_type)}")
+        em
+          = mission.mission_type.name
+  .table-body-cell
+    .col-12
+      span.small.d-block.font-weight-bold.text-truncate
+        = mission.description
+      span.d-block.small.text-muted.text-truncate
+        em
+          = "#{mission.class.human_attribute_name(:author_id)}: #{mission.author.full_name}"         
+  / .table-body-cell 
+  /   .col-12  
+  /     span.small.d-block.font-weight-bold.text-truncate
+  /       = mission.description
+  .table-body-cell
+    .col-12
+      span.small.d-block.font-weight-bold.text-truncate
+        = mission.control_executor.full_name
+  .table-body-cell
+    .row
+      .col-11
+        = content_tag(:span, class: "small d-block font-weight-bold text-truncate text-center text-white bg-#{status_manager(mission.status)} bg-gradient")
+          = executed_status(mission)
+        span.d-block.small.text-muted.text-end
+          em
+            = "Cрок: #{l(mission.execution_limit_at, format: :normal)}"
+      .col-1.p-0
+        span.d-block.font-weight-bold
+          = render "control", mission: mission
+
+

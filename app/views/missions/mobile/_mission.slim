@@ -1,0 +1,25 @@
+= turbo_frame_tag mission
+  = content_tag(:div, class: "bd-callout bd-callout-#{class_priority(mission.mission_type)} shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")  
+    .row              
+      .col-6.small.text-muted.lh-sm.fst-italic         
+        span.small.fw-bold
+          = "#{l(mission.created_at, format: :small)} (#{mission.mission_type.name})"        
+      .col-6.small.text-end.lh-sm                  
+        span.small.text-end.text-truncate.fw-bold
+          = enum_l(mission, :status)
+    hr.m-1
+      .row
+        .col-12.small.lh-sm  
+          span.fw-bold
+            = "#{mission.class.human_attribute_name(:author)}: #{mission.author.full_name}" 
+      .row.mx-1
+        span.d-block.small.text-truncate.text-muted
+          = "#{mission.class.human_attribute_name(:description)}: #{mission.description}"
+      .col-12.small.lh-1.text-end.text-muted
+        span.small.fw-bold.fst-italic
+          = "(#{mission.class.human_attribute_name(:execution_limit_at)}: #{l(mission.execution_limit_at, format: :normal)})" 
+        hr.my-1
+    .row.mt-1      
+      .col-12.text-end.m-n5.small      
+        = link_to t('button.show'), mission_path(mission), class: "btn btn-outline-primary btn-sm", data: { turbo_frame: "modal_mission" }
+          

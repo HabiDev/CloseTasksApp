@@ -25,6 +25,28 @@ ru:
           not_executed: Не исполнено
           delayed: Отложен
           canceled: Отменен
+      mission:
+        statuses:
+          registred: Зарегистрирован 
+          in_work: В работе 
+          in_approval: На согласовании 
+          in_rework: На доработке
+          agree: Согласован 
+          executed: Исполнено
+          not_executed: Не исполнено
+          delayed: Отложен
+          canceled: Отменен
+      mission_execuor:
+        statuses:
+          registred: Зарегистрирован 
+          in_work: В работе 
+          in_approval: На согласовании 
+          in_rework: На доработке
+          agree: Согласован 
+          executed: Исполнено
+          not_executed: Не исполнено
+          delayed: Отложен
+          canceled: Отменен
     models:
       user: Сотрудники
       profile: Профили
@@ -37,6 +59,8 @@ ru:
       completed_task: Выполненные задачи
       status: Статус
       task: Заявка
+      mission: Задание
+      mission_type: Категория
       priority: Приоритет
       performed_work: Выполненная работа
     attributes:
@@ -74,11 +98,33 @@ ru:
         email: E-mail
         photo: Фото объекта
         active: Действующий объект
+      mission_type:
+        name: Наименование
       status:
         name: Наименование
       priority:
         name: Наименование
         limit_day: Срок исполнения(в днях)
+      mission:
+        number: Номер
+        mission_type_id: Категория
+        status: Статус
+        description: Описание
+        control_executor_id: На контроль
+        author_id: Cоздал
+        execution_limit_at: Срок испол.     
+        close_at: Закрыта
+        created_at: Дата
+        read_at: Прочитано
+      mission_executor:
+        mission_id: Задание
+        status: Статус
+        description: Описание
+        executor_id: Исполнитель
+        imit_at: Срок испол.     
+        close_at: Закрыта
+        created_at: Дата
+        read_at: Прочитано
       task:
         division_id: Подразделение
         priority_id: Приоритет 

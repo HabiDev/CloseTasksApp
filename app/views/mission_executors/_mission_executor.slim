@@ -1,0 +1,20 @@
+= turbo_frame_tag mission_executor
+  = content_tag(:div, class: "bd-callout bd-callout-info shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
+    .row
+      .col-11.small.lh-1
+        span.small.fst-italic.text-muted
+          small
+            = mission_executor_info(mission_executor)
+      .col-1.text-end.px-2.lh-1.small
+        = render 'mission_executors/control', mission_executor: mission_executor 
+    .row.mx-1
+      .col-12.lh-1
+        span.small.fw-bold
+          span.small
+            = mission_executor.description
+    .row.mt-1
+      .col-12.small.text-end.text-muted.lh-1
+        span.small
+          i.bi.bi-hourglass-split.small
+            = "#{l(mission_executor.created_at, format: :full)}"
+

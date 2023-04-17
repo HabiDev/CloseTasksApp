@@ -1,0 +1,26 @@
+= simple_form_for @mission_executor do |f|
+  = f.error_notification    
+  .row
+    .col-12.col-12
+      = f.input :mission_id, as: :hidden, class: 'form-control form-control-sm'
+  .row
+    .col-12.col-md-8
+      / = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
+      = f.input :executor_id, collection: current_user.subordinates, label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'
+  .row 
+    .col-12.col-md-12
+      = f.input :description, as: :text, autofocus: true, class: 'form-control form-control-sm'
+  .row
+    .col-12.col-md-3
+      = f.input :limit_at, as: :date, required: true, autofocus: true, class: 'form-control form-control-sm'
+  /   .col-12.col-md-3
+  /     = f.input :time_end, required: true, autofocus: true, class: 'form-control form-control-sm'
+  / .row 
+  /   .col-12.col-md-12
+  /     = f.input :comment, autofocus: true, class: 'form-control form-control-sm'
+  .row 
+    .col-12.text-end
+      span.p-2
+        = f.submit "#{t('submit.save')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
+      span
+        = link_to "#{t('submit.cancel')}", mission_path(@mission), class: "btn btn-primary"
