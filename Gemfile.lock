@@ -49,9 +49,6 @@ GEM
     active_link_to (1.0.5)
       actionpack
       addressable
-    active_record_extended (3.2.1)
-      activerecord (>= 5.2, < 7.2.0)
-      pg (< 3.0)
     activejob (7.0.4)
       activesupport (= 7.0.4)
       globalid (>= 0.3.6)
@@ -286,7 +283,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
-  active_record_extended
   bootsnap
   capistrano
   capistrano-bundler
