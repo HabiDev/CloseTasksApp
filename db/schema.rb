@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_12_153923) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_16_171509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,45 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_153923) do
     t.integer "completed_tasks_count", default: 0, null: false
     t.integer "tasks_count", default: 0, null: false
     t.index ["department_id"], name: "index_divisions_on_department_id"
+  end
+
+  create_table "mission_executors", force: :cascade do |t|
+    t.bigint "mission_id", null: false
+    t.bigint "executor_id", default: 0, null: false
+    t.string "description", null: false
+    t.integer "status", default: 1, null: false
+    t.datetime "limit_at"
+    t.datetime "close_at"
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["executor_id"], name: "index_mission_executors_on_executor_id"
+    t.index ["mission_id"], name: "index_mission_executors_on_mission_id"
+  end
+
+  create_table "mission_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "missions_count", default: 0, null: false
+  end
+
+  create_table "missions", force: :cascade do |t|
+    t.string "number", null: false
+    t.integer "status", default: 1, null: false
+    t.bigint "mission_type_id", null: false
+    t.bigint "author_id", default: 0, null: false
+    t.string "description", null: false
+    t.bigint "control_executor_id", default: 0, null: false
+    t.datetime "execution_limit_at"
+    t.datetime "close_at"
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "mission_executors_count", default: 0, null: false
+    t.index ["author_id"], name: "index_missions_on_author_id"
+    t.index ["control_executor_id"], name: "index_missions_on_control_executor_id"
+    t.index ["mission_type_id"], name: "index_missions_on_mission_type_id"
   end
 
   create_table "performed_works", force: :cascade do |t|
@@ -161,7 +200,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_153923) do
     t.integer "completed_tasks_count", default: 0, null: false
     t.integer "author_tasks_count", default: 0, null: false
     t.integer "executor_tasks_count", default: 0, null: false
+    t.integer "author_missions_count", default: 0, null: false
+    t.integer "control_executor_missions_count", default: 0, null: false
+    t.bigint "manager_id"
+    t.integer "executor_missions_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["manager_id"], name: "index_users_on_manager_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
@@ -170,6 +214,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_153923) do
   add_foreign_key "completed_tasks", "sub_categories"
   add_foreign_key "completed_tasks", "users"
   add_foreign_key "divisions", "departments"
+  add_foreign_key "mission_executors", "missions"
+  add_foreign_key "mission_executors", "users", column: "executor_id"
+  add_foreign_key "missions", "mission_types"
+  add_foreign_key "missions", "users", column: "author_id"
+  add_foreign_key "missions", "users", column: "control_executor_id"
   add_foreign_key "performed_works", "sub_categories"
   add_foreign_key "performed_works", "tasks"
   add_foreign_key "profiles", "positions"
@@ -182,4 +231,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_12_153923) do
   add_foreign_key "tasks", "priorities"
   add_foreign_key "tasks", "users", column: "author_id"
   add_foreign_key "tasks", "users", column: "executor_id"
+  add_foreign_key "users", "users", column: "manager_id"
 end

@@ -7,6 +7,7 @@ ru:
     about_link: О нас
     contact_link: Контакты
     tasks: Заявки
+    missions: Задания
     sign_in: Войти
     sign_out: Выйти
     aria_label: Переключатель навигации 
@@ -24,6 +25,8 @@ ru:
       agree: Принять
       delayed: Отложить
       canceled: Отменить
+    mission:
+      add_executors: Доб. испол.
 
 
   submit:
@@ -36,6 +39,7 @@ ru:
     last_sign_in: последний сеанс
     completed_task: Проделанные работы
     performed_works: Выполненные работы
+    mission_executors: Исполнители
     performer: Исп.
   sidebar:
     panels:
@@ -48,6 +52,7 @@ ru:
       sub_departments: Подразделения
       statuses: Статусы
       priorities: Приоритеты
+      mission_type: Типы
     tasks:
       title: Заявки
       all_tasks: Все заявки
@@ -55,6 +60,24 @@ ru:
       priorities: Приоритет
       executors: Исполнители
       divisions: Подразделения
+      status: Статус
+      registred: Новые
+      in_work: В работе 
+      registred_inwork: Новые/В работе 
+      in_approval: На согл-нии 
+      in_rework: В дораб-ке
+      agree: Согласованные 
+      executed: Исполнено
+      not_executed: Не исполнено
+      delayed: Отложен
+      expired: Просрочен
+      canceled: Отменен
+      all: Все
+    missions:
+      title: Заявки
+      all_missions: Все заявки
+      mission_type: Категория
+      control_executor: На контроль
       status: Статус
       registred: Новые
       in_work: В работе 

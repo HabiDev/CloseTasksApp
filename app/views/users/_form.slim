@@ -5,6 +5,9 @@
       = f.input :email, required: true, autofocus: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.email')}", disabled: !f.object.new_record?
     .col-12.col-md-6
       = f.input :type_role, collection: enum_options_for_select(User, :type_role), required: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.type_role')}", disabled: !f.object.new_record?
+  .row 
+    .col-12.col-md-6
+      = f.input :manager_id, collection: User.all, label_method: :full_name, value_method: :id, autofocus: true, class: 'form-control form-control-sm' 
   - if f.object.new_record?
     .row 
       .col-12.col-md-6

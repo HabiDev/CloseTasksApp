@@ -22,6 +22,8 @@ aside.bd-sidebar
               = link_to t('sidebar.panels.sub_departments'), admin_sub_departments_path, data: { turbo_frame: 'catalogs' }
             li
               = link_to t('sidebar.panels.priorities'), admin_priorities_path, data: { turbo_frame: 'catalogs' }
+            li
+              = link_to t('sidebar.panels.mission_type'), admin_mission_types_path, data: { turbo_frame: 'catalogs' }
             
       / li.mb-1
       /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#performers-collapse" aria-expanded="false"]

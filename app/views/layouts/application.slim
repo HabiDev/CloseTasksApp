@@ -26,6 +26,10 @@ html
             .modal-dialog.modal-lg
               .modal-content
                 = turbo_frame_tag "modal_task"
+          #modalMission.modal[tabindex="-1" data-controller="modal-mission" data-modal-mission-target="modalMission" data-action="turbo:frame-load->modal-mission#open"]
+            .modal-dialog.modal-lg
+              .modal-content
+                = turbo_frame_tag "modal_mission"
             / footer
             /   = render 'layouts/footer'
   

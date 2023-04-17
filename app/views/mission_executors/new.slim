@@ -1,0 +1,10 @@
+.container
+  .row.justify-content-center.align-items-center
+    .col-12.mt-5
+      .card.shadow.p-3.mb-5.bg-white.rounded
+        .card-header.bg-transparent.p-2
+          .card-title.h5.font-weight-bold.text-center
+            = t('resource.create')
+        .card-body.pb-0
+          = turbo_frame_tag @mission_executor
+            = render 'mission_executors/form'

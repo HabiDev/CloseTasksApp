@@ -1,5 +1,7 @@
 class User < ApplicationRecord 
   enum type_role: { user: 0, guide: 1, admin: 3, moderator: 4 }
+
+  belongs_to :manager, class_name: "User", optional: true
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :registerable, :timeoutable, :trackable and :omniauthable
@@ -12,8 +14,13 @@ class User < ApplicationRecord
   has_many :author_tasks, class_name: "Task", foreign_key: "author_id", dependent: :destroy
   has_many :executor_tasks, class_name: "Task", foreign_key: "executor_id", dependent: :destroy
   has_many :tasks, class_name: "Task", foreign_key: "author_id", inverse_of: 'author'
-  # has_many :tasks, class_name: "Task", foreign_key: "executor_id", inverse_of: 'executor'
 
+  has_many :author_missions, class_name: "Mission", foreign_key: "author_id", dependent: :destroy
+  has_many :control_executor_missions, class_name: "Mission", foreign_key: "executor_id", dependent: :destroy
+  has_many :missions, class_name: "Mission", foreign_key: "author_id", inverse_of: 'author'
+  has_many :subordinates, class_name: "User", foreign_key: "manager_id"
+  has_many :mission_executors, class_name: "MissionExecutor", foreign_key: "executor_id", dependent: :destroy
+  
   accepts_nested_attributes_for :profile, allow_destroy: true
 
   # broadcasts_to ->(user) { "users" }, inserts_by: :prepend
@@ -30,5 +37,9 @@ class User < ApplicationRecord
   
   def executor_of?(resource)
     self.id == resource.executor_id
+  end
+
+  def control_executor_of?(resource)
+    self.id == resource.control_executor_id
   end
 end
