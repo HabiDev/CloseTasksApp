@@ -25,7 +25,16 @@ class User < ApplicationRecord
 
   # broadcasts_to ->(user) { "users" }, inserts_by: :prepend
 
-  scope :list_all, ->(current_user) { where.not(id: current_user.id) }  
+  scope :list_all, ->(current_user) { where.not(id: current_user) }  
+  scope :control_user, ->(current_user) { where(manager: current_user).or(where(id: current_user)) }
+  scope :executor_users, ->(current_user) { where(manager: current_user)
+                                            .or(where(manager: current_user.manager))
+                                            .and(where.not(id: current_user)) 
+                                          }
+  scope :except_control_on_author, ->(author, control_executor) {  where.not(id: author)
+                                                                   .and(where.not(id: control_executor))
+                                                                }
+  scope :except_mission_executors, ->(executor_ids) { where.not(id: executor_ids) }
 
   def full_name
     self.profile.full_name
@@ -41,5 +50,9 @@ class User < ApplicationRecord
 
   def control_executor_of?(resource)
     self.id == resource.control_executor_id
+  end
+
+  def manager_of?(resource)
+    self.id == resource.executor.manager_id
   end
 end

@@ -28,8 +28,15 @@ Rails.application.routes.draw do
     patch 'canceled', on: :member, defaults: { format: :turbo_stream } 
   end
 
+  resources :mission_executors, except: %w(index show) do
+    get 'rework', on: :member, defaults: { format: :turbo_stream }
+    patch 'agree', on: :member, defaults: { format: :turbo_stream }
+    patch 'canceled', on: :member, defaults: { format: :turbo_stream } 
+  end
+
   resources :performed_works, except: %w(index show)
-  resources :mission_executors, except: %w(index show)  
+  # resources :mission_executors, except: %w(index show)
+  resources :completed_missions, except: %w(index show)  
 
   namespace :admin do
     root 'panels#home'

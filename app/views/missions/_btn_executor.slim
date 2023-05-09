@@ -1,7 +1,7 @@
 .col-12.text-end
   .btn-group.btn-group-sm
     - if current_user.control_executor_of?(@mission)
-      = link_to t('button.mission.add_executors'), new_mission_executor_path(mission_id: @mission), class: "btn btn-outline-primary",
+      = link_to t('button.mission.add_executors'), new_mission_executor_path(mission_id: @mission), class: "btn btn-outline-success",
                   data: { turbo_frame: dom_id(MissionExecutor.new) }
       / - if current_user.executor_of?(@task) && (@task.in_work? || @task.in_rework?)
       /   = link_to t('button.execute.executed'), new_performed_work_path(task_id: @task), class: "btn btn-outline-primary",
@@ -9,12 +9,12 @@
       / - if @task.in_approval? && current_user.author_of?(@task)
       /   = link_to t('button.execute.rework'), rework_task_path(@task), class: "btn btn-outline-primary",
       /             data: { turbo_method: :patch, action: "modal-task#hideModal" } 
-      / - if @task.in_approval? && current_user.author_of?(@task)
-      /   = link_to t('button.execute.agree'), executed_task_path(@task), class: "btn btn-outline-primary",
-      /             data: { turbo_method: :patch, action: "modal-task#hideModal" }
-      / - if current_user.author_of?(@task) && (@task.in_approval? || @task.in_work? || @task.in_rework?)
-      /   = link_to t('button.execute.delayed'), delayed_task_path(@task), class: "btn btn-outline-primary",
-      /             data: { turbo_method: :patch, action: "modal-task#hideModal" } 
-      / - if current_user.author_of?(@task) && (@task.in_approval? || @task.in_work? || @task.in_rework?)
-      /   = link_to t('button.execute.canceled'), canceled_task_path(@task), class: "btn btn-outline-primary",
-      /             data: { turbo_method: :patch, action: "modal-task#hideModal" }
+    - if current_user.control_executor_of?(@mission)
+      = link_to t('sidebar.missions.executed'), executed_mission_path(@mission), class: "btn btn-outline-success",
+                data: { turbo_method: :patch, action: "modal-mission#hideModal" }
+    - if current_user.control_executor_of?(@mission) && (@mission.in_approval? || @mission.in_work? || @mission.in_rework? || @mission.registred?)
+      = link_to t('button.execute.delayed'), delayed_mission_path(@mission), class: "btn btn-outline-success",
+                data: { turbo_method: :patch, action: "modal-mission#hideModal" } 
+      / - if current_user.control_executor_of?(@mission) && (@mission.in_approval? || @mission.in_work? || @mission.in_rework?)
+      = link_to t('button.execute.canceled'), canceled_mission_path(@mission), class: "btn btn-outline-success",
+                data: { turbo_method: :patch, action: "modal-mission#hideModal" }

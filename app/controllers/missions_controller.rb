@@ -6,39 +6,54 @@ class MissionsController < ApplicationController
   def index
     # authorize User
     if current_user.user?      
-      @q = Mission.includes(:author, :mission_type)
+      @q = Mission.includes(:author, :mission_type, :mission_executors).joins(:mission_executors)
                         .where(author_id: current_user)
                         .or(Mission.where(control_executor_id: current_user))
+                        .or(Mission.where("mission_executors.executor_id = ?", current_user))
                         .ransack(params[:q])
     else
       @q = Mission.includes(:author, :control_executor, :mission_type).ransack(params[:q])
     end
     @q.sorts = ['created_at desc', 'mission_type_id asc'] if @q.sorts.empty?
-    @pagy, @missions = pagy(@q.result(disinct: true).includes(:author, :mission_type), items: mobile_device? ? 3 : 10) 
+    @pagy, @missions = pagy(@q.result(disinct: true).includes(:author, :mission_type, :mission_executors), items: mobile_device? ? 3 : 10) 
     @users = User.all
     @mission_types = MissionType.all
+    @count_missions = @q.result.count
   end
 
   def new
     # authorize User
-    @mission = Mission.new   
+    @mission = Mission.new 
+    # @control_users = current_user.subordinates.merge!(current_user)
   end
 
   def show
     # authorize @division
-    @mission.looked! unless current_user.author_of?(@mission) || !current_user.control_executor_of?(@mission)
+    @mission.looked! unless current_user.author_of?(@mission) || current_user.control_executor_of?(@mission)
     @mission_executors = @mission.mission_executors
+    # if @mission_executors.where(executor: current_user).present?
+    #   @mission_executors.where(executor: current_user).mission_looked!
+    # end
+    # @completed_missions = @mission.completed_missions
   end
 
   def edit
-    # authorize @division   
+    # authorize @division  
+    # @control_users = (current_user.subordinates << current_user) 
   end
 
-  def approval
+  def approval 
     update_status(status: :in_approval)       
   end
 
   def canceled
+    if @mission.mission_executors.present?
+      @mission.mission_executors.each do |mission_executor|
+        unless mission_executor.close_at.present?
+          mission_executor.update!(status: :canceled, close_at: DateTime.now)
+        end
+      end
+    end
     update_status(status: :canceled, close_at: DateTime.now)
   end
 
@@ -47,10 +62,24 @@ class MissionsController < ApplicationController
   end
 
   def executed
+    if @mission.mission_executors.present?
+      @mission.mission_executors.each do |mission_executor|
+        unless mission_executor.close_at.present?
+          mission_executor.update!(status: :executed, close_at: DateTime.now)
+        end
+      end
+    end
     update_status(status: :executed, close_at: DateTime.now)
   end
  
   def delayed
+    if @mission.mission_executors.present?
+      @mission.mission_executors.each do |mission_executor|
+        unless mission_executor.close_at.present?
+          mission_executor.update!(limit_at: 1.month.since)
+        end
+      end
+    end
     update_status(status: :delayed, execution_limit_at: 1.month.since)   
   end  
 

@@ -34,12 +34,14 @@ ru:
     save: Сохранить
     search: Найти
     clear: Сбросить
+    agree: Отправить на согласование
   caption:
     current_sign_in: в системе
     last_sign_in: последний сеанс
     completed_task: Проделанные работы
     performed_works: Выполненные работы
     mission_executors: Исполнители
+    completed_missions: Ход исполнения
     performer: Исп.
   sidebar:
     panels:
@@ -76,8 +78,8 @@ ru:
       all: Все
       find: Найдено
     missions:
-      title: Заявки
-      all_missions: Все заявки
+      title: Задания/поручения
+      all_missions: Все задания
       mission_type: Категория
       control_executor: На контроль
       status: Статус
@@ -93,6 +95,7 @@ ru:
       expired: Просрочен
       canceled: Отменен
       all: Все
+      find: Найдено
     completed_tasks: Проделанные работы 
     performers: По исполнителям
     divisions: По объектам

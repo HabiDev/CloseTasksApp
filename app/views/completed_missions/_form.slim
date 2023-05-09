@@ -1,0 +1,22 @@
+= simple_form_for @completed_mission do |f|
+  = f.error_notification    
+  .row
+    .col-12.col-12
+      = f.input :mission_executor_id, as: :hidden, class: 'form-control form-control-sm'
+  - if f.object.new_record?
+    .row
+      .col-12.col-md-12
+        = f.input :description, as: :text, autofocus: true,  input_html: { class: 'form-control form-control-sm' }    
+  - if !f.object.new_record?
+    .row
+      .col-12.col-md-12
+        = f.input :comment, required: true, autofocus: true,  input_html: { class: 'form-control form-control-sm' } 
+  .row 
+    .col-12.text-end
+      span.p-2
+        - if !f.object.new_record?
+          = f.submit "#{t('submit.save')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
+        - else
+          = f.submit "#{t('submit.agree')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
+      span
+        = link_to "#{t('submit.cancel')}", mission_path(@mission_executor.mission), class: "btn btn-primary"

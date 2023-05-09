@@ -1,0 +1,27 @@
+= turbo_frame_tag completed_mission 
+  .row.justify-content-end
+    .col-10
+      = content_tag(:div, class: "bd-callout bd-callout-warning shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
+        .row
+          .col-11.small.lh-1
+            span.small.fst-italic.text-muted
+              small
+                = title_info(completed_mission) 
+                - if (current_user.manager_of?(completed_mission.mission_executor) || current_user.control_executor_of?(completed_mission.mission_executor.mission)) && (completed_mission.mission_executor.in_approval? && !completed_mission.comment.present?) 
+                  = link_to t('button.execute.agree'), agree_mission_executor_path(completed_mission.mission_executor),
+                    data: { turbo_method: :patch }, class: "mx-1"
+                  = link_to t('button.execute.rework'), rework_mission_executor_path(completed_mission.mission_executor)         
+          .col-1.text-end.px-2.lh-1.small
+            - if current_user.executor_of?(completed_mission.mission_executor)
+              = render 'completed_missions/control', completed_mission: completed_mission
+          .row.mx-1
+            .col-12.lh-1
+              span.small.fw-bold
+                span.small
+                  = completed_mission.description
+          - if completed_mission.comment.present?
+            .row.mt-1
+              .col-12.smalltext-muted
+                span.small
+                  = "Замечание: #{completed_mission.comment}"
+

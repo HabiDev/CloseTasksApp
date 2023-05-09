@@ -1,15 +1,23 @@
+= turbo_frame_tag CompletedMission.new
 = turbo_frame_tag mission_executor
   = content_tag(:div, class: "bd-callout bd-callout-info shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
     .row
-      .col-11.small.lh-1
-        span.small.fst-italic.text-muted
-          small
+      .col-11.lh-1
+        span.small.text-muted
+          small.fw-bold
             = mission_executor_info(mission_executor)
+            - if current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
+              = link_to 'Исполнение', new_completed_mission_path(mission_executor_id: mission_executor), data: { turbo_frame: dom_id(CompletedMission.new) }, class: "mx-1"
+            - if current_user.subordinates.present? && current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
+               = link_to 'Добавить исполнителя', new_mission_executor_path(mission_id: mission_executor.mission), data: { turbo_frame: dom_id(MissionExecutor.new) }
+            - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && current_user.subordinates.present? && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
+                  = link_to t('button.execute.canceled'), canceled_mission_executor_path(mission_executor), data: { turbo_method: :patch }, class: "mx-1"       
       .col-1.text-end.px-2.lh-1.small
-        = render 'mission_executors/control', mission_executor: mission_executor 
+        - if current_user.control_executor_of?(mission_executor.mission)
+          = render 'mission_executors/control', mission_executor: mission_executor 
     .row.mx-1
       .col-12.lh-1
-        span.small.fw-bold
+        span.small.fst-italic
           span.small
             = mission_executor.description
     .row.mt-1
@@ -17,4 +25,8 @@
         span.small
           i.bi.bi-hourglass-split.small
             = "#{l(mission_executor.created_at, format: :full)}"
+  / = turbo_frame_tag CompletedMission.new 
+  = turbo_frame_tag "completed_missions_#{mission_executor.id}" 
+    = render partial: "completed_missions/completed_mission", collection: mission_executor.completed_missions
+
 

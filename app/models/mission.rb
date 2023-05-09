@@ -20,6 +20,7 @@ class Mission < ApplicationRecord
   counter_culture :control_executor, column_name: "executor_tasks_count"
 
   has_many :mission_executors, dependent: :destroy
+  has_many :completed_missions, through: :mission_executors, foreign_key: :mission_id
 
   validates :author_id, :control_executor_id, :mission_type_id, 
             :description, presence: true
@@ -33,15 +34,21 @@ class Mission < ApplicationRecord
     end
   end
 
+  def get_status_user(user)
+    self.mission_executors.where(executor: user).pluck(:status)
+  end
+
   private
 
   def set_number_mission
     if self.new_record?
       Mission.last.present? ? mission_number = Mission.last.id + 1 : mission_number = 1
       mission_type = MissionType.find(self.mission_type_id)    
-      self.number = "#{mission_number}/#{mission_type.name[0, 3].upcase}.-#{Date.today.year}" 
+      self.number = "#{mission_number}/#{mission_type.name[0, 3].upcase}-#{Date.today.year}" 
     end
   end
+
+
 
 
 end

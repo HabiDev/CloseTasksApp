@@ -36,7 +36,7 @@ ru:
           not_executed: Не исполнено
           delayed: Отложен
           canceled: Отменен
-      mission_execuor:
+      mission_executor:
         statuses:
           registred: Зарегистрирован 
           in_work: В работе 
@@ -63,6 +63,7 @@ ru:
       mission_type: Категория
       priority: Приоритет
       performed_work: Выполненная работа
+      completed_mission: Исполнение задания/поручения
     attributes:
       user:        
         type_role: Роль в системе
@@ -100,6 +101,7 @@ ru:
         active: Действующий объект
       mission_type:
         name: Наименование
+        view_classing: Класс отбражения
       status:
         name: Наименование
       priority:
@@ -121,10 +123,14 @@ ru:
         status: Статус
         description: Описание
         executor_id: Исполнитель
-        imit_at: Срок испол.     
+        limit_at: Срок испол.     
         close_at: Закрыта
         created_at: Дата
         read_at: Прочитано
+      completed_mission:
+        mission_executor_id: Испонитель
+        description: Описание
+        comment: Замечание
       task:
         division_id: Подразделение
         priority_id: Приоритет 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_16_171509) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_09_104230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_16_171509) do
     t.integer "sub_categories_count", default: 0, null: false
     t.bigint "priority_id", default: 3, null: false
     t.index ["priority_id"], name: "index_categories_on_priority_id"
+  end
+
+  create_table "completed_missions", force: :cascade do |t|
+    t.bigint "mission_executor_id", null: false
+    t.text "description", null: false
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mission_executor_id"], name: "index_completed_missions_on_mission_executor_id"
   end
 
   create_table "completed_tasks", force: :cascade do |t|
@@ -81,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_16_171509) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "missions_count", default: 0, null: false
+    t.string "view_classing", default: "info"
   end
 
   create_table "missions", force: :cascade do |t|
@@ -210,6 +220,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_16_171509) do
   end
 
   add_foreign_key "categories", "priorities"
+  add_foreign_key "completed_missions", "mission_executors"
   add_foreign_key "completed_tasks", "divisions"
   add_foreign_key "completed_tasks", "sub_categories"
   add_foreign_key "completed_tasks", "users"

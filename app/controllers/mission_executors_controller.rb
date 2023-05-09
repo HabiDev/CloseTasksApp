@@ -3,21 +3,20 @@ class MissionExecutorsController < ApplicationController
   before_action :set_mission_executor, except: [ :new, :create]
   before_action :set_mission, except: [ :new, :create]
 
-
   def new
     # authorize User
     @mission= Mission.find(params[:mission_id])
     @mission_executor = @mission.mission_executors.build
+    @executor_lists = executor_list(@mission)
   end
 
   def show
     # authorize completed_task
-    
   end
 
   def edit
     # authorize completed_task
-    
+    @executor_lists = executor_list(@mission)
   end
 
   def create
@@ -58,7 +57,42 @@ class MissionExecutorsController < ApplicationController
     end
   end
 
+  def agree 
+    update_status(status: :agree, close_at: DateTime.now)       
+  end
+
+  def canceled
+    update_status(status: :canceled, close_at: DateTime.now)
+  end
+
+  def rework
+    @mission_executor.update!(status: :in_rework)
+    redirect_to edit_completed_mission_path(@mission_executor.completed_missions.last) 
+  end
+
+  def executed
+    if @mission.mission_executors.present?
+      @mission.mission_executors.each do |mission_executor|
+        unless mission_executor.close_at.present?
+          mission_executor.update!(status: :executed, close_at: DateTime.now)
+        end
+      end
+    end
+    update_status(status: :executed, close_at: DateTime.now)
+  end
+
   private
+
+  def executor_list(mission)
+    User.executor_users(current_user)
+    .except_control_on_author(mission.author, mission.control_executor)
+    .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+  end 
+
+  def update_status(*args) 
+    @mission_executor.update!(*args)
+    render turbo_stream: turbo_stream.replace("mission_executor_#{@mission_executor.id}", @mission_executor)
+  end
 
   def set_mission
     @mission = @mission_executor.mission
@@ -70,5 +104,13 @@ class MissionExecutorsController < ApplicationController
 
   def mission_executor_params
     params.require(:mission_executor).permit(:mission_id, :executor_id, :description, :limit_at)
+  end
+
+  def partial_device
+    if mobile_device?
+      'missions/mobile/mission'
+    else
+      'missions/mission'
+    end
   end
 end
