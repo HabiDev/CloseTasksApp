@@ -13,8 +13,8 @@
             - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && current_user.subordinates.present? && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
                   = link_to t('button.execute.canceled'), canceled_mission_executor_path(mission_executor), data: { turbo_method: :patch }, class: "mx-1"       
       .col-1.text-end.px-2.lh-1.small
-        - if current_user.control_executor_of?(mission_executor.mission)
-          = render 'mission_executors/control', mission_executor: mission_executor 
+        / - if current_user.control_executor_of?(mission_executor.mission)
+        /   = render 'mission_executors/control', mission_executor: mission_executor 
     .row.mx-1
       .col-12.lh-1
         span.small.fst-italic

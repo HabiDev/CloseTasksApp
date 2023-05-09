@@ -12,8 +12,8 @@
                     data: { turbo_method: :patch }, class: "mx-1"
                   = link_to t('button.execute.rework'), rework_mission_executor_path(completed_mission.mission_executor)         
           .col-1.text-end.px-2.lh-1.small
-            - if current_user.executor_of?(completed_mission.mission_executor)
-              = render 'completed_missions/control', completed_mission: completed_mission
+            / - if current_user.executor_of?(completed_mission.mission_executor)
+            /   = render 'completed_missions/control', completed_mission: completed_mission
           .row.mx-1
             .col-12.lh-1
               span.small.fw-bold
