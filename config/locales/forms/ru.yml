@@ -19,6 +19,7 @@ ru:
     back: Назад
     close: Закрыть
     send_agree: Отправить на согласование
+    reset_password: Изменение пароля
     execute:
       executed: Добавить работу
       rework: На доработку

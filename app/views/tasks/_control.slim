@@ -5,7 +5,9 @@ h5.text-end
     ul.dropdown-menu.dropdown-menu-end aria-labelledby="dopdownMenuLink"
       li
         = link_to t('button.show'), task_path(task), class: "dropdown-item", data: { turbo_frame: "modal_task" }
-      / li
-      /   = link_to t('button.edit'), edit_task_path(task), class: "dropdown-item", data: { turbo_frame: "modal" }
-      / li
-      /   = link_to t('button.destroy'), task, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 
+
+      - if current_user.admin?
+        li
+          = link_to t('button.edit'), edit_task_path(task), class: "dropdown-item", data: { turbo_frame: "modal" }
+        li
+          = link_to t('button.destroy'), task, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 

@@ -7,7 +7,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :registerable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, 
          :rememberable, :validatable, :lockable, 
-         :trackable, :timeoutable
+         :trackable, :timeoutable, :recoverable
 
   has_one :profile, dependent: :destroy
   has_many :completed_tasks, dependent: :destroy
@@ -24,6 +24,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :profile, allow_destroy: true
 
   # broadcasts_to ->(user) { "users" }, inserts_by: :prepend
+  
+  default_scope { joins(:profile).order(full_name: :asc) }
 
   scope :list_all, ->(current_user) { where.not(id: current_user) }  
   scope :control_user, ->(current_user) { where(manager: current_user).or(where(id: current_user)) }

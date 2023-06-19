@@ -48,6 +48,8 @@ Rails.application.routes.draw do
               :mission_types,
               :priorities, except: %w(show)
   end
+  get 'edit_password_reset', to: 'users#edit_password_reset', as: :edit_password_reset
+  patch 'password_reset', to: 'users#password_reset', as: :password_reset
 
   root to: "static_pages#home"
 end

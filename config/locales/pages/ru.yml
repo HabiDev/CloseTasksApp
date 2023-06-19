@@ -16,6 +16,7 @@ ru:
   resource: 
     create: Создание
     edit: Редактирование
+    reset_password: Изменение пароля
   divisions:
     title: Подразделения
   shared:

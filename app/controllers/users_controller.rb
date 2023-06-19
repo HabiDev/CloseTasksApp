@@ -26,6 +26,10 @@ class UsersController < ApplicationController
     @user.profile
   end
 
+  def edit_password_reset
+   
+  end
+
   def create
     @user = User.new(user_params)    # Not the final implementation!
       # authorize @user   
@@ -48,6 +52,23 @@ class UsersController < ApplicationController
         format.turbo_stream
       else
         format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def password_reset
+    password = params[:user][:password]
+    password_confirmation = params[:user][:password_confirmation]
+    respond_to do |format|
+      unless @user.reset_password(password, password_confirmation)
+        format.html { render :edit_password_reset, status: :unprocessable_entity }
+      else
+        if @user.update_without_password(user_params)
+          format.html { redirect_to users_path, notice: t('notice.record_edit') }
+          format.turbo_stream
+        else
+          format.html { render :edit_password_reset, status: :unprocessable_entity }
+        end
       end
     end
   end
