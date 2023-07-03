@@ -6,7 +6,7 @@
     - if @task.in_approval? && current_user.author_of?(@task)
       = link_to t('button.execute.rework'), rework_task_path(@task), class: "btn btn-outline-primary",
                 data: { turbo_method: :patch, action: "modal-task#hideModal" } 
-    - if @task.in_approval? && current_user.author_of?(@task)
+    - if @task.in_approval? && (current_user.author_of?(@task) || current_user.admin?)
       = link_to t('button.execute.agree'), executed_task_path(@task), class: "btn btn-outline-primary",
                 data: { turbo_method: :patch, action: "modal-task#hideModal" }
     - if current_user.author_of?(@task) && (@task.in_approval? || @task.in_work? || @task.in_rework?)

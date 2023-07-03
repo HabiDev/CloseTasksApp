@@ -11,6 +11,10 @@ module PerformedWorksHelper
     " (#{l(resource.time_start, format: :mini)}-#{l(resource.time_end, format: :mini)})"    
   end
 
+  def work_time_mini(resource)
+    "#{l(resource.time_start, format: :mini)}-#{l(resource.time_end, format: :mini)}"
+  end
+
   def performed_works_count(resource)    
     resource.performed_works_count if resource.performed_works_count > 0
   end

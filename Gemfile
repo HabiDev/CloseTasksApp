@@ -104,6 +104,7 @@ group :development do
   gem 'capistrano3-puma',   require: false
 
   gem 'sshkit-sudo'
+  gem 'pry'
 end
 
 group :test do

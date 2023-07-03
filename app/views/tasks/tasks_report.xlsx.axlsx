@@ -1,0 +1,32 @@
+wb = xlsx_package.workbook
+
+wb_style = wb.styles
+header = wb_style.add_style bg_color: 'ADD8E6', b: true, alignment: { wrap_text: true,  horizontal: :center, vertical: :center }
+wrap_text = wb_style.add_style alignment: { horizontal: :left, vertical: :center }
+row_aligment = wb_style.add_style alignment: { horizontal: :center, vertical: :center }
+wrap = wb_style.add_style alignment: {wrap_text: true}
+
+wb.add_worksheet(name: "Report") do |sheet|  
+  sheet.add_row ["№ п/п", "Дата", "Инициатор", "Торговый объект", "Описание", "Исполнитель", "Выполненные работы", "Статус заявки"], style: header, height: 30
+  sheet.page_setup.fit_to width: 1, height: 999
+  number = 1
+ 
+  tasks.each do |task| 
+    works_perf = ''
+    if task.performed_works.present?          
+      task.performed_works.each do |work|
+        works_perf = works_perf + "#{l(work.created_at, format: :small)}-(#{work_time_mini(work)}): #{work.sub_category.name}\n"
+      end
+      works_perf = works_perf.chomp
+    else
+      works_perf = ''
+    end
+    sheet.add_row [number, task.created_at, task.author.full_name, task.division.name, task.description, task.executor.full_name, works_perf, enum_l(task, :status)]
+    number += 1
+  end
+  #sheet.col_style 2, row_aligment, row_offset: 2
+  sheet.column_widths 4, 12, nil, nil, 50, nil, 80, nil
+  sheet.col_style 6, wrap, row_offset: 1
+  sheet.col_style 4, wrap, row_offset: 1
+end
+

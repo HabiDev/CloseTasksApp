@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, except: [ :index, :new, :create]
+  before_action :set_task, except: [ :index, :new, :create, :report_tasks_xls]
   before_action :set_priority, only: [ :create, :update]
   
   def index
@@ -19,6 +19,7 @@ class TasksController < ApplicationController
     @divisions = Division.all
     @priorities = Priority.all
     @count_tasks = @q.result.count
+    $report_tasks = @q.result(disinct: true).includes(:author, :priority, :division)
   end
 
   def new
@@ -93,7 +94,30 @@ class TasksController < ApplicationController
     end
   end
 
+  def report_tasks_xls
+    @report_tasks = $report_tasks
+    respond_to do |format|
+      format.zip { respond_with_zipped_tasks }
+    end
+  end
+
   private
+
+  def respond_with_zipped_tasks  
+    # users = User.where(id: ( @report_tasks.pluck(:user_id).uniq))
+    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+      # users.each do |user|
+      zos.put_next_entry "task_report_#{DateTime.now}.xlsx"
+      zos.print render_to_string(
+        layout: false, handlers: [:axlsx], formats: [:xlsx],
+        template: 'tasks/tasks_report',
+        locals: { tasks:  @report_tasks.reorder(:created_at) }
+      )
+      # end
+    end
+    compressed_filestream.rewind
+    send_data compressed_filestream.read, filename: 'report_tasks.zip'    
+  end
 
   def partial_device
     if mobile_device?
