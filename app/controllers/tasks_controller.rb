@@ -15,11 +15,13 @@ class TasksController < ApplicationController
     end
     @q.sorts = ['created_at desc', 'priority_id asc', 'division_name asc'] if @q.sorts.empty?
     @pagy, @tasks = pagy(@q.result(disinct: true).includes(:author, :priority, :division), items: mobile_device? ? 3 : 10) 
-    @users = User.all
-    @divisions = Division.all
-    @priorities = Priority.all
+    # @users = User.all
+    # @divisions = Division.all
+    # @priorities = Priority.all
     @count_tasks = @q.result.count
     $report_tasks = @q.result(disinct: true).includes(:author, :priority, :division)
+    $date_start = params[:q].present? ? (params[:q][:created_at_gteq]).to_datetime : ""
+    $date_end = params[:q].present? ? (params[:q][:created_at_end_of_day_lteq]).to_datetime : "" 
   end
 
   def new
@@ -95,15 +97,14 @@ class TasksController < ApplicationController
   end
 
   def report_tasks_xls
-    @report_tasks = $report_tasks
     respond_to do |format|
-      format.zip { respond_with_zipped_tasks }
+      format.zip { respond_with_zipped_tasks($report_tasks, $date_start, $date_end) }
     end
   end
 
   private
 
-  def respond_with_zipped_tasks  
+  def respond_with_zipped_tasks(tasks, date_start, date_end)  
     # users = User.where(id: ( @report_tasks.pluck(:user_id).uniq))
     compressed_filestream = Zip::OutputStream.write_buffer do |zos|
       # users.each do |user|
@@ -111,7 +112,7 @@ class TasksController < ApplicationController
       zos.print render_to_string(
         layout: false, handlers: [:axlsx], formats: [:xlsx],
         template: 'tasks/tasks_report',
-        locals: { tasks:  @report_tasks.reorder(:created_at) }
+        locals: { tasks:  tasks.reorder(:created_at), date_start: date_start, date_end: date_end }
       )
       # end
     end

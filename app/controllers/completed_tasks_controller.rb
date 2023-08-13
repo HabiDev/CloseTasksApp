@@ -13,13 +13,15 @@ class CompletedTasksController < ApplicationController
       @q = CompletedTask.includes(:user, :sub_category, :division).ransack(params[:q])
     end
    
-    @q.sorts = ['created_at desc', 'profile_fullname asc'] if @q.sorts.empty?    
+    @q.sorts = ['profile_fullname asc', 'created_at desc'] if @q.sorts.empty?    
     @pagy, @completed_tasks = pagy(@q.result(disinct: true).includes(:user, :sub_category, :division), items: mobile_device? ? 3 : 10)   
     @users = User.all
     @divisions = Division.all
     @categories = SubCategory.all
     @count_completed_tasks = @q.result.count 
-    $report_tasks = @q.result(disinct: true).includes(:user, :sub_category, :division)  
+    $report_tasks = @q.result(disinct: true).includes(:user, :sub_category, :division) 
+    $date_start = params[:q].present? ? (params[:q][:created_at_gteq]).to_datetime : ""
+    $date_end = params[:q].present? ? (params[:q][:created_at_end_of_day_lteq]).to_datetime : "" 
 
     # respond_to do |format|
     #   format.html
@@ -79,23 +81,22 @@ class CompletedTasksController < ApplicationController
   end
 
   def report_xls
-    @report_tasks = $report_tasks
     respond_to do |format|
-      format.zip { respond_with_zipped_tasks }
+      format.zip { respond_with_zipped_tasks($report_tasks, $date_start, $date_end) }
     end
   end
 
   private
 
-  def respond_with_zipped_tasks  
-    # users = User.where(id: ( @report_tasks.pluck(:user_id).uniq))
+  def respond_with_zipped_tasks(tasks, date_start, date_end)  
+    users = User.includes(:profile).where(id: (tasks.pluck(:user_id).uniq)).order('profile.full_name asc')
     compressed_filestream = Zip::OutputStream.write_buffer do |zos|
       # users.each do |user|
       zos.put_next_entry "task_#{DateTime.now}.xlsx"
       zos.print render_to_string(
         layout: false, handlers: [:axlsx], formats: [:xlsx],
         template: 'completed_tasks/tasks_user',
-        locals: { tasks:  @report_tasks.reorder(:created_at, :time_start) }
+        locals: { tasks:  tasks, users: users, date_start:  date_start, date_end:  date_end}
       )
       # end
     end

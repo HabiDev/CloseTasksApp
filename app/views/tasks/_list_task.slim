@@ -1,8 +1,4 @@
 .row
-  / .col-4.col-md-4
-  /   h5
-  /     span.badge.rounded-pill.text-bg-secondary
-  /       | Найдено заявок: #{@count_tasks}
   .col-12.col-md-12.text-end
     = link_to t('sidebar.panels.report_xls'), report_tasks_xls_path(format: :zip), class: "btn btn-outline-primary btn-sm mx-1"
     = link_to "#{t('button.new')}",  new_task_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: "modal" }
