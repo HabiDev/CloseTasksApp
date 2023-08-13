@@ -20,8 +20,8 @@ class CompletedTasksController < ApplicationController
     @categories = SubCategory.all
     @count_completed_tasks = @q.result.count 
     $report_tasks = @q.result(disinct: true).includes(:user, :sub_category, :division) 
-    $date_start = params[:q].present? ? (params[:q][:created_at_gteq]).to_datetime : ""
-    $date_end = params[:q].present? ? (params[:q][:created_at_end_of_day_lteq]).to_datetime : "" 
+    $date_start = params[:q].present? ? params[:q][:created_at_gteq]&.to_datetime : ""
+    $date_end = params[:q].present? ? params[:q][:created_at_end_of_day_lteq]&.to_datetime : ""
 
     # respond_to do |format|
     #   format.html
