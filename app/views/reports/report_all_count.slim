@@ -1,0 +1,93 @@
+.h3
+  | Отчет по всем проделанным работам в разрезе работ
+  .h5.text-end.text-muted
+    - if @date_start&.present? & @date_end&.present?
+      = "период: с #{l(@date_start, format: :normal)} по #{l(@date_end, format: :normal)}"
+hr
+.h4.ms-3
+  | Всего: 
+  span.ps-2
+    = @tasks.count + @completed_tasks.count
+  .h5.ms-3.pt-1.text-muted
+    | Выполнено работ (вне заявок):
+    span.ps-2.text-muted
+      = @completed_tasks.count
+  .h5.ms-3.text-muted
+    | Поступило заявок:
+    span.ps-2.text-muted
+      = @tasks.count
+    .h6.ms-3.pt-2.text-muted
+      | - из них выполнено:
+      span.ps-2.text-muted
+        = @performed_works.count
+      hr.mb-1
+    .h6
+      .row 
+        .col-8
+          table.table.table-striped
+            thead
+              tr
+                th
+                  | Перечень работ
+                th
+                  | Кол-во
+            tbody.table-group-divider
+              - @all_sub_category_tasks.each do |category, count|
+                tr
+                  td
+                    = category 
+                  td
+                    = count
+              tr.table-group-divider 
+                th 
+                  | Всего
+                th 
+                  = @completed_tasks.count + @performed_works.count
+      hr
+      - if @users&.present?
+        .row 
+          .col-12 
+            .h4
+              | По сотрудникам:
+
+            .h6.ms-3
+              - @users.each do |user|
+                - if @completed_tasks.user_completed_tasks(user)&.present? || @performed_works.user_performed_works(user)&.present?
+                  - count1 = @completed_tasks.user_completed_tasks(user).sub_category_completed_tasks
+                  - count2 = @performed_works.user_performed_works(user).sub_category_tasks
+                  - all_count = count1.merge(count2) { |key, val1, val2| val1+val2 }
+                  .h5
+                    = user.full_name
+                  p.small 
+                    = "Всего: #{@completed_tasks.user_completed_tasks(user).count + @performed_works.user_performed_works(user).count}. "
+                    = "Выполнено работ (вне заявок): #{@completed_tasks.user_completed_tasks(user).count}. "
+                    = "Поступило заявок: #{@tasks.user_tasks(user).count} " 
+                    = "(из них выполнено: #{@performed_works.user_performed_works(user).count})"         
+                  .row 
+                    .col-8
+                      table.table.table-striped.ms-5
+                        thead
+                          tr
+                            th
+                              | Перечень работ
+                            th
+                              | Кол-во
+                        tbody.table-group-divider
+                          - total = 0
+                          - all_count.each do |category, count|
+                            tr
+                              td
+                                = category 
+                              td
+                                = count
+                            - total = total + count
+                          tr.table-group-divider 
+                            th 
+                              | Всего
+                            th 
+                              = total
+                hr
+
+                  
+                
+        

@@ -1,0 +1,9 @@
+= form_with url: report_all_count_path, method: :get, builder: SimpleForm::FormBuilder do |f|
+  .row
+    .col-6
+      = f.input :date_start, label: "Начальная дата", required: true, input_html: { data: { controller: 'flatpickr' }, id: "start_search_date", class: "form-control form-control-sm" }
+    .col-6
+      = f.input :date_end, label: "Конечная дата", required: true, input_html: { data: { controller: 'flatpickr' }, id: "end_search_date", class: "form-control form-control-sm" }
+  .row  
+    .col-12.mt-4.text-end
+      = f.submit t('submit.search'), class: 'btn btn-outline-primary mx-1'

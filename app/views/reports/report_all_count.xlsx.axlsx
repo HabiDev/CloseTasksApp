@@ -1,0 +1,79 @@
+xlsx_package.use_autowidth = true
+wb = xlsx_package.workbook
+
+margins = {
+  left: 1,
+  right: 1,
+  top: 1,
+  bottom: 1,
+}
+
+setup = {
+  fit_to_width: 1,
+  fit_to_height: 999,
+  orientation: :landscape,
+  paper_size: 9
+}
+
+options = {
+  grid_lines: false
+}
+
+wb_style = wb.styles
+header = wb_style.add_style bg_color: 'ADD8E6', b: true, alignment: { wrap_text: true,  horizontal: :center, vertical: :center }, border: { style: :thin, color: 'FF000000' }
+wrap_text = wb_style.add_style alignment: { horizontal: :left, vertical: :center }
+row_aligment = wb_style.add_style alignment: { horizontal: :center, vertical: :center }
+row_aligment_vertical = wb_style.add_style alignment: { vertical: :center }
+wrap = wb_style.add_style alignment: {wrap_text: true, vertical: :center}, border: { style: :thin, color: 'FF000000' }
+row_borders = wb_style.add_style border: { style: :thin, color: 'FF000000' },  alignment: { vertical: :center }
+if date_start.present?
+  period = "c #{l(date_start, format: :normal)} по #{l(date_end, format: :normal)}"
+else
+  period = "за весь период"
+end
+wb.add_worksheet(name: "Отчет по зявкам", 
+                 page_margins: margins,
+                 page_setup: setup,
+                 print_options: options) do |sheet| 
+  sheet.add_row ["Заявки поступившие #{period}"], height: 30, style: row_aligment_vertical
+  sheet.merge_cells('A1:H1')
+  sheet.add_row ["№ п/п", "Дата", "Инициатор", "Торговый объект", "Описание", "Исполнитель", "Выполненные работы", "Статус заявки"], style: header, height: 30
+  number = 1
+ 
+  tasks.each do |task| 
+    works_perf = ''
+    if task.performed_works.present?          
+      task.performed_works.each do |work|
+        works_perf = works_perf + "#{l(work.created_at, format: :small)}-(#{work_time_mini(work)}): #{work.sub_category.name}\n"
+      end
+      works_perf = works_perf.chomp
+    else
+      works_perf = ''
+    end
+    sheet.add_row [number, l(task.created_at, format: :small), task.author.full_name, task.division.name, task.description, task.executor.full_name, works_perf, enum_l(task, :status)], style: Axlsx::STYLE_THIN_BORDER
+    number += 1
+  end
+
+  sheet.column_widths 5, 10, 34, 28, 40, 34, 40, 17
+
+  sheet.col_style 6, wrap, row_offset: 2
+  sheet.col_style 4, wrap, row_offset: 2
+  sheet.col_style 0, row_borders, row_offset: 2
+  sheet.col_style 1, row_borders, row_offset: 2
+  sheet.col_style 2, row_borders, row_offset: 2
+  sheet.col_style 3, row_borders, row_offset: 2
+  sheet.col_style 5, row_borders, row_offset: 2
+  sheet.col_style 7, row_borders, row_offset: 2
+  sheet.add_row [""]
+  sheet.add_row ["", "", "Зарегистрирован", tasks.where(status: 0).count]
+  sheet.add_row ["", "", "В работе", tasks.where(status: 1).count]
+  sheet.add_row ["", "", "На согласовании", tasks.where(status: 3).count]
+  sheet.add_row ["", "", "На доработке", tasks.where(status: 4).count]
+  sheet.add_row ["", "", "Исполнено", tasks.where(status: 6).count]
+  sheet.add_row ["", "", "Отложен", tasks.where(status: 8).count]
+  sheet.add_row ["", "", "Отменен", tasks.where(status: 9).count]
+  sheet.add_row ["", "", "Всего", tasks.count]
+  sheet.col_style 2, row_borders, row_offset: number + 1
+  sheet.col_style 3, row_borders, row_offset: number + 1
+end
+

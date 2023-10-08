@@ -28,6 +28,10 @@ class Task < ApplicationRecord
 
   scope :task_executors, ->(user) { where(executor_id: user.id) }
 
+  scope :date_between, ->(date_start, date_end) { where('tasks.created_at >= ? AND tasks.created_at <= ?', date_start, date_end) }
+
+  scope :user_tasks, ->(user) { where('tasks.executor_id = ? ', user) }
+
   def looked!
     unless self.read_at.present?
       self.read_at = DateTime.now

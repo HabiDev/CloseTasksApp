@@ -35,6 +35,9 @@ Rails.application.routes.draw do
     patch 'canceled', on: :member, defaults: { format: :turbo_stream } 
   end
 
+  get :reports, action: :index, controller: 'reports'
+  get :report_all_count, action: :report_all_count, controller: 'reports'
+
   resources :performed_works, except: %w(index show)
   # resources :mission_executors, except: %w(index show)
   resources :completed_missions, except: %w(index show)  

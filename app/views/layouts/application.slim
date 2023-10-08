@@ -30,6 +30,10 @@ html
             .modal-dialog.modal-lg
               .modal-content
                 = turbo_frame_tag "modal_mission"
+          #modalSearch.modal[tabindex="-1" data-controller="modal-search" data-modal-search-target="modalSearch" data-action="turbo:frame-load->modal-search#open"]
+            .modal-dialog
+              .modal-content
+                = turbo_frame_tag "modal_search"
             / footer
             /   = render 'layouts/footer'
   

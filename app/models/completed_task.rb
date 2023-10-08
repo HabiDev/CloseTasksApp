@@ -15,4 +15,11 @@ class CompletedTask < ApplicationRecord
   scope :ordered, -> { order(created_at: :desc) }  
 
   scope :created_date, -> (shares_at) { where(created_at: shares_at.beginning_of_day..shares_at.end_of_day) }
+
+  scope :date_between, ->(date_start, date_end) { where('completed_tasks.created_at >= ? AND completed_tasks.created_at <= ?', date_start, date_end) }
+
+  scope :sub_category_completed_tasks, -> { select("sub_categories.name").joins(:sub_category).order("sub_categories.name")
+                                  .group("sub_categories.name").count(:sub_category_id) }
+  scope :user_completed_tasks, ->(user) { where('completed_tasks.user_id = ? ', user) }
 end
+ 

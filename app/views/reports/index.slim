@@ -1,0 +1,17 @@
+/ .container 
+/   .row
+/     .col-12
+/       = render 'reports/search_form' 
+/     hr.m-1.p-1
+/   .row 
+/     .col-12
+/       - if @tasks&.present 
+/         = render 'reports/report_all_count'
+.container
+  = turbo_frame_tag "modal_search"
+    .modal-header
+      h3#modalSearchLabel.modal-title
+        | Укажите период
+      button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]         
+    .modal-body
+      = render 'reports/search_form'
