@@ -1,0 +1,25 @@
+= turbo_frame_tag check_list
+  = content_tag(:div, class: "bd-callout bd-callout-#{class_priority(task.priority)} shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")  
+    .row              
+      .col-6.small.text-muted.lh-sm.fst-italic         
+        span.small.fw-bold
+          = "#{l(task.created_at, format: :small)} (#{task.priority.name})"        
+      .col-6.small.text-end.lh-sm                  
+        span.small.text-end.text-truncate.fw-bold
+          = enum_l(task, :status)
+    hr.m-1
+    .row
+      .col-12.small.lh-sm  
+        span.fw-bold
+          = "#{t('sidebar.from')}: #{task.division.name}" 
+      .row.mx-1
+        span.d-block.small.text-truncate.text-muted
+          = "#{task.class.human_attribute_name(:description)}: #{task.description}"
+      .col-12.small.lh-1.text-end.text-muted
+        span.small.fw-bold.fst-italic
+          = "(#{task.class.human_attribute_name(:execution_limit_at)}: #{l(task.execution_limit_at, format: :normal)})" 
+        hr.my-1
+    .row.mt-1      
+      .col-12.text-end.m-n5.small      
+        = link_to t('button.show'), task_path(task), class: "btn btn-outline-primary btn-sm", data: { turbo_frame: "modal_task" }
+          

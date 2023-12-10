@@ -1,0 +1,9 @@
+= simple_form_for @list_event do |f|
+  = f.error_notification
+  .row
+    .col-12.col-md-12
+      = f.input :comment, required: true, autofocus: true, class: 'form-control form-control-sm' 
+  .row  
+    .col-12.col-md-12.text-end
+      span.p-2
+        = f.submit "#{t('submit.save')}", class: "btn btn-primary"

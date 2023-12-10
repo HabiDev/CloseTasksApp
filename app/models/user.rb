@@ -13,7 +13,9 @@ class User < ApplicationRecord
   has_many :completed_tasks, dependent: :destroy
   has_many :author_tasks, class_name: "Task", foreign_key: "author_id", dependent: :destroy
   has_many :executor_tasks, class_name: "Task", foreign_key: "executor_id", dependent: :destroy
+  has_many :author_check_lists, class_name: "CheckList", foreign_key: "author_id", dependent: :destroy
   has_many :tasks, class_name: "Task", foreign_key: "author_id", inverse_of: 'author'
+  has_many :check_lists, class_name: "CheckList", foreign_key: "author_id", inverse_of: 'author'
 
   has_many :author_missions, class_name: "Mission", foreign_key: "author_id", dependent: :destroy
   has_many :control_executor_missions, class_name: "Mission", foreign_key: "executor_id", dependent: :destroy

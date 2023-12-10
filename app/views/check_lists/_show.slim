@@ -1,0 +1,34 @@
+.row
+  .container
+    .col-12.sticky-top.sticky-offset.bg-white.bg-gradient
+      .h5.text-muted
+        .row
+          .col-12.text-end
+            = "#{@check_list.class.human_attribute_name(:created_at)}: #{l(@check_list.created_at, format: :small)}"
+            / span.fw-normal.lh-1
+            /   = 
+        .row
+          .col-12.text-end
+            = "#{@check_list.class.human_attribute_name(:division_id)}: #{@check_list.division.name}"
+            / span.fw-normal.lh-1
+            /   = @check_list.division.name
+        .row
+          .col-12.text-end
+            = "#{@check_list.class.human_attribute_name(:author_id)}: #{@check_list.author.full_name}"
+            / span.fw-normal.lh-1
+            /   = @check_list.author.full_name
+        hr.mb-0
+
+    .col-11
+      .row
+        - @check_list.list_events.each do |list_event|        
+          = render "list_events/list_event", list_event: list_event
+
+.row.sticky-bottom.bg-white.bg-gradient
+  hr.m-2
+  .col-10.align-self-center
+    = turbo_frame_tag "check_lists_counter"
+      = render "check_lists/processed", check_list: @check_list
+  .col-2.text-end
+    = link_to t('button.close'), check_lists_path, class: "btn btn-outline-primary mb-2"
+  

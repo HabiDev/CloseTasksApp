@@ -1,0 +1,35 @@
+= turbo_frame_tag check_list, class: 'resp-table-row tblbody-resp'
+  .table-body-cell
+    .col-12
+      span.small.d-block.font-weight-bold
+        = l(check_list.created_at, format: :small)  
+  .table-body-cell
+    .col-12
+      span.small.d-block.font-weight-bold.text-truncate
+        = check_list.check_list_type.name    
+  .table-body-cell
+    .col-12
+      span.small.d-block.font-weight-bold.text-truncate
+        = check_list.division.name
+      / span.d-block.small.text-muted.text-truncate
+      /   em
+      /     = check_list.author.full_name         
+
+  .table-body-cell 
+    .row
+      .col-12
+        span.d-block.small.text-muted.text-truncate
+          em
+            = check_list.author.full_name  
+  .table-body-cell 
+    .row
+      .col-11
+        = check_list_status(check_list) 
+          / span.small.d-block.font-weight-bold.text-truncate
+          /   = check_list.status
+      .col-1.p-0
+        span.d-block.font-weight-bold
+          = render "control", check_list: check_list
+
+
+

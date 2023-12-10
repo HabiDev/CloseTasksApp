@@ -1,0 +1,13 @@
+.container
+  .row
+    .col-8 
+      h5 
+        = t('sidebar.check_lists.title')  
+    .col-4.text-end.mb-3
+        = link_to "#{t('button.new')}",  new_check_list_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: "modal" }
+  .row 
+    .col-12 
+      = turbo_frame_tag "check_list"
+      = turbo_frame_tag "check_lists"
+        = render partial: "check_lists/mobile/check_list", collection: @check_lists
+        == pagy_bootstrap_nav(@pagy) if @check_lists&.exists?

@@ -29,6 +29,15 @@ Rails.application.routes.draw do
     patch 'canceled', on: :member, defaults: { format: :turbo_stream } 
   end
 
+  resources :check_lists do
+    patch 'check_status', on: :member, defaults: { format: :turbo_stream }
+  end
+  resources :list_events, only: %w(edit update) do
+    resources :list_event_tasks, only: %w(new create)
+    patch 'update_status', on: :member, defaults: { format: :turbo_stream }
+  end
+
+
   resources :mission_executors, except: %w(index show) do
     get 'rework', on: :member, defaults: { format: :turbo_stream }
     patch 'agree', on: :member, defaults: { format: :turbo_stream }
@@ -37,6 +46,7 @@ Rails.application.routes.draw do
 
   get :reports, action: :index, controller: 'reports'
   get :report_all_count, action: :report_all_count, controller: 'reports'
+
 
   resources :performed_works, except: %w(index show)
   # resources :mission_executors, except: %w(index show)
@@ -50,6 +60,9 @@ Rails.application.routes.draw do
               :sub_categories, 
               :sub_departments, 
               :mission_types,
+              :check_list_types,
+              :check_list_groups,
+              :sub_check_lists,
               :priorities, except: %w(show)
   end
   get 'edit_password_reset', to: 'users#edit_password_reset', as: :edit_password_reset

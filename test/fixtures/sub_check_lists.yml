@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  check_list_type: one
+  check_list_group: one
+
+two:
+  check_list_type: two
+  check_list_group: two

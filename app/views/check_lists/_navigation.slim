@@ -1,0 +1,12 @@
+aside
+  nav#bd-docs-nav aria-label=t('sidebar.check_lists.title')
+    .row
+      .col-4
+        h3 
+          = t('sidebar.check_lists.title') 
+      .col-8.text-end
+        h5.pt-1.m-0
+          span.badge.rounded-pill.text-bg-secondary
+            /= "#{t('sidebar.check_lists.find')}: #{@count_check_lists}"
+      hr.m-1.p-1 
+        = render 'check_lists/search_form'   

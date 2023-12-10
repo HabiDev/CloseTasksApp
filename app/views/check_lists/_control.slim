@@ -1,0 +1,13 @@
+h5.text-end
+  .dropdown
+    a#dopdownMenuLink.nav-link aria-expanded="false" aria-haspopup="true" data-bs-toggle="dropdown" href="#"
+      i.bi.bi-three-dots-vertical.small
+    ul.dropdown-menu.dropdown-menu-end aria-labelledby="dopdownMenuLink"
+      li
+        = link_to t('button.show'), check_list_path(check_list), class: "dropdown-item", data: { turbo_frame: "modal_check_list" }
+
+      - if current_user.admin?
+        li
+          = link_to t('button.edit'), edit_check_list_path(check_list), class: "dropdown-item", data: { turbo_frame: "modal" }
+        li
+          = link_to t('button.destroy'), check_list, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 

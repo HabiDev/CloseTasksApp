@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_185008) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_03_202242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_185008) do
     t.integer "sub_categories_count", default: 0, null: false
     t.bigint "priority_id", default: 3, null: false
     t.index ["priority_id"], name: "index_categories_on_priority_id"
+  end
+
+  create_table "check_list_groups", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "check_list_types", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "check_lists", force: :cascade do |t|
+    t.bigint "division_id", null: false
+    t.bigint "check_list_type_id", null: false
+    t.bigint "author_id", default: 0, null: false
+    t.boolean "status", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_check_lists_on_author_id"
+    t.index ["check_list_type_id"], name: "index_check_lists_on_check_list_type_id"
+    t.index ["division_id"], name: "index_check_lists_on_division_id"
   end
 
   create_table "completed_missions", force: :cascade do |t|
@@ -69,6 +93,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_185008) do
     t.integer "completed_tasks_count", default: 0, null: false
     t.integer "tasks_count", default: 0, null: false
     t.index ["department_id"], name: "index_divisions_on_department_id"
+  end
+
+  create_table "list_events", force: :cascade do |t|
+    t.bigint "check_list_id", null: false
+    t.bigint "sub_check_list_id", null: false
+    t.string "comment"
+    t.integer "check_status", default: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["check_list_id"], name: "index_list_events_on_check_list_id"
+    t.index ["sub_check_list_id"], name: "index_list_events_on_sub_check_list_id"
   end
 
   create_table "mission_executors", force: :cascade do |t|
@@ -162,6 +197,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_185008) do
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
+  create_table "sub_check_lists", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.bigint "check_list_type_id", null: false
+    t.bigint "check_list_group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["check_list_group_id"], name: "index_sub_check_lists_on_check_list_group_id"
+    t.index ["check_list_type_id"], name: "index_sub_check_lists_on_check_list_type_id"
+  end
+
   create_table "sub_departments", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.bigint "department_id", null: false
@@ -185,10 +230,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_185008) do
     t.datetime "updated_at", null: false
     t.integer "performed_works_count", default: 0, null: false
     t.bigint "category_id", default: 1, null: false
+    t.bigint "list_event_id"
     t.index ["author_id"], name: "index_tasks_on_author_id"
     t.index ["category_id"], name: "index_tasks_on_category_id"
     t.index ["division_id"], name: "index_tasks_on_division_id"
     t.index ["executor_id"], name: "index_tasks_on_executor_id"
+    t.index ["list_event_id"], name: "index_tasks_on_list_event_id"
     t.index ["priority_id"], name: "index_tasks_on_priority_id"
   end
 
@@ -222,11 +269,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_185008) do
   end
 
   add_foreign_key "categories", "priorities"
+  add_foreign_key "check_lists", "check_list_types"
+  add_foreign_key "check_lists", "divisions"
+  add_foreign_key "check_lists", "users", column: "author_id"
   add_foreign_key "completed_missions", "mission_executors"
   add_foreign_key "completed_tasks", "divisions"
   add_foreign_key "completed_tasks", "sub_categories"
   add_foreign_key "completed_tasks", "users"
   add_foreign_key "divisions", "departments"
+  add_foreign_key "list_events", "check_lists"
+  add_foreign_key "list_events", "sub_check_lists"
   add_foreign_key "mission_executors", "missions"
   add_foreign_key "mission_executors", "users", column: "executor_id"
   add_foreign_key "missions", "mission_types"
@@ -238,9 +290,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_185008) do
   add_foreign_key "profiles", "sub_departments"
   add_foreign_key "profiles", "users"
   add_foreign_key "sub_categories", "categories"
+  add_foreign_key "sub_check_lists", "check_list_groups"
+  add_foreign_key "sub_check_lists", "check_list_types"
   add_foreign_key "sub_departments", "departments"
   add_foreign_key "tasks", "categories"
   add_foreign_key "tasks", "divisions"
+  add_foreign_key "tasks", "list_events"
   add_foreign_key "tasks", "priorities"
   add_foreign_key "tasks", "users", column: "author_id"
   add_foreign_key "tasks", "users", column: "executor_id"

@@ -81,6 +81,8 @@ gem 'rubyzip'
 #pagy
 gem 'pagy'
 
+gem "image_processing", ">= 1.2"
+
 # gem 'active_record_extended'
 
 group :development, :test do

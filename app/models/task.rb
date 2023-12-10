@@ -16,6 +16,7 @@ class Task < ApplicationRecord
   belongs_to :author, class_name: "User", optional: true  
   belongs_to :executor, class_name: "User", optional: true
   belongs_to :priority, optional: true
+  belongs_to :list_event, optional: true
   counter_culture :division
   counter_culture :priority
   counter_culture :author, column_name: "author_tasks_count"

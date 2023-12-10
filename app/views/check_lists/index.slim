@@ -1,0 +1,18 @@
+.container
+  = turbo_frame_tag "check_lists_index"
+    - if mobile_device?
+      .row
+        = render "check_lists/mobile/mobile", check_lists: @check_lists
+    -else
+      .row
+        - unless current_user.user?
+          .col-12.col-md-3
+            = render 'check_lists/navigation'
+          .col-12.col-md-9
+            = render 'list_check_list'
+        - else 
+          .col-12.col-md-12
+            = render 'list_check_list'
+
+            
+    

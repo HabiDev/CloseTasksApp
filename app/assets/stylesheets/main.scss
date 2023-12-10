@@ -1,3 +1,19 @@
+// body {
+//   height: 100%;
+//   /* Just to force scrolling for this example */
+// }
+
+// .sticky-top {
+//   position: -webkit-sticky;
+//   position: sticky;
+//   top: 0;
+//   z-index: 1020;
+// }
+
+.sticky-offset {
+  top: 56px;
+}
+
 .form-group .icon {
   font-size: 18px;
   position: absolute;

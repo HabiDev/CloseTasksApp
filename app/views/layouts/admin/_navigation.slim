@@ -24,37 +24,13 @@ aside.bd-sidebar
               = link_to t('sidebar.panels.priorities'), admin_priorities_path, data: { turbo_frame: 'catalogs' }
             li
               = link_to t('sidebar.panels.mission_type'), admin_mission_types_path, data: { turbo_frame: 'catalogs' }
-            
-      / li.mb-1
-      /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#performers-collapse" aria-expanded="false"]
-      /     = t('sidebar.performers')
-      /   #performers-collapse.collapse
-      /     ul.list-unstyled.fw-normal.pb-1
-      /       - @users.each do |user|  
-      /         li 
-      /           = link_to user.profile.full_name, completed_tasks_path(q: { user_id_eq: user.id }), data: { turbo_frame: 'completed_tasks' }
-      /           span.badge.rounded-pill.bg-secondary
-      /             = completed_tasks_count(user)
-      / li.mb-1
-      /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#divisions-collapse" aria-expanded="false"]
-      /     = t('sidebar.divisions') 
-      /   #divisions-collapse.collapse
-      /     ul.list-unstyled.fw-normal.pb-1
-      /       - @divisions.each do |division|  
-      /         li 
-      /           = link_to division.name, completed_tasks_path(q: { division_id_eq: division.id }), data: { turbo_frame: 'completed_tasks' }
-      /           span.badge.rounded-pill.bg-secondary
-      /             = completed_tasks_count(division)
-      / li.mb-1
-      /   button.btn.d-inline-flex.align-items-center.rounded.collapsed[data-bs-toggle="collapse" data-bs-target="#categories-collapse" aria-expanded="false"]
-      /     = t('sidebar.categories') 
-      /   #categories-collapse.collapse
-      /     ul.list-unstyled.fw-normal.pb-1
-      /       - @categories.each do |category|  
-      /         li 
-      /           = link_to category.name, completed_tasks_path(q: { sub_category_id_eq: category.id }), data: { turbo_frame: 'completed_tasks' }
-      /           span.badge.rounded-pill.bg-secondary
-      /             = completed_tasks_count(category)
+            li
+              = link_to t('sidebar.panels.check_list_type'), admin_check_list_types_path, data: { turbo_frame: 'catalogs' }
+            li
+              = link_to t('sidebar.panels.check_list_group'), admin_check_list_groups_path, data: { turbo_frame: 'catalogs' }
+            li
+              = link_to t('sidebar.panels.sub_check_list'), admin_sub_check_lists_path, data: { turbo_frame: 'catalogs' }
+
 
  
  

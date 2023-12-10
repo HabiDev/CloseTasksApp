@@ -64,6 +64,11 @@ ru:
       priority: Приоритет
       performed_work: Выполненная работа
       completed_mission: Исполнение задания/поручения
+      check_list_group: Группа Чек-Лист
+      check_list_type: Типы Чек-Лист
+      sub_check_list: Перечень Чек-Лист
+      check_list: Чек-Лист
+      list_event: Перечень Чек-Лист
     attributes:
       user:        
         type_role: Роль в системе
@@ -90,6 +95,25 @@ ru:
       sub_category:
         name: Подкатегория
         category_id: Категория
+      check_list_group:
+        name: Группа
+      check_list_type:
+        name: Тип
+      sub_check_list:
+        name: Наименование ЧекЛист
+        check_list_type_id: Тип
+        check_list_group_id: Группа
+      check_list:
+        division_id: Подразделение
+        author_id: Ответственный
+        check_list_type_id: Тип
+        status: Статус
+        created_at: Дата
+      list_event:
+        check_list_id: Чек-Лист
+        sub_check_list_id: Перечень Чек-Лист
+        comment: Замечания
+        check_status: Статус
       position:
         name: Должность
       division:

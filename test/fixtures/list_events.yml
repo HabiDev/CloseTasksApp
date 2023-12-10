@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ckeck_list: one
+  sub_check_list: one
+  comment: MyString
+  check_status: 1
+
+two:
+  ckeck_list: two
+  sub_check_list: two
+  comment: MyString
+  check_status: 1

@@ -1,0 +1,2 @@
+= turbo_stream.replace(@list_event, partial: "list_events/list_event", locals: { list_event: @list_event } )
+= turbo_stream.update "check_lists_counter", partial: "check_lists/processed", locals: { check_list: @list_event.check_list }

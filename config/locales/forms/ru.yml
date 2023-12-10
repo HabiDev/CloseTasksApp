@@ -8,6 +8,7 @@ ru:
     contact_link: Контакты
     tasks: Заявки
     missions: Задания
+    check_lists: Чек-Лист
     reports: Отчеты
     sign_in: Войти
     sign_out: Выйти
@@ -58,6 +59,10 @@ ru:
       priorities: Приоритеты
       report_xls: Выгрузить в Excel
       mission_type: Типы
+      check_list_type: Типы ЧекЛист
+      check_list_group: Группа ЧекЛист
+      sub_check_list: ЧекЛист
+      check_lists: ЧекЛисты
     tasks:
       title: Заявки
       all_tasks: Все заявки
@@ -98,6 +103,8 @@ ru:
       canceled: Отменен
       all: Все
       find: Найдено
+    check_lists: 
+      title: ЧекЛисты
     completed_tasks: Проделанные работы 
     performers: По исполнителям
     divisions: По объектам
