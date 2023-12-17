@@ -17,6 +17,8 @@ ru:
     create: Создание
     edit: Редактирование
     reset_password: Изменение пароля
+  photos:
+    create: Прекрепить фото
   divisions:
     title: Подразделения
   shared:

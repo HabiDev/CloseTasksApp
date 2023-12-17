@@ -4,24 +4,38 @@
       = link_to update_status_list_event_path(list_event), class: "m-2 h2 text-#{check_status_manager(list_event.check_status)}", data: { turbo_method: :patch }
         = content_tag(:i, "", class: check_status_icon(list_event.check_status))
     .col-10.m-0.p-0
-      = content_tag(:div, class: "bd-callout bd-callout-#{check_callout(list_event.check_status)} shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
-        span.fst-italic.text-muted
-          = list_event.sub_check_list.name                
-          .row 
+      = content_tag(:div, class: "d-block bd-callout bd-callout-#{check_callout(list_event.check_status)} shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
+        .row
+          .col-12
+            span.fst-italic.text-muted
+              = list_event.sub_check_list.name      
+        .row
+          .col-12 
             span.small
               small
                 = link_to "Комментария:", edit_list_event_path(list_event)                
                 - if list_event&.comment && list_event.comment.present?
                   span.mx-2
                     = list_event.comment
-                hr.m-1
-          .row 
-            span.small
-              = link_to "Сделать заявку", new_list_event_list_event_task_path(list_event), data: { turbo_frame: "modal" }
-              - if list_event&.tasks.present?
-                span.ms-2
-                  = "Текущие заявки:"
+        - if list_event&.tasks.present?
+          .row
+            .col-12 
+              ul.list-inline.m-0.small
+                = "Текущие заявки:"
                 - list_event.tasks.each do |task|
-                  span.mx-2
-
-                    = link_to "#{l(task.created_at, format: :small)} (#{enum_l(task, :status)})", task_path(task), data: { turbo_frame: "modal_task" }, class: "link-success"
+                  li.list-inline-item
+                    = link_to "#{l(task.created_at, format: :small)} (#{enum_l(task, :status)})", task_path(task), data: { turbo_frame: "modal_task" }, class: "mx-1 link-success"
+        - if list_event&.photos.present?          
+          .row
+            .col-12.m-0
+              = turbo_frame_tag "list_event_photos"
+                ul.list-inline.m-0.small
+                  = "Фото: "                     
+                  = render 'list_events/list_event_photos', list_event: list_event
+        - if current_user.author_of?(list_event.check_list) || current_user.admin?
+          hr.mb-1.mt-1
+            .row
+              .col-12.text-end
+                span.small
+                  = link_to "Добавить фото", new_photos_list_event_path(list_event), data: { turbo_frame: "modal" }, class: "mx-2 link-secondary link-offset-3 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                  = link_to "Сделать заявку", new_list_event_list_event_task_path(list_event), data: { turbo_frame: "modal" }, class: "link-secondary link-offset-3 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 

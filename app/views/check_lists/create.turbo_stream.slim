@@ -1,5 +1,5 @@
-- unless mobile_device?
-  = turbo_stream.replace "check_lists_index"
-    = render partial: "check_lists/show", locals: { check_list: @check_list }
-- else
-  = turbo_stream.prepend "check_lists", partial: "check_lists/mobile/check_list", locals: { check_list: @check_list }
+/ - unless mobile_device?
+= turbo_stream.replace "check_lists_index"
+  = render partial: "check_lists/show", locals: { check_list: @check_list }
+/ - else
+/   = turbo_stream.prepend "check_lists", partial: "check_lists/check_list", locals: { check_list: @check_list }

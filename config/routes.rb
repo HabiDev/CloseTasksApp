@@ -35,6 +35,9 @@ Rails.application.routes.draw do
   resources :list_events, only: %w(edit update) do
     resources :list_event_tasks, only: %w(new create)
     patch 'update_status', on: :member, defaults: { format: :turbo_stream }
+    post "create_photos", on: :member, defaults: { format: :turbo_stream }
+    get "new_photos", on: :member
+    delete "destroy_photos", on: :member, defaults: { format: :turbo_stream }
   end
 
 

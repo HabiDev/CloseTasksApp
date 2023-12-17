@@ -8,16 +8,16 @@
     = turbo_frame_tag "check_lists"
       #resp-table.fixed-table
         #resp-table-header.tblhead-resp
-          .table-header-cell.col-12.col-md-1
+          .table-header-cell.col-12.col-md-4
             = t("#{@check_lists.model.human_attribute_name(:created_at)}") 
-          .table-header-cell.col-12.col-md-3
-            = t("#{@check_lists.model.human_attribute_name(:check_list_type_id)}")
-          .table-header-cell.col-12.col-md-3
+          / .table-header-cell.col-12.col-md-2.col-lg-3
+          /   = t("#{@check_lists.model.human_attribute_name(:check_list_type_id)}")
+          .table-header-cell.col-12.col-md-4
             = t("#{@check_lists.model.human_attribute_name(:division_id)}")
-          .table-header-cell.col-12.col-md-3
+          .table-header-cell.col-12.col-md-4
             = t("#{@check_lists.model.human_attribute_name(:author_id)}")
-          .table-header-cell.col-12.col-md-2
-            = "Статус"
+          / .table-header-cell.col-12.col-md-2.col-lg-2
+          /   = "Статус"
           / .table-header-cell.col-12.col-md-2
           /   = t("#{@check_lists.model.human_attribute_name(:status)}")  
         = turbo_frame_tag "resp-table-body"

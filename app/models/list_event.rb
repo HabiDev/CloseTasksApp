@@ -1,4 +1,6 @@
 class ListEvent < ApplicationRecord
+  has_many_attached :photos
+
   belongs_to :check_list, optional: true
   belongs_to :sub_check_list, optional: true
 

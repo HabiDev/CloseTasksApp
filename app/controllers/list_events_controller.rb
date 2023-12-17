@@ -1,6 +1,6 @@
 class ListEventsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_list_event, except: [ :index, :new, :create]
+  before_action :set_list_event, except: [ :index, :destroy_photos ]
 
   def edit
 
@@ -29,6 +29,20 @@ class ListEventsController < ApplicationController
       format.turbo_stream
     end
   end
+
+
+  def new_photos;  end
+
+  def create_photos
+    @list_event.photos.attach(params[:list_event][:photos])
+  end
+
+  def destroy_photos
+    @list_event = ListEvent.find(params[:list_event_id])
+    @photo = ActiveStorage::Attachment.find(params[:id])
+    @photo.purge
+  end
+  
 
   private
 

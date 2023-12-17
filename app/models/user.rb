@@ -59,4 +59,5 @@ class User < ApplicationRecord
   def manager_of?(resource)
     self.id == resource.executor.manager_id
   end
+  
 end
