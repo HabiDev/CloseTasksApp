@@ -8,5 +8,12 @@ h5.text-end
       - if current_user.admin?
         li
           = link_to t('button.destroy'), user, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 
+        - if user.locked_at.present?
+          li
+            = link_to t('button.unlock_user'), unlock_user_path(user), class: "dropdown-item"
+        - else
+          li
+            = link_to t('button.lock_user'), lock_user_path(user), class: "dropdown-item"
+        
         li
           = link_to t('button.reset_password'), edit_password_reset_path(id: user), class: "dropdown-item"

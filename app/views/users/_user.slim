@@ -5,7 +5,8 @@
         .row   
           .col-10.col-md-10
             h4.card-title
-              = user.profile.full_name
+              = locked_at(user)
+              = user.profile.full_name              
           .col-2.col-md-2
             = render 'users/control', user: user
         .row

@@ -22,6 +22,8 @@ ru:
     close: Закрыть
     send_agree: Отправить на согласование
     reset_password: Изменение пароля
+    lock_user: Заблокировать
+    unlock_user: Разблокировать
     execute:
       executed: Добавить работу
       rework: На доработку
@@ -46,6 +48,7 @@ ru:
     mission_executors: Исполнители
     completed_missions: Ход исполнения
     performer: Исп.
+    locked_at: Блокировка
   sidebar:
     panels:
       title: Справочники системы

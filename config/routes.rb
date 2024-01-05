@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   #   root to: "panels#home", as: :admin_root
   # end
   devise_for :users, controllers: { registrations: 'users' }
-  resources :users
+  resources :users do 
+    get "lock", on: :member
+    get "unlock", on: :member
+  end
   resources :divisions
   resources :completed_tasks, except: %w(show)
   get :report_xls, action: :report_xls, controller: 'completed_tasks'

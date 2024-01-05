@@ -16,4 +16,9 @@ module UsersHelper
       "#{caption}:"
     end  
   end
+
+  def locked_at(user)
+    content_tag(:span, content_tag(:i, "", class: "bi bi-lock text-danger")) if user.locked_at.present?
+  end
+
 end

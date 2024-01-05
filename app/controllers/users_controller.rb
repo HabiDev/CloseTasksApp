@@ -87,6 +87,28 @@ class UsersController < ApplicationController
     end
   end
 
+  def lock
+    respond_to do |format|
+      if @user.update(locked_at: DateTime.now)
+        format.html { redirect_to users_path, notice: t('notice.record_edit') }
+        format.turbo_stream
+      else
+        format.html { render :lock, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unlock
+    respond_to do |format|
+      if @user.update(locked_at: "")
+        format.html { redirect_to users_path, notice: t('notice.record_edit') }
+        format.turbo_stream
+      else
+        format.html { render :lock, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def set_user
