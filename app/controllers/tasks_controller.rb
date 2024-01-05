@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, except: [ :index, :new, :create, :report_tasks_xls]
+  before_action :set_task, except: [ :index, :new, :create, :report_tasks_xls, :executed_all]
   before_action :set_priority, only: [ :create, :update]
   
   def index
@@ -22,6 +22,7 @@ class TasksController < ApplicationController
     $report_tasks = @q.result(disinct: true).includes(:author, :priority, :division)
     $date_start = params[:q].present? ? params[:q][:created_at_gteq]&.to_datetime : ""
     $date_end = params[:q].present? ? params[:q][:created_at_end_of_day_lteq]&.to_datetime : ""
+    @@executed_all = @tasks
   end
 
   def new
@@ -58,6 +59,13 @@ class TasksController < ApplicationController
   def delayed
     update_status(status: :delayed, execution_limit_at: 1.month.since)   
   end  
+
+  def executed_all
+    @@executed_all.each do |task|      
+        task.update(status: :executed, close_at: DateTime.now) if task.in_approval?
+    end
+    render turbo_stream: turbo_stream.update("resp-table-body", partial: "tasks/task", collection: @@executed_all, as: :task )
+  end
 
   def create
     @task = current_user.tasks.build(task_params.merge(status: :registred, priority: @priority))   # Not the final implementation!
