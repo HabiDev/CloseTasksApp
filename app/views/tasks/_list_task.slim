@@ -1,6 +1,9 @@
 .row
   .col-12.col-md-12.text-end
     = link_to t('sidebar.panels.report_xls'), report_tasks_xls_path(format: :zip), class: "btn btn-outline-primary btn-sm mx-1"
+    - if current_user&.admin?
+      = link_to t('sidebar.panels.executed_all'), executed_all_path, class: "btn btn-outline-secondary btn-sm mx-1"
+    
     = link_to "#{t('button.new')}",  new_task_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: "modal" }
 
 .row
@@ -20,5 +23,5 @@
             = t("#{@tasks.model.human_attribute_name(:status)}")  
         = turbo_frame_tag "resp-table-body"
           = render @tasks
-          .row.mt-3
-            == pagy_bootstrap_nav(@pagy) if @tasks&.exists?
+        .row.mt-3
+          == pagy_bootstrap_nav(@pagy) if @tasks&.exists?

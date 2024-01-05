@@ -61,6 +61,7 @@ ru:
       statuses: Статусы
       priorities: Приоритеты
       report_xls: Выгрузить в Excel
+      executed_all: Согласовать все
       mission_type: Типы
       check_list_type: Типы ЧекЛист
       check_list_group: Группа ЧекЛист
