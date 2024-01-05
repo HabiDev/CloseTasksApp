@@ -91,7 +91,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(locked_at: DateTime.now)
         format.html { redirect_to users_path, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@user) }
       else
         format.html { render :lock, status: :unprocessable_entity }
       end
@@ -102,7 +102,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(locked_at: "")
         format.html { redirect_to users_path, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@user) }
       else
         format.html { render :lock, status: :unprocessable_entity }
       end
