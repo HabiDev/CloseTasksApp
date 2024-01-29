@@ -1,9 +1,9 @@
-= search_form_for (@q), builder: SimpleForm::FormBuilder do |f|
+= search_form_for @q,  data: { controller: 'flatpickr' }, builder: SimpleForm::FormBuilder do |f|
   .row
     .col-6
-      = f.input :created_at_gteq, label: "Начальная дата", input_html: { data: { controller: 'flatpickr' }, id: "start_search_date", class: "form-control form-control-sm" }
+      = f.input :created_at_gteq, label: "Начальная дата", input_html: { id: "start_search_date", class: "form-control form-control-sm" }
     .col-6
-      = f.input :created_at_end_of_day_lteq, label: "Конечная дата", input_html: { data: { controller: 'flatpickr' }, id: "end_search_date", class: "form-control form-control-sm" }
+      = f.input :created_at_end_of_day_lteq, label: "Конечная дата", input_html: { id: "end_search_date", class: "form-control form-control-sm" }
   .row
     .col-12
       = f.input :author_id_eq, collection: User.all, label_method: :full_name, value_method: :id, label: "Автор", input_html: { class: "form-control form-control-sm" }
@@ -13,10 +13,6 @@
   .row
     .col-12
       = f.input :check_list_type_id_eq, collection: CheckListType.all, label_method: :name, value_method: :id, label: "Тип Чек-Лист", input_html: { class: "form-control form-control-sm" }
-  
-  / .row
-  /   .col-12
-  /     = f.input :status_eq,  collection: Task.statuses.map {|k, v| [t("activerecord.enums.task.statuses.#{k}"), v]}, label: "Статус заявки", input_html: { class: "form-control form-control-sm" }  
   .row
     .col-12.text-end
       = f.submit t('submit.search'), class: 'btn btn-outline-primary mx-1'

@@ -17,7 +17,8 @@
           = "#{mission.class.human_attribute_name(:description)}: #{mission.description}"
       .col-12.small.lh-1.text-end.text-muted
         span.small.fw-bold.fst-italic
-          = "(#{mission.class.human_attribute_name(:execution_limit_at)}: #{l(mission.execution_limit_at, format: :normal)})" 
+          - if mission.execution_limit_at.present?
+           = "(#{mission.class.human_attribute_name(:execution_limit_at)}: #{l(mission.execution_limit_at, format: :normal)})" 
         hr.my-1
     .row.mt-1      
       .col-12.text-end.m-n5.small      

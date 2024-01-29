@@ -8,22 +8,19 @@ import { Russian } from "flatpickr/dist/l10n/ru.js";
  
 export default class extends Controller {
   connect() {
-    var config = {
+    let config = {
       locale: Russian,
-      defaultDate: "null",
-      // altInput: true,
-      dateFormat: "d.m.Y",
-      altFormat: "d.m.Y"
-      // altInput: true,
+      altFormat: "d.m.Y",
+      altInput: true
+      // static: true
     }
+
     flatpickr("#start_search_date", config)
     flatpickr("#end_search_date", config)
-    // flatpickr("#end_search_date", config)
     flatpickr("#mission_executor_limit_date", config)
     flatpickr("#mission_mission_executors_limit_date", config)
     flatpickr("#start_search_limit_date", config)
     flatpickr("#end_search_limit_date", config)
-    // $("#start_search_date").flatpickr(config);
-    // $("#end_search_date").flatpickr(config);
+
   }
 }
