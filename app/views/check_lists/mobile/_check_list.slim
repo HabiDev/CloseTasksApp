@@ -1,0 +1,26 @@
+= turbo_frame_tag check_list
+  .bd-callout.bd-callout-info.shadow-sm.p-2.mt-1.mb-2.rounded-9.text-dark.bg-light  
+    .row              
+      .col-6.small.text-muted.lh-sm.fst-italic         
+        span.small.fw-bold
+          = "#{l(check_list.created_at, format: :small)}"       
+      .col-6.small.text-end.lh-sm                  
+        span.small.text-end.text-truncate.fw-bold
+          = check_list_status(check_list) 
+      .col-12.small.text-muted.lh-sm.fst-italic
+        em
+          = check_list.check_list_type.name
+    hr.m-1
+    .row
+      .col-12.small.lh-sm  
+        span.fw-bold
+          = "#{@check_lists.model.human_attribute_name(:division_id)}: #{check_list.division.name}" 
+      .col-12.small.lh-1.text-end.text-muted.mt-2
+        span.small.fw-bold.fst-italic
+          = "#{@check_lists.model.human_attribute_name(:author_id)}: #{check_list.author.full_name }" 
+        hr.my-1
+    .row.mt-1      
+      .col-12.text-end.m-n5.small      
+        = link_to t('button.show'),  check_list_path(check_list), class: "btn btn-outline-primary btn-sm", data: { turbo_frame: "modal_check_list" }
+
+          

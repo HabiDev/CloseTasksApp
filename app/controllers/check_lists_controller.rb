@@ -5,11 +5,11 @@ class CheckListsController < ApplicationController
   def index
     # authorize User
     if current_user.user?      
-      @q = CheckList.includes(:author, :check_list_type, :division).joins(:list_events)
+      @q = CheckList.includes(:author, :check_list_type, :division, :list_events)
                         .where(author_id: current_user)
                         .ransack(params[:q])
     else
-      @q = CheckList.includes(:author, :check_list_type, :division).ransack(params[:q])
+      @q = CheckList.includes(:author, :check_list_type, :division, :list_events).ransack(params[:q])
     end
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @pagy, @check_lists = pagy(@q.result(disinct: true).includes(:author, :check_list_type, :division), items: mobile_device? ? 3 : 10) 
