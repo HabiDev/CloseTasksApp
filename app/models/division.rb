@@ -11,4 +11,6 @@ class Division < ApplicationRecord
   default_scope { order(name: :asc) }
 
   scope :ordered, -> { order(name: :asc) }
+
+  scope :list_active, -> { where(active: true) }
 end
