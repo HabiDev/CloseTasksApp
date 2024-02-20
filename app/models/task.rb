@@ -11,6 +11,7 @@ class Task < ApplicationRecord
                  canceled: 9
                 }
   has_many :performed_works, dependent: :destroy
+  has_many :sub_categories, through: :performed_works
   belongs_to :category, optional: true
   belongs_to :division, optional: true
   belongs_to :author, class_name: "User", optional: true  

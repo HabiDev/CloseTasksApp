@@ -47,6 +47,9 @@ export default class extends Controller {
     $('#single-select-sub_category-comp_task-search').select2() 
     $('#single-select-category-comp_task-search').select2() 
     $('#single-select-user-missions-search').select2() 
+    $('#single-select-sub_category-task-search').select2() 
+
+    
     // $('#single-select-category-comp_task-search').select2() 
     
     

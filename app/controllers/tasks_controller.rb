@@ -6,20 +6,20 @@ class TasksController < ApplicationController
   def index
     # authorize User
     if current_user.user?      
-      @q = Task.includes(:author, :executor, :priority, :division)
+      @q = Task.includes(:author, :executor, :priority, :division, :sub_categories)
                         .where(author_id: current_user)
                         .or(Task.where(executor_id: current_user))
                         .ransack(params[:q])
     else
-      @q = Task.includes(:author, :priority, :division).ransack(params[:q])
+      @q = Task.includes(:author, :priority, :division, :sub_categories).ransack(params[:q])
     end
     @q.sorts = ['created_at desc', 'priority_id asc', 'division_name asc'] if @q.sorts.empty?
-    @pagy, @tasks = pagy(@q.result(disinct: true).includes(:author, :priority, :division), items: mobile_device? ? 3 : 10) 
+    @pagy, @tasks = pagy(@q.result(disinct: true).includes(:author, :priority, :division, :sub_categories), items: mobile_device? ? 3 : 10) 
     # @users = User.all
     # @divisions = Division.all
     # @priorities = Priority.all
     @count_tasks = @q.result.count
-    $report_tasks = @q.result(disinct: true).includes(:author, :priority, :division)
+    $report_tasks = @q.result(disinct: true).includes(:author, :priority, :division, :sub_categories)
     $date_start = params[:q].present? ? params[:q][:created_at_gteq]&.to_datetime : ""
     $date_end = params[:q].present? ? params[:q][:created_at_end_of_day_lteq]&.to_datetime : ""
     @@executed_all = $report_tasks
