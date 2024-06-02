@@ -21,3 +21,6 @@ application.register("modal-search", ModalSearchController)
 
 import Select2Controller from "./select2_controller"
 application.register("select2", Select2Controller)
+
+import FormTaskController from "./form_task_controller"
+application.register("form-task", FormTaskController)

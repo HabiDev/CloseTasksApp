@@ -1,11 +1,15 @@
-= simple_form_for @completed_task do |f|
+= simple_form_for @completed_task, data: { controller: "select2" } do |f|
   = f.error_notification
   .row
     .col-12.col-md-8
       = f.input :division_id, collection: Division.all, label_method: :name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-division-completed", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
   .row
     .col-12.col-md-10
-      = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-completed", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
+      / = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-completed", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
+      = f.input :sub_category_id, as: :grouped_select, collection: Category.all.map { |r| [r.name, r.sub_categories.map { |c| [c.name, c.id, { 'status': c.workload }] }] }, group_method: :last, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-completed", data: { action: "change->select2#showWorkload", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
+  #workload_performed.row.d-none data-select2-target="inputWorkload"
+    .col-12.col-md-3
+      = f.input :workload, required: true, autofocus: true, class: 'form-control form-control-sm'
   .row
     .col-12.col-md-3
       = f.input :time_start, required: true, autofocus: true, class: 'form-control form-control-sm'

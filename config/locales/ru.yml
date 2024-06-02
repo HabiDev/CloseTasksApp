@@ -95,6 +95,7 @@ ru:
       sub_category:
         name: Подкатегория
         category_id: Категория
+        workload: Вводить объем работ
       check_list_group:
         name: Группа
       check_list_type:
@@ -171,12 +172,14 @@ ru:
         division_id: Подразделение
         sub_category_id: Проделанная работа
         user_id: Исполнитель
+        workload: Объем работ(кол-во)
         time_start: Время начало
         time_end: Время окончания
         comment: Описание работ
       performed_work:
         sub_category_id: Проделанная работа
         task_id: Заявка
+        workload: Объем работ(кол-во)
         time_start: Время начало
         time_end: Время окончания
         comment: Дополнения

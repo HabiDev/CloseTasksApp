@@ -109,6 +109,6 @@ class CompletedTasksController < ApplicationController
   end
 
   def completed_task_params
-    params.require(:completed_task).permit(:division_id, :sub_category_id, :time_start, :time_end, :comment)
+    params.require(:completed_task).permit(:division_id, :sub_category_id, :time_start, :time_end, :comment, :workload)
   end
 end

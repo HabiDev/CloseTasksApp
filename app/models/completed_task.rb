@@ -8,7 +8,7 @@ class CompletedTask < ApplicationRecord
   has_many :category, through: :sub_category
 
 
-  validates :division_id, :user_id, :sub_category_id, :time_start, :time_end, presence: true
+  validates :division_id, :user_id, :sub_category_id, :time_start, :time_end, :workload, presence: true
 
   # broadcasts_to ->(completed_task) { "completed_tasks" }, inserts_by: :prepend
 

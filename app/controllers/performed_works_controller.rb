@@ -69,6 +69,6 @@ class PerformedWorksController < ApplicationController
   end
 
   def performed_work_params
-    params.require(:performed_work).permit(:task_id, :sub_category_id, :time_start, :time_end, :comment)
+    params.require(:performed_work).permit(:task_id, :sub_category_id, :time_start, :time_end, :comment, :workload)
   end
 end

@@ -4,7 +4,7 @@ class PerformedWork < ApplicationRecord
   counter_culture :sub_category
   counter_culture :task
 
-  validates :task_id, :sub_category_id, :time_start, :time_end, presence: true
+  validates :task_id, :sub_category_id, :time_start, :time_end, :workload, presence: true
 
   default_scope { order(created_at: :desc) }
 
