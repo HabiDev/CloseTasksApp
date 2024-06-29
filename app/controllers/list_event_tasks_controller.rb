@@ -17,7 +17,7 @@ class ListEventTasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_path, notice: t('notice.record_create') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

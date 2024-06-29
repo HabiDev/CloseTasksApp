@@ -2,3 +2,4 @@
   = turbo_stream.prepend "resp-table-body", @mission
 - else
   = turbo_stream.prepend "missions", partial: "mission/mobile/mission", locals: { mission: @mission}
+= render_turbo_stream_flash_messages

@@ -1,3 +1,4 @@
 = turbo_stream.prepend "completed_missions_#{@completed_mission.mission_executor.id}", @completed_mission
 = turbo_stream.update CompletedMission.new, "" 
 = turbo_stream.update "mission_executor_#{@completed_mission.mission_executor.id}", @completed_mission.mission_executor
+= render_turbo_stream_flash_messages

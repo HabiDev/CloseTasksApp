@@ -3,3 +3,4 @@
 / - else
 /   = turbo_stream.prepend "tasks", partial: "tasks/mobile/task", locals: { task: @task }
 = turbo_stream.replace(@list_event, partial: "list_events/list_event", locals: { list_event: @list_event } )
+= render_turbo_stream_flash_messages

@@ -1,2 +1,3 @@
 = turbo_stream.remove @performed_work
 = turbo_stream.update "performed_btn", partial: "tasks/btn_performed", locals: { task: @task }
+= render_turbo_stream_flash_messages

@@ -49,7 +49,7 @@ class CompletedTasksController < ApplicationController
     respond_to do |format|
       if @completed_task.save
         format.html { redirect_to completed_tasks_path, notice: t('notice.record_create') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -61,7 +61,7 @@ class CompletedTasksController < ApplicationController
     respond_to do |format|
       if @completed_task.update(completed_task_params)
         format.html { redirect_to completed_tasks_path, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -73,7 +73,7 @@ class CompletedTasksController < ApplicationController
     if @completed_task.destroy
       respond_to do |format|
         format.html { redirect_to completed_tasks_path, notice: t('notice.record_destroy') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:danger] = t('notice.record_destroy') }
       end
     else
       flash.now[:error] = t('notice.record_destroy_errors')

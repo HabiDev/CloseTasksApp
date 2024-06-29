@@ -24,3 +24,6 @@ application.register("select2", Select2Controller)
 
 import FormTaskController from "./form_task_controller"
 application.register("form-task", FormTaskController)
+
+import FlashController from "./flash_controller.js"
+application.register("flash", FlashController)

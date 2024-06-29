@@ -21,7 +21,7 @@ class Admin::BaseController < ApplicationController
     respond_to do |format|
       if @resource.save
         format.html { redirect_to @resource, notice: t('notice.record_create') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -32,7 +32,7 @@ class Admin::BaseController < ApplicationController
     respond_to do |format|
       if @resource.update(division_params)
         format.html { redirect_to @resource, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -43,7 +43,7 @@ class Admin::BaseController < ApplicationController
     if @resource.destroy
       respond_to do |format|
         format.html { redirect_to divisions_path, notice: t('notice.record_destroy') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:danger] = t('notice.record_destroy') }
       end
     else
       flash.now[:error] = t('notice.record_destroy_errors')

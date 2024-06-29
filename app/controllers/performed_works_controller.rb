@@ -27,7 +27,7 @@ class PerformedWorksController < ApplicationController
     respond_to do |format|
       if @performed_work.save
         # format.html { redirect_to task_path(@task), notice: t('notice.record_create') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -39,7 +39,7 @@ class PerformedWorksController < ApplicationController
     respond_to do |format|
       if @performed_work.update(performed_work_params)
         format.html { redirect_to task_path(@task), notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -51,7 +51,7 @@ class PerformedWorksController < ApplicationController
     if @performed_work.destroy
       respond_to do |format|
         format.html { redirect_to task_path(@task), notice: t('notice.record_destroy') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:danger] = t('notice.record_destroy') }
       end
     else
       flash.now[:error] = t('notice.record_destroy_errors')
