@@ -2,3 +2,4 @@
   = turbo_stream.prepend "resp-table-body", @task
 - else
   = turbo_stream.prepend "tasks", partial: "tasks/mobile/task", locals: { task: @task }
+= render_turbo_stream_flash_messages

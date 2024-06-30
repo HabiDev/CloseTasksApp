@@ -1,0 +1,8 @@
+
+- resource&.photos.find_each do |photo| 
+  = turbo_frame_tag photo
+    li.list-inline-item
+      = link_to "Фото_#{photo.id}", rails_blob_path(photo), class: "mx-1", target: "_blank"
+      - if (current_user.executor_of?(resource.task) && (resource.task.in_work? || resource.task.in_rework?))
+        / = link_to '(x)', destroy_photo_task_path(photo_id: photo.id, id: resource.id), data: { turbo_method: :delete }, class: "small text-danger"
+        = link_to '(x)', [:destroy_photo, resource, { photo_id: photo.id }], data: { turbo_method: :delete }, class: "small text-danger"

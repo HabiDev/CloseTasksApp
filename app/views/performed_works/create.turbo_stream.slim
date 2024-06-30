@@ -1,3 +1,4 @@
 = turbo_stream.prepend "performed_works", @performed_work
 = turbo_stream.update PerformedWork.new, "" 
 = turbo_stream.update "performed_btn", partial: "tasks/btn_performed", locals: { task: @task }
+= render_turbo_stream_flash_messages

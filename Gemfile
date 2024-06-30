@@ -64,7 +64,7 @@ gem "devise"
 gem "simple_form"
 
 # Ransack
-gem 'ransack'
+gem 'ransack', '~> 3.2.1'
 
 # gem Active_link
 gem 'active_link_to'

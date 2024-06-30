@@ -34,6 +34,10 @@ html
             .modal-dialog
               .modal-content
                 = turbo_frame_tag "modal_search"
+          #modalPhoto.modal[tabindex="-1" data-controller="modal-photo" data-modal-photo-target="modalPhoto" data-action="turbo:frame-load->modal-photo#open turbo:submit-end->modal-photo#close"]
+            .modal-dialog
+              .modal-content
+                = turbo_frame_tag "modal_photo"
             / footer
             /   = render 'layouts/footer'
   

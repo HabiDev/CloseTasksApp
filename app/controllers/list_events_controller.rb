@@ -10,8 +10,8 @@ class ListEventsController < ApplicationController
     # authorize @division    
     respond_to do |format|
       if @list_event.update(list_event_params)
-        format.html { redirect_to list_event_path, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.html { redirect_to list_event_path, success: t('notice.record_edit') }
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -25,8 +25,8 @@ class ListEventsController < ApplicationController
       @list_event.update!(check_status: 0)
     end
     respond_to do |format|
-      format.html { redirect_to list_event_path, notice: t('notice.record_edit') }
-      format.turbo_stream
+      format.html { redirect_to list_event_path, success: t('notice.record_edit') }
+      format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
     end
   end
 

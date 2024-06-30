@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, except: [ :index, :new, :create, :report_tasks_xls, :executed_all]
+  before_action :set_task, except: [ :index, :new, :create, :report_tasks_xls, :executed_all ]
   before_action :set_priority, only: [ :create, :update]
   
   def index
@@ -67,13 +67,20 @@ class TasksController < ApplicationController
     render turbo_stream: turbo_stream.update("resp-table-body", partial: "tasks/task", collection: @@executed_all, as: :task )
   end
 
+  def new_photo;  end
+
+  def create_photo
+    @task.photos.attach(params[:task][:photos])
+  end
+
   def create
     @task = current_user.tasks.build(task_params.merge(status: :registred, priority: @priority))   # Not the final implementation!
+    @task.photos.attach(params[:task][:photos])
       # authorize @division   
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_path, notice: t('notice.record_create') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -85,7 +92,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update(task_params.merge(priority: @priority))
         format.html { redirect_to tasks_path, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -97,11 +104,17 @@ class TasksController < ApplicationController
     if @task.destroy
       respond_to do |format|
         format.html { redirect_to tasks_path, notice: t('notice.record_destroy') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:danger] = t('notice.record_destroy') }
       end
     else
       flash.now[:error] = t('notice.record_destroy_errors')
     end
+  end
+
+  def destroy_photo
+    # @task = ListEvent.find(params[:task_id])
+    @photo = ActiveStorage::Attachment.find(params[:photo_id])
+    @photo.purge
   end
 
   def report_tasks_xls
@@ -151,7 +164,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:division_id, :executor_id, :category_id, :description)
+    params.require(:task).permit(:division_id, :executor_id, :category_id, :description, :photos)
   end
 
 end

@@ -1,0 +1,3 @@
+= turbo_stream.prepend("performed_work_photos", partial: "performed_works/list_photos", locals: { resource: @performed_work })
+/ = turbo_stream.prepend "task_photos", @task
+= render_turbo_stream_flash_messages

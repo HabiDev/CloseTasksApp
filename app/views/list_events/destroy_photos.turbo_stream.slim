@@ -1,3 +1,4 @@
 = turbo_stream.remove @photo
 - unless @list_event&.photos.present?
   = turbo_stream.remove "list_event_photos"
+= render_turbo_stream_flash_messages

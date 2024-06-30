@@ -1,2 +1,3 @@
 / = turbo_stream.replace("list_event_photos", partial: "list_events/list_event_photos", locals: { list_event: @list_event })
 = turbo_stream.replace @list_event
+= render_turbo_stream_flash_messages

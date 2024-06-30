@@ -6,23 +6,21 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-# Department.create(name: 'Офис') unless Department.any?
+# Department.create(name: 'Офис') unless Department.present?
 # department = Department.first
-# department.sub_departments.create(name: 'Администрация') unless SubDepartment.any?
+# department.sub_departments.create(name: 'Администрация') unless SubDepartment.present?
 
 # sub_department = SubDepartment.first
 
-# Position.create(name: 'Администратор') unless Position.any?
+# Position.create(name: 'Администратор')
+# Position.create(name: 'Электрик')
+# Position.create(name: 'Инженер-техник')
 # position = Position.first
 
-# Category.create(name: 'Монтажные работы') unless Category.any?
-# category = Category.first
 
-# category.sub_categories.create(name: 'Сборка и монтаж кассового блока') unless SubCategory.any?
+# Division.create(name: 'Офис', department: department, address: 'г.Казань', email: 'office@mail.ru') unless Division.present?
 
-# Division.create(name: 'Офис', department: department, address: 'г.Казань', email: 'office@mail.ru') unless Division.any?
-
-# User.create(email: 'fd@mail.ru', type_role: 'admin', password: 'Kzn2021$') unless User.any?
+# User.create(email: 'fd@mail.ru', type_role: 'admin', password: 'Kzn2021$') unless User.present?
 
 # user = User.first
 
@@ -30,6 +28,10 @@
 #                    sub_department_id: sub_department.id, 
 #                    position_id: position.id)
 # user.save
+
+# Priority.create(name: 'Высокая', limit_day: 3)
+# Priority.create(name: 'Обычная', limit_day: 7)
+# Priority.create(name: 'Срочно', limit_day: 1)
 
 # Department.create(name: 'Торговый объект')
 # Department.create(name: 'Прочее')
@@ -44,18 +46,16 @@
 # department.sub_departments.create(name: 'Юридический отдел')
 # department.sub_departments.create(name: 'Отдел кадров')
 
-# Position.create(name: 'Электрик')
-# Position.create(name: 'Инженер-техник')
-
-# Category.create(name: 'Закупка, доставка ТМЦ')
-# Category.create(name: 'Отопление')
-# Category.create(name: 'Прочие работы')
-# Category.create(name: 'Работы по кровли')
-# Category.create(name: 'Работы по открытию ТО')
-# Category.create(name: 'Работы по холоднильному оборудованию')
-# Category.create(name: 'Ремонтно-регулировочные работы')
-# Category.create(name: 'Сантехничеcкие работы')
-# Category.create(name: 'Электричество, электрооборудование')
+# Category.create(name: 'Монтажные работы', priority_id: 3)
+# Category.create(name: 'Закупка, доставка ТМЦ', priority_id: 3)
+# Category.create(name: 'Отопление', priority_id: 2)
+# Category.create(name: 'Прочие работы', priority_id: 3)
+# Category.create(name: 'Работы по кровли', priority_id: 3)
+# Category.create(name: 'Работы по открытию ТО', priority_id: 3)
+# Category.create(name: 'Работы по холоднильному оборудованию', priority_id: 3)
+# Category.create(name: 'Ремонтно-регулировочные работы', priority_id: 1)
+# Category.create(name: 'Сантехничеcкие работы', priority_id: 3)
+# Category.create(name: 'Электричество, электрооборудование', priority_id: 3)
 
 # cat1 = Category.find_by(name: 'Закупка, доставка ТМЦ')
 # cat2 = Category.find_by(name: 'Монтажные работы')
@@ -63,7 +63,7 @@
 # cat4 = Category.find_by(name: 'Прочие работы')
 # cat5 = Category.find_by(name: 'Работы по кровли')
 # cat6 = Category.find_by(name: 'Работы по открытию ТО')
-cat7 = Category.find_by(name: 'Работы по холоднильному оборудованию')
+# cat7 = Category.find_by(name: 'Работы по холоднильному оборудованию')
 # cat8 = Category.find_by(name: 'Ремонтно-регулировочные работы')
 # cat9 = Category.find_by(name: 'Сантехничеcкие работы')
 # cat10 = Category.find_by(name: 'Электричество, электрооборудование') 
@@ -80,6 +80,7 @@ cat7 = Category.find_by(name: 'Работы по холоднильному об
 # cat2.sub_categories.create(name: 'Частичный демонтаж и монтаж стеллажа')
 # cat2.sub_categories.create(name: 'Демонтаж крепления шаров')
 # cat2.sub_categories.create(name: 'Демонтаж деревянной конструкции и перемещение на мусорку')
+# cat2.sub_categories.create(name: 'Сборка и монтаж кассового блока')
 
 # cat3.sub_categories.create(name: 'Ревизия и запуск отопления')
 # cat3.sub_categories.create(name: 'Подключение, опрессовка отопительной системы')

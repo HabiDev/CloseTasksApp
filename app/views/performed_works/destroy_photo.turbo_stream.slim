@@ -1,0 +1,4 @@
+= turbo_stream.remove @photo
+/ - unless @task&.photos.present?
+/   = turbo_stream.remove "task_photos"
+= render_turbo_stream_flash_messages

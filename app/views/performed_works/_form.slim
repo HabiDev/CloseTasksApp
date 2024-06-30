@@ -6,7 +6,11 @@
   .row
     .col-12.col-md-12
       / = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
-      = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-work", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
+      / = f.input :sub_category_id, collection: Category.all, as: :grouped_select, group_method: :sub_categories, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-work", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
+      = f.input :sub_category_id, collection: SubCategory.all.map { |r| [r.name, r.id, { 'status': "#{r.workload}" }] }, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { id: "single-select-subcategory-work", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: "bootstrap-5" } }
+  .row#workload_performed.d-none
+    .col-12.col-md-8
+      = f.input :workload, required: true, autofocus: true, class: 'form-control form-control-sm'
   .row
     .col-12.col-md-3
       = f.input :time_start, required: true, autofocus: true, class: 'form-control form-control-sm'
@@ -15,6 +19,9 @@
   .row 
     .col-12.col-md-12
       = f.input :comment, autofocus: true, class: 'form-control form-control-sm'
+  .row 
+    .col-12.col-md-12
+      = f.input :photos, as: :file, input_html: { class: 'form-control form-control-sm my-3', multiple: true, direct_upload: true, include_hidden: false }
   .row 
     .col-12.text-end
       span.p-2

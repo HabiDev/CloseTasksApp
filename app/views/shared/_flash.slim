@@ -1,2 +1,10 @@
-- flash.each do |key, message|
-  = content_tag :div, raw(message), class: "alert alert-#{alert_manager(key)}", role: "alert"
+/ - flash.each do |key, message|
+/   = content_tag :div, raw(message), class: "alert alert-#{alert_manager(key)} alert-dismissible fade show", role: "alert",
+/     button.btn-close[type="button" data-bs-dismiss="alert" aria-label="Закрыть"]
+
+.position-fixed.end-0.p-2.myAlert
+  - flash.each do |key, value|
+    - next if key.to_s == "timedout"
+    div class="#{flash_class(key)} alert-dismissible fade show d-flex shadow-sm" role="alert" data-controller='flash'
+      = value
+      button.btn-close aria-label="Close" data-bs-dismiss="alert" type="button"

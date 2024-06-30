@@ -39,7 +39,7 @@ class CheckListsController < ApplicationController
           end
         end
         format.html { redirect_to check_list_path(@check_list), notice: t('notice.record_create') }
-        format.turbo_stream 
+        format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -51,7 +51,7 @@ class CheckListsController < ApplicationController
     respond_to do |format|
       if @check_list.update(check_list_params)
         format.html { redirect_to check_lists_path, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -63,7 +63,7 @@ class CheckListsController < ApplicationController
     if @check_list.destroy
       respond_to do |format|
         format.html { redirect_to check_lists_path, notice: t('notice.record_destroy') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:danger] = t('notice.record_destroy') }
       end
     else
       flash.now[:error] = t('notice.record_destroy_errors')

@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html { redirect_to users_path, notice: t('notice.record_create') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_path, notice: t('notice.record_edit') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
       else
         if @user.update_without_password(user_params)
           format.html { redirect_to users_path, notice: t('notice.record_edit') }
-          format.turbo_stream
+          format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
         else
           format.html { render :edit_password_reset, status: :unprocessable_entity }
         end
@@ -78,12 +78,12 @@ class UsersController < ApplicationController
     if @user.destroy
       respond_to do |format|
         format.html { redirect_to users_path, notice: t('notice.record_destroy') }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:danger] = t('notice.record_destroy') }
       end
       # flash[:success] = "Пользователь удачно удален."
       # redirect_to users_path, status: :see_other
     else
-      flash[:error] = t('notice.record_destroy_errors')
+      flash.now[:error] = t('notice.record_destroy_errors')
     end
   end
 
@@ -91,7 +91,11 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(locked_at: DateTime.now)
         format.html { redirect_to users_path, notice: t('notice.record_edit') }
+<<<<<<< HEAD
         format.turbo_stream { render turbo_stream: turbo_stream.replace(@user) }
+=======
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
+>>>>>>> FixTasks
       else
         format.html { render :lock, status: :unprocessable_entity }
       end
@@ -102,7 +106,11 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(locked_at: "")
         format.html { redirect_to users_path, notice: t('notice.record_edit') }
+<<<<<<< HEAD
         format.turbo_stream { render turbo_stream: turbo_stream.replace(@user) }
+=======
+        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
+>>>>>>> FixTasks
       else
         format.html { render :lock, status: :unprocessable_entity }
       end
