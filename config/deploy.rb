@@ -5,7 +5,7 @@ env_name = ".deploy.#{fetch(:stage)}.env"
 Dotenv.load(env_name)
 
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.17.1"
+lock "~> 3.18.1"
 
 set :rvm_type, :user
 set :rvm_ruby_version, '3.1.1'
