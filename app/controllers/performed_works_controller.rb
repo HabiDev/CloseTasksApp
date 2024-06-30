@@ -20,9 +20,17 @@ class PerformedWorksController < ApplicationController
     
   end
 
+  def new_photo;  end
+
+  def create_photo
+    @performed_work.photos.attach(params[:performed_work][:photos])
+    flash.now[:success] = t('notice.photos_create')
+  end
+
   def create
     @task = Task.find(performed_work_params[:task_id])
     @performed_work = @task.performed_works.build(performed_work_params)    # Not the final implementation!
+    @performed_work.photos.attach(params[:performed_work][:photos])
       # authorize completed_task   
     respond_to do |format|
       if @performed_work.save
@@ -58,6 +66,13 @@ class PerformedWorksController < ApplicationController
     end
   end
 
+  def destroy_photo
+    # @task = ListEvent.find(params[:task_id])
+    @photo = ActiveStorage::Attachment.find(params[:photo_id])
+    @photo.purge
+    flash.now[:success] = t('notice.photo_destroy')
+  end
+
   private
 
   def set_task
@@ -69,6 +84,6 @@ class PerformedWorksController < ApplicationController
   end
 
   def performed_work_params
-    params.require(:performed_work).permit(:task_id, :sub_category_id, :time_start, :time_end, :comment, :workload)
+    params.require(:performed_work).permit(:task_id, :sub_category_id, :time_start, :time_end, :comment, :workload, :photos)
   end
 end

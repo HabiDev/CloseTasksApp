@@ -168,6 +168,7 @@ ru:
         execution_limit_at: Срок испол.     
         close_at: Заявка закрыта
         created_at: Дата
+        photos: Прикрепить фото
       completed_task:
         division_id: Подразделение
         sub_category_id: Проделанная работа
@@ -183,6 +184,7 @@ ru:
         time_start: Время начало
         time_end: Время окончания
         comment: Дополнения
+        photos: Прикрепить фото
   date:
     abbr_day_names:
     - Вс

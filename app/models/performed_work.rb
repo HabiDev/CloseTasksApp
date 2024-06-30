@@ -1,4 +1,5 @@
 class PerformedWork < ApplicationRecord
+  has_many_attached :photos
   belongs_to :sub_category, class_name: 'SubCategory', foreign_key: :sub_category_id
   belongs_to :task
   counter_culture :sub_category

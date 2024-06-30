@@ -19,6 +19,9 @@ application.register("modal-mission", ModalMissionController)
 import ModalSearchController from "./modal_search_controller"
 application.register("modal-search", ModalSearchController)
 
+import ModalPhotoController from "./modal_photo_controller"
+application.register("modal-photo", ModalPhotoController)
+
 import Select2Controller from "./select2_controller"
 application.register("select2", Select2Controller)
 

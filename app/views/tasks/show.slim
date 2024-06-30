@@ -31,16 +31,27 @@
               = "#{t('sidebar.from')}: "
               span.fw-normal.small
                 = @task.division.name                        
-            .row.mx-1
+        .row.mx-1
+          .col-12.lh-1
+            span.small.fst-italic.fw-bold
+              small
+                = "#{@task.class.human_attribute_name(:description)}: "
+            .col-12.lh-1
+              span.small.fst-italic
+                small
+                  = @task.description                      
+            .row.pt-2
               .col-12.lh-1
-                span.small.fst-italic.fw-bold
-                  small
-                    = "#{@task.class.human_attribute_name(:description)}: "
-              .col-12.lh-1
-                span.small.fst-italic
-                  small
-                    = @task.description
-              hr.mt-1.mb-1            
+                span.small.fst-italic                    
+                  ul.list-inline.m-0.small
+                    - if (current_user.author_of?(@task) && (@task.in_work? || @task.in_rework? || @task.registred? || @task.delayed?))
+                      = link_to "Добавить фото:", new_photo_task_path(@task), data: { turbo_frame: "modal_photo" }, class: "fw-bold link-success link-offset-3 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                    - else 
+                      = "Фото: "
+                    = turbo_frame_tag "task_photos" 
+                      - if @task&.photos.present?                
+                        = render 'tasks/list_photos', resource: @task                  
+          hr.mt-1.mb-1            
         .row
           .col-12.text-end.lh-1                
             span.small.fst-italic.fw-bold
@@ -70,4 +81,5 @@
       .col-12.col-md-12.text-end.lh-1
         = turbo_frame_tag "performed_btn"
           = render "btn_performed", task: @task
+          
           

@@ -12,9 +12,22 @@
           span.small.fw-bold
             span.small
               = performed_work.sub_category.name
+      .row.mt-2.mx-1
+        .col-12.text-muted.lh-1
+          span.small.fst-italic                    
+            ul.list-inline.m-0.small
+              - if (current_user.executor_of?(performed_work.task) && (performed_work.task.in_work? || performed_work.task.in_rework? || performed_work.task.registred? || performed_work.task.delayed?))
+                = link_to "Добавить фото:", new_photo_performed_work_path(performed_work), data: { turbo_frame: "modal_photo" }, class: "fw-bold link-success link-offset-3 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+              - else 
+                = "Фото: "
+              = turbo_frame_tag "performed_work_photos" 
+                - if performed_work&.photos.present?                
+                  = render 'performed_works/list_photos', resource: performed_work 
     .row.mt-1
       .col-12.small.text-end.text-muted.lh-1
         span.small
           i.bi.bi-hourglass-split.small
             = time_work(performed_work)
+
+
 

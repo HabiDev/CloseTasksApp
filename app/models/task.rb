@@ -10,6 +10,7 @@ class Task < ApplicationRecord
                  delayed: 8,
                  canceled: 9
                 }
+  has_many_attached :photos
   has_many :performed_works, dependent: :destroy
   has_many :sub_categories, through: :performed_works
   belongs_to :category, optional: true
