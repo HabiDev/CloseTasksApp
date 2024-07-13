@@ -1,6 +1,9 @@
 ru:
   app:
-    title: Информационная система    
+    title: Информационная система 
+    order_day:
+      order_left_day: "до срока исполнения осталось: "
+      order_overdue_day: "срок исполнения просрочен на: "   
   navbar:
     brand: На главную
     home_link: Главная

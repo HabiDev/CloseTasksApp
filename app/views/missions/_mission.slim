@@ -21,15 +21,20 @@
     .col-12
       span.small.d-block.font-weight-bold.text-truncate
         = mission.control_executor.full_name
+        span.d-block
+          em
+            - if mission.execution_limit_at.present?
+              = mission_executed_at(mission)         
   .table-body-cell
     .row
       .col-11
-        = content_tag(:span, class: "small d-block font-weight-bold text-truncate text-center text-white bg-#{status_classing(mission)} bg-gradient")            
+        = content_tag(:span, class: "small d-block font-weight-bold text-truncate text-center text-white bg-#{status_classing(mission)} bg-gradient rounded")            
           = executed_mission_status(mission)
         span.d-block.small.text-muted.text-end
           em
             - if mission.execution_limit_at.present?
-              = "Cрок: #{l(mission.execution_limit_at, format: :normal)}"
+              = mission_execution_limited(mission)
+              / = "Cрок: #{l(mission.execution_limit_at, format: :normal)}"
       .col-1.p-0
         span.d-block.font-weight-bold
           = render "control", mission: mission

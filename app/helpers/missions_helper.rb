@@ -59,5 +59,64 @@ module MissionsHelper
     end
   end
 
+  def class_priority(resource)
+    if resource.high? 
+      "warning"
+    elsif resource.rush?   
+      "danger"
+    else
+     "info" 
+    end
+  end
+
+  def class_mission(resource)
+    if resource.execution_limit_at.present? && !resource.canceled?
+      if (Date.today > resource.execution_limit_at) 
+        "danger"
+      elsif (Date.today == resource.execution_limit_at) 
+        "warning" 
+      elsif resource.delayed?
+        "info"
+      else
+        "primary"
+      end 
+    elsif resource.canceled?
+      "default"
+    else
+      "success"
+    end
+
+  end
+
+  def mission_executed_at(resource)
+    if !resource.close_at.present? && resource.execution_limit_at.present?
+      if (Date.today < resource.execution_limit_at)
+        content_tag(:small, "#{'Срок исп.: '}" + "#{l(resource.execution_limit_at, format: :normal)}", class: 'text-success')
+      elsif (Date.today > resource.execution_limit_at)
+        content_tag(:small, "#{'Срок исп.: '}" + "#{l(resource.execution_limit_at, format: :normal)}", class: 'text-danger')
+      end
+    end        
+  end
+
+  def mission_execution_limited(resource)    
+    if !resource.close_at.present? && resource.execution_limit_at.present?
+      if (Date.today < resource.execution_limit_at)
+        content_tag(:small, "(Осталось: #{distance_of_time_in_words(Date.today, resource.execution_limit_at)})",
+          class: 'text-success')
+      elsif (Date.today > resource.execution_limit_at)
+        content_tag(:small, "(Просрочено: #{distance_of_time_in_words(Date.today, resource.execution_limit_at)})",
+          class: 'text-danger')
+      end
+    elsif resource.close_at.present?
+      if (resource.close_at < resource.execution_limit_at)
+        content_tag(:small, "(Досрочно за: #{distance_of_time_in_words(resource.close_at, resource.execution_limit_at)})",
+          class: 'text-success')
+      elsif (resource.close_at > resource.execution_limit_at)
+        content_tag(:small, "(Запаздание на: #{distance_of_time_in_words(resource.close_at, resource.execution_limit_at)})",
+          class: 'text-danger')
+      end
+    end 
+  end
+
 end
 
