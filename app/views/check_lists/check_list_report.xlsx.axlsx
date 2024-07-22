@@ -1,0 +1,66 @@
+xlsx_package.use_autowidth = true
+wb = xlsx_package.workbook
+
+margins = {
+  left: 1.00,
+  right: 1.00,
+  top: 1.00,
+  bottom: 1.00,
+}
+
+setup = {
+  fit_to_width: 1,
+  fit_to_height: 999,
+  orientation: :portrait,
+  paper_size: 9
+}
+
+options = {
+  grid_lines: false
+}
+
+wb_style = wb.styles
+header = wb_style.add_style bg_color: 'ADD8E6', b: true, alignment: { wrap_text: true,  horizontal: :center, vertical: :center }, border: { style: :thin, color: 'FF000000' }
+wrap_text = wb_style.add_style alignment: { horizontal: :left, vertical: :center }
+row_aligment = wb_style.add_style alignment: { horizontal: :center, vertical: :center }
+row_aligment_vertical = wb_style.add_style alignment: { vertical: :center }
+wrap = wb_style.add_style alignment: {wrap_text: true, vertical: :center}, border: { style: :thin, color: 'FF000000' }
+row_borders = wb_style.add_style border: { style: :thin, color: 'FF000000' },  alignment: { vertical: :center }
+row_borders_alg = wb_style.add_style border: { style: :thin, color: 'FF000000' },  alignment: { vertical: :center, horizontal: :center }
+row_group_check = wb_style.add_style alignment: { vertical: :center }, border: { style: :thin, color: 'FF000000', edges: %i[left right top bottom] }
+
+wb.add_worksheet(name: "Чек лист по ТО", 
+                 page_margins: margins,
+                 page_setup: setup,
+                 print_options: options) do |sheet|
+  processed = check_list.list_events.count - check_list.list_events.not_processed
+  sheet.add_row ["Дата проведения: #{l(check_list.created_at, format: :small)}"], height: 25, style: row_aligment_vertical, b: true
+  sheet.add_row ["Трговый объект: #{check_list.division.name}"], height: 25, style: row_aligment_vertical, b: true
+  sheet.add_row ["Составлен сотрудником: #{check_list.author.full_name}"], height: 25, style: row_aligment_vertical, b: true
+  sheet.add_row ["Результат: Пройдено - #{processed}. С замечаниями - #{check_list.list_events.not_processed}."], height: 25, style: row_aligment_vertical, b: true
+  sheet.merge_cells('A1:C1')
+  sheet.merge_cells('A2:C2')
+  sheet.merge_cells('A3:C3')    
+  sheet.merge_cells('A4:C4') 
+  sheet.add_row ["Наименование", "Результат (Да/Нет)", "Коментарии"], style: header, height: 30
+  number = 6
+
+  if check_list.list_events.present?
+    list_event_group = ""
+    check_list.list_events.each do |list_event|
+      result = (list_event.check_status > 0) ? "Да" : "Нет"
+      if list_event_group != list_event.sub_check_list.check_list_group.name
+        sheet.add_row [list_event.sub_check_list.check_list_group.name, "", ""], style: row_group_check, height: 25, b: true
+        sheet.merge_cells("A#{number}:C#{number}")
+        list_event_group = list_event.sub_check_list.check_list_group.name
+        number = number + 1
+      end
+      sheet.add_row [list_event.sub_check_list.name, result, list_event.comment]
+      number = number + 1
+    end
+  end
+  sheet.column_widths 65, 13, 40
+  sheet.col_style 0, wrap, row_offset: 6
+  sheet.col_style 2, wrap, row_offset: 6
+  sheet.col_style 1, row_borders_alg, row_offset: 6
+end

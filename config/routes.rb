@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   end
 
   resources :check_lists do
-    patch 'check_status', on: :member, defaults: { format: :turbo_stream }
+    patch 'check_status', on: :member, defaults: { format: :turbo_stream }    
   end
   resources :list_events, only: %w(edit update) do
     resources :list_event_tasks, only: %w(new create)
@@ -78,6 +78,7 @@ Rails.application.routes.draw do
               :sub_check_lists,
               :priorities, except: %w(show)
   end
+  get :report_check_list_xls, action: :report_check_list_xls, controller: 'check_lists'
   get 'edit_password_reset', to: 'users#edit_password_reset', as: :edit_password_reset
   patch 'password_reset', to: 'users#password_reset', as: :password_reset
   get 'executed_all', to: 'tasks#executed_all'
