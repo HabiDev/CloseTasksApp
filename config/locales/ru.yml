@@ -163,6 +163,7 @@ ru:
         category_id: Категория
         status: Статус
         description: Описание
+        sub_department_id: Подразделение
         executor_id: Исполнитель
         author_id: Cоздал
         execution_limit_at: Срок испол.     

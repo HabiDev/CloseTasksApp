@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, except: [ :index, :new, :create]
+  before_action :set_user, except: [ :index, :new, :create, :fetch_department]
   
   def index
     # authorize User
@@ -106,6 +106,15 @@ class UsersController < ApplicationController
       else
         format.html { render :lock, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def fetch_department
+    if params[:sub_department].present?
+      @users = User.select(:id, 'full_name as text').list_all(current_user).sub_department_user(params[:sub_department])
+      render json: @users.to_json
+    else
+      render json: []
     end
   end
 

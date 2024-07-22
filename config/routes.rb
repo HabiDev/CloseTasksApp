@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   # end
   devise_for :users, controllers: { registrations: 'users' }
   resources :users do 
+    collection do 
+      get :fetch_department
+    end
     get "lock", on: :member
     get "unlock", on: :member
   end

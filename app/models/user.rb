@@ -22,6 +22,8 @@ class User < ApplicationRecord
   has_many :missions, class_name: "Mission", foreign_key: "author_id", inverse_of: 'author'
   has_many :subordinates, class_name: "User", foreign_key: "manager_id"
   has_many :mission_executors, class_name: "MissionExecutor", foreign_key: "executor_id", dependent: :destroy
+
+  has_one :sub_department, through: :profile
   
   accepts_nested_attributes_for :profile, allow_destroy: true
 
@@ -39,6 +41,8 @@ class User < ApplicationRecord
                                                                    .and(where.not(id: control_executor))
                                                                 }
   scope :except_mission_executors, ->(executor_ids) { where.not(id: executor_ids) }
+
+  scope :sub_department_user, ->(sub_department) { joins(:profile).where(profile: { sub_department_id: sub_department }) }
 
   def full_name
     self.profile.full_name
