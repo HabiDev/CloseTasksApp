@@ -2,10 +2,10 @@ xlsx_package.use_autowidth = true
 wb = xlsx_package.workbook
 
 margins = {
-  left: 1,
-  right: 1,
-  top: 1,
-  bottom: 1,
+  left: 0.395,
+  right: 0.395,
+  top: 0.395,
+  bottom: 0.395
 }
 
 setup = {
@@ -36,7 +36,7 @@ wb.add_worksheet( name: "Отчет по проделанным работам",
                   page_setup: setup,
                   print_options: options) do |sheet| 
   sheet.add_row ["Проделанные работы #{period}"], height: 30, style: row_aligment_vertical
-  sheet.merge_cells('A1:H1')
+  sheet.merge_cells('A1:G1')
   sheet.add_row ["№ п/п", "Дата", "Время", "Сотрудник", "Торговый объект", "Проделанная работа", "Коментарий"], style: header, height: 30
   number = 1
   users.each do |user|
