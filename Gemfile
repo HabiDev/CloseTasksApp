@@ -83,6 +83,8 @@ gem 'pagy'
 
 gem "image_processing", ">= 1.2"
 
+gem "simple_calendar"
+
 # gem 'active_record_extended'
 
 group :development, :test do

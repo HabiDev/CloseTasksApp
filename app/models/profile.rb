@@ -1,4 +1,6 @@
 class Profile < ApplicationRecord
+  enum gender: { male: 0, female: 1 }
+
   belongs_to :user
   belongs_to :sub_department, class_name: 'SubDepartment', foreign_key: :sub_department_id
   belongs_to :position

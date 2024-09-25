@@ -78,7 +78,9 @@ export default class extends Controller {
     $('#single-select-user-missions-search').select2(); 
     $('#single-select-sub_category-task-search').select2();
     $('#single-select-executor-task').select2();
-    $('#single-select-sub-department-task').select2(); 
+    $('#single-select-sub-department-task').select2();
+    $('#single-select-division-mission').select2(); 
+    
     
     
     this.showWorkload();   

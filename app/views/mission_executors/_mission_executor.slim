@@ -1,32 +1,84 @@
 = turbo_frame_tag CompletedMission.new
-= turbo_frame_tag mission_executor
-  = content_tag(:div, class: "bd-callout bd-callout-info shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
-    .row
-      .col-11.lh-1
-        span.small.text-muted
-          small.fw-bold
-            = mission_executor_info(mission_executor)
+= turbo_frame_tag mission_executor  
+  .coment-container
+    .comment__row
+      .comment__column
+        .people-img
+          - if mission_executor.executor.male?
+            = image_tag 'avatar_none_men.png'
+          - else
+            = image_tag 'avatar_none_female.png'
+      .comment__column.w-100
+        .comment__header
+          .comment__people
+            .people__name
+              = executor_responsible(mission_executor)
+            .comment__date
+              / = mission_executor_status(mission_executor)
+              = mission_executor_executed_at(mission_executor)
+              = mission_executor_limited(mission_executor)
+              / = mission_executor_executed_at(mission_executor)
+          .comment-btns.opacity-50
+            = "#{l(mission_executor.created_at, format: :full)}" 
+            / = enum_l(mission_executor, :status)
+          / - if current_user.control_executor_of?(mission_executor.mission)
+          /   = render 'mission_executors/control', mission_executor: mission_executor 
+        .comment__text
+          / i.bi.bi-arrow-return-right.m-2.text-primary
+          span.fw-bolder.ps-2
+           | Поручение: 
+          = mission_executor.description
+          spam.d-block.fw-bold.mt-3.text-executed
+            | Исполнение:
+            span.small.fw-lighter.fw-lighter.text-decoration-underline
+              = mission_executor_status(mission_executor)
+        .comment__footer
+          .comment-btns
             - if current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
-              = link_to 'Исполнение', new_completed_mission_path(mission_executor_id: mission_executor), data: { turbo_frame: dom_id(CompletedMission.new) }, class: "mx-1"
+              = link_to t('button.execute.execution'), new_completed_mission_path(mission_executor_id: mission_executor), data: { turbo_frame: "modal" }, class: "btn btn-small btn-outline-success ms-1"
             - if current_user.subordinates.present? && current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
-               = link_to 'Добавить исполнителя', new_mission_executor_path(mission_id: mission_executor.mission), data: { turbo_frame: dom_id(MissionExecutor.new) }
+              = link_to t('button.execute.add_executor'), new_mission_executor_path(mission_id: mission_executor.mission), data: { turbo_frame: "modal" }, class: "btn btn-small btn-outline-primary ms-1" 
             - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && current_user.subordinates.present? && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
-                  = link_to t('button.execute.canceled'), canceled_mission_executor_path(mission_executor), data: { turbo_method: :patch }, class: "mx-1"       
-      .col-1.text-end.px-2.lh-1.small
-        / - if current_user.control_executor_of?(mission_executor.mission)
-        /   = render 'mission_executors/control', mission_executor: mission_executor 
-    .row.mx-1
-      .col-12.lh-1
-        span.small.fst-italic
-          span.small
-            = mission_executor.description
-    .row.mt-1
-      .col-12.small.text-end.text-muted.lh-1
-        span.small
-          i.bi.bi-hourglass-split.small
-            = "#{l(mission_executor.created_at, format: :full)}"
-  / = turbo_frame_tag CompletedMission.new 
-  = turbo_frame_tag "completed_missions_#{mission_executor.id}" 
-    = render partial: "completed_missions/completed_mission", collection: mission_executor.completed_missions
+              = link_to t('button.execute.canceled'), canceled_mission_executor_path(mission_executor), data: { turbo_method: :patch }, class: "btn btn-small btn-outline-secondary ms-1"       
+          / .comment__date.opacity-75
+            
+        
+        - if mission_executor.completed_missions.present?
+          span.d-block.fw-bold.text-success.ps-2.mb-1            
+          = turbo_frame_tag "completed_missions_#{mission_executor.id}" 
+            = render partial: "completed_missions/completed_mission", collection: mission_executor.completed_missions
+
+    hr.mt-2
+
+
+
+  / = content_tag(:div, class: "bd-callout bd-callout-info shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
+  /   .row
+  /     .col-12.lh-1
+  /       span.small.text-muted
+  /         small.fw-bold
+  /           = mission_executor_info(mission_executor)            
+  /           - if current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
+  /             = link_to 'Исполнение', new_completed_mission_path(mission_executor_id: mission_executor), data: { turbo_frame: dom_id(CompletedMission.new) }, class: "mx-1"
+  /           - if current_user.subordinates.present? && current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
+  /             = link_to 'Добавить исполнителя', new_mission_executor_path(mission_id: mission_executor.mission), data: { turbo_frame: dom_id(MissionExecutor.new) }
+  /           - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && current_user.subordinates.present? && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
+  /                 = link_to t('button.execute.canceled'), canceled_mission_executor_path(mission_executor), data: { turbo_method: :patch }, class: "mx-1"       
+  /     .col-1.text-end.px-2.lh-1.small
+  /       / - if current_user.control_executor_of?(mission_executor.mission)
+  /       /   = render 'mission_executors/control', mission_executor: mission_executor 
+  /   .row.mx-1
+  /     .col-12.lh-1
+  /       span.small.fst-italic
+  /         span.small
+  /           = mission_executor.description
+  /   .row.mt-1
+  /     .col-12.small.text-end.text-muted.lh-1
+  /       span.small
+  /         i.bi.bi-hourglass-split.small
+  /           = "#{l(mission_executor.created_at, format: :full)}"
+  / / = turbo_frame_tag CompletedMission.new 
+  / = turbo_frame_tag "completed_missions_#{mission_executor.id}" 
+  /   = render partial: "completed_missions/completed_mission", collection: mission_executor.completed_missions
 
 

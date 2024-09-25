@@ -149,6 +149,7 @@ ru:
       password: Введите пароль
       password_confirmation: Повторите пароль
       type_role: Тип пользователя
+      gender_type: Пол
   errors:
     messages:
       already_confirmed: уже подтверждён. Пожалуйста, попробуйте войти в систему

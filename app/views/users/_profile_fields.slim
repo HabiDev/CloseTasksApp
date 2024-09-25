@@ -2,6 +2,8 @@
   .row 
     .col-12.col-md-8
       = m.input :full_name, required: true, autofocus: true, class: 'form-control form-control-sm'
+    .col-12.col-md-4 
+      = m.input :gender, collection: enum_options_for_select(Profile, :gender), required: true, class: 'form-control form-control-sm', placeholder: "#{t('devise.placeholder.gender_type')}"
   .row
     .col-12.col-md-6
       = m.input :sub_department_id, collection: Department.all, as: :grouped_select, group_method: :sub_departments, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
