@@ -30,12 +30,12 @@ Rails.application.routes.draw do
     get "new_photo", on: :member
   end
   resources :missions do
-    patch 'approval', on: :member, defaults: { format: :turbo_stream }
-    patch 'rework', on: :member, defaults: { format: :turbo_stream }
-    patch 'executed', on: :member, defaults: { format: :turbo_stream }
-    patch 'delayed', on: :member, defaults: { format: :turbo_stream }  
-    patch 'not_executed', on: :member, defaults: { format: :turbo_stream }
-    patch 'canceled', on: :member, defaults: { format: :turbo_stream }     
+    get 'approval', on: :member
+    get 'rework', on: :member
+    get 'executed', on: :member
+    get 'delayed', on: :member
+    get 'not_executed', on: :member
+    get 'canceled', on: :member   
   end
 
   resources :check_lists do

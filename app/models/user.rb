@@ -33,10 +33,10 @@ class User < ApplicationRecord
   default_scope { joins(:profile).order(full_name: :asc) }
 
   scope :list_all, ->(current_user) { where.not(id: current_user).where(locked_at: nil) }  
-  scope :control_user, ->(current_user) { where(manager: current_user).or(where(id: current_user)).and(where(locked_at: nil)) }
+  scope :control_user, ->(current_user) { where(manager: current_user.manager).or(where(manager: current_user)).or(where(id: current_user)).and(where(locked_at: nil)) }
   scope :moderator_control_user, ->(current_user) { where(manager: current_user.manager).or(where(id: current_user)).and(where(locked_at: nil)) }
   scope :executor_users, ->(current_user) { where(manager: current_user)
-                                            # .or(where(manager: current_user.manager))
+                                            .or(where(manager: current_user.manager))
                                             .and(where(locked_at: nil))
                                             .and(where.not(id: current_user)) 
                                           }

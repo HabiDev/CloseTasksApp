@@ -19,6 +19,7 @@ class MissionExecutorsController < ApplicationController
     @executor_lists = executor_list(@mission)
   end
 
+
   def create
     @mission = Mission.find(mission_executor_params[:mission_id])
     if current_user.subordinates_of?(User.find(mission_executor_params[:executor_id]))
