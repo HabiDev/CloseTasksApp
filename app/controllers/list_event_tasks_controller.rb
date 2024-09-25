@@ -14,6 +14,7 @@ class ListEventTasksController < ApplicationController
                                                                  priority: @priority, 
                                                                  author_id: @list_event.check_list.author_id, 
                                                                  division_id: @list_event.check_list.division_id)) 
+    @task.photos.attach(params[:task][:photos])
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_path, notice: t('notice.record_create') }

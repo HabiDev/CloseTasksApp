@@ -8,7 +8,7 @@
           = mission.mission_type.name
   .table-body-cell
     .col-12
-      span.small.d-block.font-weight-bold.text-truncate
+      span.small.d-block.text-truncate
         = mission.description
       span.d-block.small.text-muted.text-truncate
         em
@@ -19,19 +19,49 @@
   /       = mission.description
   .table-body-cell
     .col-12
-      span.small.d-block.font-weight-bold.text-truncate
+      span.small.d-block.text-truncate
         = mission.control_executor.full_name
+        / span.d-block
+        /   em
+        /     - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator?
+        /       = mission_executor_executed_at(mission.mission_executors.executor_mission(current_user).last)
+        /     - else
+        /       = mission_executed_at(mission) 
+  .table-body-cell
+    .col-12
+      span.small.d-block.text-truncate
+        - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator?
+          = detlain_executor_executed_at(mission.mission_executors.executor_mission(current_user).last)
+        - else
+          = detlain_executed_at(mission) 
+      span.d-block.small
+        - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator?
+          = mission_closed(mission.mission_executors.executor_mission(current_user).last)
+        - else 
+          = mission_closed(mission)
+          
   .table-body-cell
     .row
       .col-11
-        = content_tag(:span, class: "small d-block font-weight-bold text-truncate text-center text-white bg-#{status_classing(mission)} bg-gradient")            
-          = executed_mission_status(mission)
+    
+        - if current_user.control_executor_of?(mission) || current_user.admin? || current_user.moderator?
+          = content_tag(:span, class: "d-block fw-bolder text-#{status_classing(mission)}")
+            / = content_tag(:span, class: "small d-block font-weight-bold text-truncate text-center text-white bg-#{status_classing(mission)} bg-gradient rounded")            
+            = executed_mission_status(mission)
+        - else
+          = content_tag(:span, class: "d-block fw-bolder text-#{status_classing(mission.mission_executors.executor_mission(current_user).last)}")
+            / = content_tag(:span, class: "small d-block font-weight-bold text-truncate text-center text-white bg-#{status_classing(mission.mission_executors.executor_mission(current_user).last)} bg-gradient rounded")            
+            = executed_mission_status(mission.mission_executors.executor_mission(current_user).last)
         span.d-block.small.text-muted.text-end
-          em
-            - if mission.execution_limit_at.present?
-              = "Cрок: #{l(mission.execution_limit_at, format: :normal)}"
+          em.small
+            - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator?
+              = mission_executor_limited(mission.mission_executors.executor_mission(current_user).last)
+            - else 
+              = mission_execution_limited(mission)
+              / = "Cрок: #{l(mission.execution_limit_at, format: :normal)}"
       .col-1.p-0
         span.d-block.font-weight-bold
           = render "control", mission: mission
+  
 
 

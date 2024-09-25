@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, except: [ :index, :new, :create]
+  before_action :set_user, except: [ :index, :new, :create, :fetch_department]
   
   def index
     # authorize User
@@ -110,6 +110,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def fetch_department
+    if params[:sub_department].present?
+      @users = User.select(:id, 'full_name as text').list_all(current_user).sub_department_user(params[:sub_department])
+      render json: @users.to_json
+    else
+      render json: []
+    end
+  end
+
   private
 
   def set_user
@@ -118,7 +127,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :type_role, :password, :password_confirmation, :manager_id,
-                                 profile_attributes: [:full_name, :sub_department_id, :position_id, :mobile])
+                                 profile_attributes: [:full_name, :sub_department_id, :position_id, :gender, :mobile])
   end
 
 end

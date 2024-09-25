@@ -32,4 +32,10 @@ module ApplicationHelper
     turbo_stream.prepend "flash", partial: "shared/flash"
   end
   
+  def show_badge(resource)    
+    tag(:span, class: "position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle") if resource.present?
+    # tag("span", class: ["position-absolute", "top-0", "start-100", "translate-middle", "p-2", "bg-danger", "border", "border-light", "rounded-circle"])
+  end 
+
+  
 end

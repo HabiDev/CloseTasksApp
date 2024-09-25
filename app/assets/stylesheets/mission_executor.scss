@@ -1,0 +1,75 @@
+// * {
+//     margin: 0;
+//     padding: 0;
+//     text-decoration: none;
+//     color: black;
+// }
+
+.coment-container {
+    width: auto;
+    margin-left: 10px;
+    // padding: 5px 0;
+    // margin-top: 5px;
+}
+
+.people-img img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.comment__row {
+    display: flex;
+    gap: 15px;
+}
+
+.comment__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment__people {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.comment__date{
+    font-style: italic;
+    font-size: 12px;
+    color: #424242;
+}
+
+.people__name{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.comment__text {
+    // margin-top: 20px;
+    // padding-left: 10px;
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 130%;
+    font-style: italic;
+}
+
+.comment-btns {
+    font-style: italic;
+    font-size: 11px;
+    color: #424242;
+}
+
+.comment__footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    align-items: center;
+
+}
+
+.btn-small {
+    --bs-btn-padding-y: .20rem; 
+    --bs-btn-padding-x: .5rem; 
+    --bs-btn-font-size: .65rem;
+}

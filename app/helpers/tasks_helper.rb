@@ -25,8 +25,8 @@ module TasksHelper
     end
   end
 
-  def show_badge(resource)    
-    tag(:span, class: "fa-stack fa-5x has-badge") if resource.exists?
-  end 
+  # def show_badge(resource)    
+  #   tag(:span, class: "fa-stack fa-5x has-badge") if resource.exists?
+  # end 
 end
 

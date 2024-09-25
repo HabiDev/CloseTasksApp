@@ -27,6 +27,7 @@ class CompletedMissionsController < ApplicationController
     respond_to do |format|
       if @completed_mission.save
         @completed_mission.mission_executor.update!(status: :in_approval)
+        @mission_executor.mission.mission_approvals.build(mission_executor_id: @mission_executor.id, coordinator_id:  @mission_executor.coordinator_id).save
         # format.html { redirect_to task_path(@task), notice: t('notice.record_create') }
         format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else

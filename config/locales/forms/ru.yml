@@ -1,6 +1,9 @@
 ru:
   app:
-    title: Информационная система    
+    title: Информационная система 
+    order_day:
+      order_left_day: "до срока исполнения осталось: "
+      order_overdue_day: "срок исполнения просрочен на: "   
   navbar:
     brand: На главную
     home_link: Главная
@@ -14,12 +17,18 @@ ru:
     sign_out: Выйти
     aria_label: Переключатель навигации 
   button:
+    all: Все
+    calendar: Календарь
     new: Добавить
+    create: Создать
     edit: Редактировать
     show: Просмотр
     destroy: Удалить
     back: Назад
     close: Закрыть
+    for_approval: Мне для согласования
+    approval: На согласовании
+    read: Поступило (новые)
     send_agree: Отправить на согласование
     reset_password: Изменение пароля
     lock_user: Заблокировать
@@ -30,6 +39,8 @@ ru:
       agree: Принять
       delayed: Отложить
       canceled: Отменить
+      execution: Исполнение
+      add_executor: Добавить исполнителя
     mission:
       add_executors: Доб. испол.
   submit:

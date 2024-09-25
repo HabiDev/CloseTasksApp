@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   # end
   devise_for :users, controllers: { registrations: 'users' }
   resources :users do 
+    collection do 
+      get :fetch_department
+    end
     get "lock", on: :member
     get "unlock", on: :member
   end
@@ -32,7 +35,7 @@ Rails.application.routes.draw do
     patch 'executed', on: :member, defaults: { format: :turbo_stream }
     patch 'delayed', on: :member, defaults: { format: :turbo_stream }  
     patch 'not_executed', on: :member, defaults: { format: :turbo_stream }
-    patch 'canceled', on: :member, defaults: { format: :turbo_stream } 
+    patch 'canceled', on: :member, defaults: { format: :turbo_stream }     
   end
 
   resources :check_lists do
@@ -82,5 +85,6 @@ Rails.application.routes.draw do
   get 'edit_password_reset', to: 'users#edit_password_reset', as: :edit_password_reset
   patch 'password_reset', to: 'users#password_reset', as: :password_reset
   get 'executed_all', to: 'tasks#executed_all'
+  get 'mission_calendar', to: 'missions#mission_calendar'
   root to: "static_pages#home"
 end

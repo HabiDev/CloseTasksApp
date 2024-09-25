@@ -2,18 +2,34 @@
   = f.error_notification
   .row
     .col-12.col-md-4
-      = f.input :number, disabled: true, autofocus: true, class: 'form-control form-control-sm'
-    .col-12.col-md-6
-      = f.input :mission_type_id, collection: MissionType.all, label_method: :name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'  
+      = f.input :mission_type_id, collection: MissionType.all, label_method: :name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm' 
+    .col-12.col-md-8
+       = f.input :division_id, collection: Division.list_active, 
+        label_method: :name, 
+        value_method: :id, 
+        autofocus: true, 
+        class: 'form-control form-control-sm', 
+        input_html: { id: "single-select-division-mission", 
+        data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: 'bootstrap-5' } }
   .row
     .col-12.col-md-12
       = f.input :description, as: :text, required: true, autofocus: true, class: 'form-control form-control-sm'
   .row
     .col-12.col-md-9
-      = f.input :control_executor_id, collection: User.control_user(current_user), label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'
+      = f.input :responsible_executor_id, collection: @user_list, label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'
     .col-12.col-md-3
       = f.input :execution_limit_at, as: :string, autofocus: true, class: 'form-control form-control-sm', input_html: { data: { controller: 'flatpickr' }, id: "mission_executor_limit_date" }
+  .row
+    .col-12.col-md-9
+      = f.input :control_executor_id, collection: @user_list, label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'
+  - if current_user&.moderator?
+    .row
+      .col-12.col-md-9
+        = f.input :author_id, collection: User.all, label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'
+
   .row 
     .col-12.col-md-12.text-end
       span.p-2
         = f.submit "#{t('submit.save')}", class: "btn btn-primary"
+
+/ User.control_user(current_user)

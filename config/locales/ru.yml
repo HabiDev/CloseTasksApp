@@ -1,4 +1,9 @@
 ru:
+  simple_calendar:
+    previous: "<<"
+    next: ">>"
+    week: Неделя
+    today: Сегодня
   activerecord:
     errors:
       access_denied: "В доступе отказано!"
@@ -14,6 +19,10 @@ ru:
           guide: Руководство
           moderator: Модератор
           user: Пользователь
+      profile:
+        genders:
+          male: Мужской
+          female: Женский
       task:
         statuses:
           registred: Зарегистрирован 
@@ -77,6 +86,7 @@ ru:
         password_confirmation: Подтверждение пароля        
       profile:
         full_name: Фамилия Имя Отчество
+        gender: Пол
         mobile: Телефон
         sub_department_id: Подразделение
         position_id: Должность
@@ -136,6 +146,8 @@ ru:
       mission:
         number: Номер
         mission_type_id: Категория
+        division_id: Подразделение
+        responsible_executor_id: Ответственный исполнитель
         status: Статус
         description: Описание
         control_executor_id: На контроль
@@ -163,6 +175,7 @@ ru:
         category_id: Категория
         status: Статус
         description: Описание
+        sub_department_id: Подразделение
         executor_id: Исполнитель
         author_id: Cоздал
         execution_limit_at: Срок испол.     

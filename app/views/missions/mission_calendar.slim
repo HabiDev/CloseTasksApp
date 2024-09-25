@@ -1,0 +1,14 @@
+.container
+  = turbo_frame_tag "modal"
+    .modal-header
+      h3#modalNewEditLabel.modal-title
+        | Календарь работ 
+      button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]         
+    .modal-body
+      = month_calendar(events: @mission_executors, attribute: :limit_at) do |date, missions|
+        = date.day
+        - missions.each do |mission|
+          span.badge.text-bg-success
+            i.bi.bi-alarm-fill
+            span.ms-1
+              = link_to "#{mission.mission.number}",  mission_path(mission.mission), class: "text-bg-success text-decoration-none"

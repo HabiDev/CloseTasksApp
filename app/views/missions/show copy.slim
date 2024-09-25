@@ -1,0 +1,68 @@
+= turbo_frame_tag "modal_mission"
+  .modal-header
+    h4#modalTaskLabel.modal-title.fw-bold.lh-1
+      = "#{@mission.model_name.human}(#{@mission.mission_type.name}), №#{@mission.number}"           
+    button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]
+  .modal-body
+    .card.shadow-sm.p-0.mb-3.bg-white.rounded-9
+      .card-body.pt-1.pb-1                
+        .col-12.text-end.lh-1
+          span.small.fst-italic.fw-bold.text-muted
+            span.small
+              = "#{@mission.class.human_attribute_name(:created_at)}: "
+            span.fw-normal.lh-1.small
+              = l(@mission.created_at, format: :normal)
+          .row
+            span.small.fst-italic.fw-bold.text-muted
+              span.small
+                = "#{@mission.class.human_attribute_name(:status)}: "
+              span.fw-normal.lh-1.small
+                = enum_l(@mission, :status)  
+          .row
+            span.small.fst-italic.fw-bold.text-muted
+              small.lh-1
+                = "#{@mission.class.human_attribute_name(:author_id)}: "
+              span.fst-italic.fw-normal.lh-1.small
+                = @mission.author.full_name 
+          hr.mt-1.mb-1
+        .row
+          .col-12.lh-1
+            span.small.fst-italic.fw-bold
+              small
+                = "#{@mission.class.human_attribute_name(:description)}: "
+          .col-12.lh-1
+            span.small.fst-italic
+              small
+                = @mission.description
+          hr.mt-1.mb-1            
+        .row
+          .col-12.text-end.lh-1                
+            span.small.fst-italic.fw-bold
+              small
+                = "#{@mission.class.human_attribute_name(:control_executor_id)}: "
+              span.fst-italic.fw-normal.small
+                = @mission.control_executor.full_name
+          .col-12.text-end.lh-1
+            - if @mission.execution_limit_at.present?
+              span.small.fst-italic.fw-bold
+                small
+                  = "#{@mission.class.human_attribute_name(:execution_limit_at)}: "                
+                span.fst-italic.fw-normal.small
+                  = l(@mission.execution_limit_at, format: :normal)
+            hr.mt-1.mb-2
+        - if !@mission.close_at.present?
+          .row
+            = render 'missions/btn_executor'
+        .row
+          .col-12.mt-2.lh-1          
+            = turbo_frame_tag MissionExecutor.new  
+            - if @mission_executors.present?
+              span.d-block.small.fw-bold.text-muted.p-2
+                = t('caption.mission_executors')                 
+            = turbo_frame_tag "mission_executors"                 
+              = render @mission_executors
+    / .row
+    /   .col-12.col-md-12.text-end.lh-1
+    /     = turbo_frame_tag "performed_btn"
+    /       = render "btn_performed", task: @task
+          

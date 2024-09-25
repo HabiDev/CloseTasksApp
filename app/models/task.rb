@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  attr_accessor :sub_department_id
+  
   before_save :set_execution_limit
   enum status: { registred: 0, 
                  in_work: 1, 
@@ -13,6 +15,7 @@ class Task < ApplicationRecord
   has_many_attached :photos
   has_many :performed_works, dependent: :destroy
   has_many :sub_categories, through: :performed_works
+
   belongs_to :category, optional: true
   belongs_to :division, optional: true
   belongs_to :author, class_name: "User", optional: true  
@@ -25,7 +28,7 @@ class Task < ApplicationRecord
   counter_culture :executor, column_name: "executor_tasks_count"
 
   validates :division_id, :author_id, :executor_id, :category_id, 
-            :priority_id, :description, presence: true
+            :priority_id, :description, :sub_department_id, presence: true
 
   default_scope { order(created_at: :desc, priority_id: :asc, status: :asc, division_id: :asc) }
 
@@ -34,6 +37,10 @@ class Task < ApplicationRecord
   scope :date_between, ->(date_start, date_end) { where('tasks.created_at >= ? AND tasks.created_at <= ?', date_start, date_end) }
 
   scope :user_tasks, ->(user) { where('tasks.executor_id = ? ', user) }
+
+  after_find do |task|
+    task.sub_department_id = task.executor.sub_department.id if task.executor.present?
+  end
 
   def looked!
     unless self.read_at.present?

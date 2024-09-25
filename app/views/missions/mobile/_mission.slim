@@ -1,12 +1,15 @@
 = turbo_frame_tag mission
-  = content_tag(:div, class: "bd-callout bd-callout-#{class_priority(mission.mission_type)} shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")  
+  = content_tag(:div, class: "callout callout-#{class_mission(mission)} shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")  
     .row              
-      .col-6.small.text-muted.lh-sm.fst-italic         
+      .col-4.small.text-muted.lh-sm.fst-italic         
         span.small.fw-bold
           = "#{l(mission.created_at, format: :small)} (#{mission.mission_type.name})"        
-      .col-6.small.text-end.lh-sm                  
+      .col-8.small.text-end.lh-sm                  
         span.small.text-end.text-truncate.fw-bold
           = enum_l(mission, :status)
+        span.d-block.small.fw-bold.fst-italic
+          - if mission.execution_limit_at.present?
+            = mission_execution_limited(mission)
     hr.m-1
       .row
         .col-12.small.lh-sm  
@@ -18,7 +21,8 @@
       .col-12.small.lh-1.text-end.text-muted
         span.small.fw-bold.fst-italic
           - if mission.execution_limit_at.present?
-           = "(#{mission.class.human_attribute_name(:execution_limit_at)}: #{l(mission.execution_limit_at, format: :normal)})" 
+            = mission_executed_at(mission)
+            / = "(#{mission.class.human_attribute_name(:execution_limit_at)}: #{l(mission.execution_limit_at, format: :normal)})" 
         hr.my-1
     .row.mt-1      
       .col-12.text-end.m-n5.small      

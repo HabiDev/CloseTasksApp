@@ -21,11 +21,19 @@ class MissionExecutorsController < ApplicationController
 
   def create
     @mission = Mission.find(mission_executor_params[:mission_id])
-    @mission_executor = @mission.mission_executors.build(mission_executor_params)    # Not the final implementation!
+    if current_user.subordinates_of?(User.find(mission_executor_params[:executor_id]))
+      save_params = mission_executor_params.merge!(parent_executor_id: current_user.id, coordinator_id:  current_user.id)
+    else
+      save_params = mission_executor_params.merge!(coordinator_id: current_user.id)
+    end
+    @mission_executor = @mission.mission_executors.build(save_params) 
+   # Not the final implementation!
       # authorize completed_task   
     respond_to do |format|
       if @mission_executor.save
         # format.html { redirect_to task_path(@task), notice: t('notice.record_create') }
+        @parent_executors = MissionExecutor.parent_for_executor(@mission)
+        @replies_executors = MissionExecutor.replies_for_executor(@mission)
         format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -67,6 +75,8 @@ class MissionExecutorsController < ApplicationController
 
   def rework
     @mission_executor.update!(status: :in_rework)
+    mission_approvals = @mission_executor.mission.mission_approvals
+    mission_approvals.where(mission_executor_id: @mission_executor.id).delete_all
     redirect_to edit_completed_mission_path(@mission_executor.completed_missions.last) 
   end
 
@@ -84,13 +94,22 @@ class MissionExecutorsController < ApplicationController
   private
 
   def executor_list(mission)
-    User.executor_users(current_user)
-    .except_control_on_author(mission.author, mission.control_executor)
-    .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+    if current_user.moderator?
+      User.moderator_executor_users(current_user)
+      .except_control_on_author(mission.author, mission.control_executor)
+      .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+    else
+      User.executor_users(current_user)
+      .except_control_on_author(mission.author, mission.control_executor)
+      .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+    end
+
   end 
 
   def update_status(*args) 
     @mission_executor.update!(*args)
+    mission_approvals = @mission_executor.mission.mission_approvals
+    mission_approvals.where(mission_executor_id: @mission_executor.id).delete_all
     render turbo_stream: turbo_stream.replace("mission_executor_#{@mission_executor.id}", @mission_executor)
   end
 

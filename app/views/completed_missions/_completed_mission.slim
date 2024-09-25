@@ -1,6 +1,6 @@
 = turbo_frame_tag completed_mission 
   .row.justify-content-end
-    .col-10
+    .col-12.mt-1.ps-5
       = content_tag(:div, class: "bd-callout bd-callout-warning shadow-sm p-2 mt-1 mb-2 rounded-9 text-dark bg-light")
         .row
           .col-11.small.lh-1
@@ -15,7 +15,7 @@
             / - if current_user.executor_of?(completed_mission.mission_executor)
             /   = render 'completed_missions/control', completed_mission: completed_mission
           .row.mx-1
-            .col-12.lh-1
+            .col-12.lh-2
               span.small.fw-bold
                 span.small
                   = completed_mission.description
@@ -24,4 +24,5 @@
               .col-12.smalltext-muted
                 span.small
                   = "Замечание: #{completed_mission.comment}"
+            
 
