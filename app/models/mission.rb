@@ -47,7 +47,7 @@ class Mission < ApplicationRecord
     if self.new_record?
       Mission.last.present? ? mission_number = Mission.last.id + 1 : mission_number = 1
       mission_type = MissionType.find(self.mission_type_id)    
-      self.number = "#{mission_number}/#{mission_type.name[0, 3].upcase}-#{Date.today.year}" 
+      self.number = "#{mission_number}/#{mission_type.name[0, 1].upcase}-#{Date.today.year}" 
     end
   end
 end

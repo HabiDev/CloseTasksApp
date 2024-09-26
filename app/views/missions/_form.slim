@@ -2,7 +2,7 @@
   = f.error_notification
   .row
     .col-12.col-md-4
-      = f.input :mission_type_id, collection: MissionType.all, label_method: :name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm' 
+      = f.input :mission_type_id, collection: MissionType.all, label_method: :name, value_method: :id, blank: false, required: true, autofocus: true, class: 'form-control form-control-sm' 
     .col-12.col-md-8
        = f.input :division_id, collection: Division.list_active, 
         label_method: :name, 
