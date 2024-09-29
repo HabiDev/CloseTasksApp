@@ -1,7 +1,7 @@
 = simple_form_for @mission_executor do |f|
   = f.error_notification    
   .row
-    .col-12.col-12
+    .col-12
       = f.input :mission_id, as: :hidden, class: 'form-control form-control-sm'
   .row
     .col-12.col-md-9
@@ -17,5 +17,5 @@
     .col-12.text-end
       span.p-2
         = f.submit "#{t('submit.save')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
-      span
-        = link_to "#{t('submit.cancel')}", mission_path(@mission), class: "btn btn-primary"
+      / span
+      /   = link_to "#{t('submit.cancel')}", mission_path(@mission), class: "btn btn-primary"

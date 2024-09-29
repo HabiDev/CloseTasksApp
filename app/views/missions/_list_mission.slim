@@ -15,7 +15,7 @@
     = link_to missions_path(q: { mission_executors_status_eq: 3 }), class: "btn btn-outline-secondary btn-sm ms-2 position-relative", data: { turbo_frame: 'missions_list' }
       = t('button.approval')
       = show_badge(current_user.mission_executors.in_approval) 
-    = link_to "#{t('button.calendar')}", mission_calendar_path, class: "btn btn-outline-danger btn-sm ms-2", data: { turbo_frame: 'modal' }
+    = link_to "#{t('button.calendar')}", mission_calendar_path, class: "btn btn-outline-danger btn-sm ms-2", data: { turbo_frame: "modal", bs_toggle: "tooltip", bs_text: "Заголовок поповера" }
       
   .col-12.col-md-2.text-end 
     = link_to "#{t('button.create')}",  new_mission_path, class: "btn btn-outline-success btn-sm ms-3", data: { turbo_frame: "modal" }
