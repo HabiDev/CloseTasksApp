@@ -9,7 +9,6 @@
     - if @mission_executor.mission.execution_limit_at.present?
       .col-12.col-md-3
         = f.input :limit_at, as: :string, required: true, autofocus: true,  input_html: { class: "form-control form-control-sm", data: { controller: 'flatpickr' }, id: "mission_mission_executors_limit_date" }
-  
   .row 
     .col-12.col-md-12
       = f.input :description, as: :text, autofocus: true,  input_html: { class: 'form-control form-control-sm' }
