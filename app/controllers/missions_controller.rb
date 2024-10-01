@@ -17,7 +17,7 @@ class MissionsController < ApplicationController
     @q.sorts = ['created_at desc', 'mission_type_id asc'] if @q.sorts.empty?
     @pagy, @missions = pagy(@q.result(disinct: true).includes(:author, :mission_type, :mission_executors, :mission_approvals), items: mobile_device? ? 3 : 10)
     # @missions = @missions.distinct
-    @users = User.all
+    @users = User.all.includes(:profile)
     @mission_types = MissionType.all
     @count_missions = @q.result.count
   end
@@ -25,11 +25,8 @@ class MissionsController < ApplicationController
   def new
     # authorize User
     @mission = Mission.new
-    if current_user.moderator? 
-      @user_list = User.moderator_control_user(current_user)
-    else
-      @user_list = User.control_user(current_user)
-    end
+    @user_list = set_user_list
+
     # @control_users = current_user.subordinates.merge!(current_user)
   end
 
@@ -37,19 +34,17 @@ class MissionsController < ApplicationController
     # authorize @division
     @mission.looked! unless current_user.author_of?(@mission) || current_user.control_executor_of?(@mission)
     @mission_executors = @mission.mission_executors
-    @parent_executors = MissionExecutor.parent_for_executor(@mission)
-    @replies_executors = MissionExecutor.replies_for_executor(@mission)
+    @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
+    @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
     @mission_executor = @mission_executors.where(executor: current_user)
     @mission_executor.each { |mission| mission.mission_looked! }
-    # if @mission_executors.where(executor: current_user).present?
-    #   @mission_executors.where(executor: current_user).mission_looked!
-    # end
-    # @completed_missions = @mission.completed_missions
+
   end
 
   def edit
     # authorize @division  
-    # @control_users = (current_user.subordinates << current_user) 
+    @user_list = set_user_list
+
   end
 
   def approval 
@@ -143,6 +138,12 @@ class MissionsController < ApplicationController
 
   def mission_calendar
     @mission_executors = current_user.mission_executors.opened
+    @mission_control_executors = Mission.opened(current_user)
+    # if @mission_executors.present?
+    #   @mission_executors.each do |mission_executor|
+    #     limit_executors
+    #   end
+    # end
   end
 
   private
@@ -159,6 +160,13 @@ class MissionsController < ApplicationController
   #   @priority = Category.find(task_params[:category_id]).priority
   # end
 
+  def set_user_list
+    if current_user.moderator? 
+      User.includes(:profile).moderator_control_user(current_user)
+    else
+      User.includes(:profile).control_user(current_user)
+    end
+  end
 
   def set_mission
     @mission = Mission.find(params[:id])

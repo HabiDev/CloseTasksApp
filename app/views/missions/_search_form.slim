@@ -1,4 +1,4 @@
-= search_form_for (@q), builder: SimpleForm::FormBuilder do |f|
+= search_form_for (@q) do |f|
   .row
     .col-6
       = f.input :created_at_gteq, label: "Начальная дата", input_html: { data: { controller: 'flatpickr' }, id: "start_search_date", class: "form-control form-control-sm" }
@@ -6,13 +6,13 @@
       = f.input :created_at_end_of_day_lteq, label: "Конечная дата", input_html: { data: { controller: 'flatpickr' }, id: "end_search_date", class: "form-control form-control-sm" }
   .row
     .col-12
-      = f.input :control_executor_id_eq, collection: User.all, label_method: :full_name, value_method: :id, label: "На контроле", input_html: { class: "form-control form-control-sm" }
+      = f.input :control_executor_id_eq, collection: @users, label_method: :full_name, value_method: :id, label: "На контроле", input_html: { class: "form-control form-control-sm" }
   .row
     .col-12
-      = f.input :author_id_eq, collection: User.all, label_method: :full_name, value_method: :id, label: "Инициатор", input_html: { class: "form-control form-control-sm" }
+      = f.input :author_id_eq, collection:@users, label_method: :full_name, value_method: :id, label: "Инициатор", input_html: { class: "form-control form-control-sm" }
   .row
     .col-12
-      = f.input :mission_executors_executor_id_in, collection: User.all, label_method: :full_name, value_method: :id, label: "Исполнитель", input_html: { id: "single-select-user-missions-search", class: "form-control form-control-sm", multiple: "multiple", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: 'bootstrap-5', allowClear: "true" } }
+      = f.input :mission_executors_executor_id_in, collection: @users, label_method: :full_name, value_method: :id, label: "Исполнитель", input_html: { id: "single-select-user-missions-search", class: "form-control form-control-sm", multiple: "multiple", data: { controller: "select2", placeholder: t('simple_form.prompt'), theme: 'bootstrap-5', allowClear: "true" } }
   .row
     .col-12
       = f.input :status_eq,  collection: Task.statuses.map {|k, v| [t("activerecord.enums.task.statuses.#{k}"), v]}, label: "Статус задания", input_html: { class: "form-control form-control-sm" }  

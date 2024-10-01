@@ -95,11 +95,11 @@ class MissionExecutorsController < ApplicationController
 
   def executor_list(mission)
     if current_user.moderator?
-      User.moderator_executor_users(current_user)
+      User.includes(:profile).moderator_executor_users(current_user)
       .except_control_on_author(mission.author, mission.control_executor)
       .except_mission_executors(mission.mission_executors.pluck(:executor_id))
     else
-      User.executor_users(current_user)
+      User.includes(:profile).executor_users(current_user)
       .except_control_on_author(mission.author, mission.control_executor)
       .except_mission_executors(mission.mission_executors.pluck(:executor_id))
     end

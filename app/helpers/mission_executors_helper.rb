@@ -36,11 +36,11 @@ module MissionExecutorsHelper
 
   def mission_executor_executed_at(resource)
     if !resource.close_at.present? && resource.limit_at.present?
-      if (Date.today < resource.limit_at) && ((resource.limit_at.to_datetime - Date.today).to_i) >= 1
+      if (Date.today.end_of_day < resource.limit_at.end_of_day) && ((resource.limit_at.end_of_day - Date.today.end_of_day).to_i) >= 1
         content_tag(:span, "#{'Срок исп.: '}" + "#{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-success')
-      elsif (Date.today > resource.limit_at)
+      elsif (Date.today.end_of_day > resource.limit_at.end_of_day)
         content_tag(:span, "#{'Срок исп.: '}" + "#{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-danger')
-      elsif ((resource.limit_at.to_datetime - Date.today).to_i) <= 1
+      elsif ((resource.limit_at.end_of_day - Date.today.end_of_day).to_i) <= 1
         content_tag(:span, "#{'Срок исп.: '}" + "#{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-warning')
       end
     else
@@ -50,11 +50,11 @@ module MissionExecutorsHelper
 
   def detlain_executor_executed_at(resource)
     if !resource.close_at.present? && resource.limit_at.present?
-      if (Date.today < resource.limit_at) && ((resource.limit_at.to_datetime - Date.today).to_i) >= 1
+      if (Date.today.end_of_day < resource.limit_at.end_of_day) && ((resource.limit_at.end_of_day - Date.today.end_of_day).to_i) >= 1
         content_tag(:span, "срок: #{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-success')
-      elsif (Date.today > resource.limit_at)
+      elsif (Date.today.end_of_day > resource.limit_at.end_of_day)
         content_tag(:span,  "срок: #{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-danger')
-      elsif ((resource.limit_at.to_datetime - Date.today).to_i) <= 1
+      elsif ((resource.limit_at.end_of_day - Date.today.end_of_day).to_i) <= 1
         content_tag(:span, "срок: #{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-warning')
       end
     else
@@ -72,19 +72,19 @@ module MissionExecutorsHelper
 
   def mission_executor_limited(resource)    
     if !resource.close_at.present? && resource.limit_at.present?
-      if (Date.today < resource.limit_at)
-        content_tag(:span, "(осталось: #{distance_of_time_in_words(Date.today, resource.limit_at)})",
+      if (Date.today.beginning_of_day < resource.limit_at.end_of_day)
+        content_tag(:span, "(осталось: #{distance_of_time_in_words(Date.today.end_of_day, resource.limit_at.end_of_day)})",
           class: 'text-success ps-1')
-      elsif (Date.today > resource.limit_at)
-        content_tag(:span, "(просрочено: #{distance_of_time_in_words(Date.today, resource.limit_at)})",
+      elsif (Date.today.beginning_of_day > resource.limit_at.end_of_day)
+        content_tag(:span, "(просрочено: #{distance_of_time_in_words(Date.today.end_of_day, resource.limit_at.end_of_day)})",
           class: 'text-danger ps-1')
       end
     elsif resource.close_at.present?
-      if (resource.close_at < resource.limit_at)
-        content_tag(:span, "(выпол. за: #{distance_of_time_in_words(resource.close_at, resource.limit_at)})",
+      if (resource.close_at.beginning_of_day < resource.limit_at.end_of_day)
+        content_tag(:span, "(выпол. за: #{distance_of_time_in_words(resource.close_at.end_of_day, resource.limit_at.end_of_day)})",
           class: 'text-success ps-1')
-      elsif (resource.close_at > resource.limit_at)
-        content_tag(:span, "(просрочено на: #{distance_of_time_in_words(resource.close_at, resource.limit_at)})",
+      elsif (resource.close_at.beginning_of_day > resource.limit_at.end_of_day)
+        content_tag(:span, "(просрочено на: #{distance_of_time_in_words(resource.close_at.end_of_day, resource.limit_at.end_of_day)})",
           class: 'text-danger ps-1')
       end
     end 

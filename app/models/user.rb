@@ -25,6 +25,8 @@ class User < ApplicationRecord
   has_many :mission_approvals, class_name: "MissionApproval", foreign_key: "coordinator_id", dependent: :destroy
 
   has_one :sub_department, through: :profile
+
+  delegate :full_name, to: :profile
   
   accepts_nested_attributes_for :profile, allow_destroy: true
 
@@ -51,9 +53,9 @@ class User < ApplicationRecord
 
   scope :sub_department_user, ->(sub_department) { joins(:profile).where(profile: { sub_department_id: sub_department }) }
 
-  def full_name
-    self.profile.full_name
-  end
+  # def full_name
+  #   self.profile.full_name
+  # end
 
   def male?
     self.profile.male?

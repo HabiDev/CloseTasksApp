@@ -29,6 +29,9 @@ class Mission < ApplicationRecord
             :description, presence: true
 
 
+  scope :opened, ->(control_user) { where(control_executor_id: control_user).where(close_at: nil) }
+
+
   def looked!
     unless self.read_at.present?
       self.read_at = DateTime.now

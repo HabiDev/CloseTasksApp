@@ -1,6 +1,8 @@
 .container
   = turbo_frame_tag "modal"
-    h1.h3.modal-header
-      = t('resource.edit')     
+    .modal-header
+      h3#modalNewEditLabel.modal-title
+        = t('resource.edit')  
+      button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]         
     .modal-body
-      = render 'missions/form', task: @mission
+      = render 'missions/form', mission: @mission

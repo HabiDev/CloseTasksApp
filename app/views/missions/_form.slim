@@ -14,11 +14,12 @@
   .row
     .col-12.col-md-12
       = f.input :description, as: :text, required: true, autofocus: true, class: 'form-control form-control-sm'
-  .row
-    .col-12.col-md-9
-      = f.input :responsible_executor_id, collection: @user_list, label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'
-    .col-12.col-md-3
-      = f.input :execution_limit_at, as: :string, autofocus: true, class: 'form-control form-control-sm', input_html: { data: { controller: 'flatpickr' }, id: "mission_executor_limit_date" }
+  - if f.object.new_record?
+    .row
+      .col-12.col-md-9
+        = f.input :responsible_executor_id, collection: @user_list, label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'
+      .col-12.col-md-3
+        = f.input :execution_limit_at, as: :string, autofocus: true, class: 'form-control form-control-sm', input_html: { data: { controller: 'flatpickr' }, id: "mission_executor_limit_date" }
   .row
     .col-12.col-md-9
       = f.input :control_executor_id, collection: @user_list, label_method: :full_name, value_method: :id, required: true, autofocus: true, class: 'form-control form-control-sm'

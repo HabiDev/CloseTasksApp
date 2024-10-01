@@ -36,6 +36,10 @@ class MissionExecutor < ApplicationRecord
       self.read_at = DateTime.now
       self.status = :in_work
       self.save!
+      if self.mission.registred?
+        self.mission.status = :in_work
+        self.mission.save
+      end
     end
   end
 
