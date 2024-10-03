@@ -18,7 +18,6 @@ class MissionExecutor < ApplicationRecord
 
   has_many :completed_missions, dependent: :destroy
 
-
   validates :mission_id, :executor_id, :parent_executor_id, :description, presence: true
 
   default_scope { order(parent_executor_id: :asc) }

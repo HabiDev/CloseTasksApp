@@ -31,10 +31,15 @@ hr.mt-2.mb-0
             /   = t("#{@missions.model.human_attribute_name(:mission_type_id)}")
             / .table-header-cell.col-12.col-md-3
             = t("#{@missions.model.human_attribute_name(:description)}")
-          .table-header-cell.col-12.col-md-2
-            = t("#{@missions.model.human_attribute_name(:control_executor_id)}")
+          .table-header-cell.col-12.col-md-3
+            | На контр./Отв. испол.
+            / = t("#{@missions.model.human_attribute_name(:control_executor_id)}")
+          / .table-header-cell.col-12.col-md-2
+          /   / = t("#{@missions.model.human_attribute_name(:execution_limit_at)}")
+          /   | Отв. испол.
           .table-header-cell.col-12.col-md-2
             / = t("#{@missions.model.human_attribute_name(:execution_limit_at)}")
+    
             | Срок/Выпол.
           .table-header-cell.col-12.col-md-2
             = t("#{@missions.model.human_attribute_name(:status)}")  

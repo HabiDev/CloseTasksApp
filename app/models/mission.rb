@@ -26,7 +26,7 @@ class Mission < ApplicationRecord
   has_many :mission_approvals, dependent: :destroy
 
   validates :author_id, :control_executor_id, :mission_type_id, 
-            :description, presence: true
+            :description, :responsible_executor_id, presence: true
   
   alias_attribute :limit_at, :execution_limit_at
 

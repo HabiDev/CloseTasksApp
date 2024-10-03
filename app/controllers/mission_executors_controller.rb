@@ -22,12 +22,16 @@ class MissionExecutorsController < ApplicationController
 
   def create
     @mission = Mission.find(mission_executor_params[:mission_id])
-    if current_user.subordinates_of?(User.find(mission_executor_params[:executor_id]))
-      save_params = mission_executor_params.merge!(parent_executor_id: current_user.id, coordinator_id:  current_user.id)
+    if mission_executor_params[:executor_id].present?
+      if current_user.subordinates_of?(User.find(mission_executor_params[:executor_id]))
+        save_params = mission_executor_params.merge!(parent_executor_id: current_user.id, coordinator_id:  current_user.id)
+      else
+        save_params = mission_executor_params.merge!(coordinator_id: current_user.id)
+      end
+      @mission_executor = @mission.mission_executors.build(save_params)
     else
-      save_params = mission_executor_params.merge!(coordinator_id: current_user.id)
+      @mission_executor =  @mission.mission_executors.build(mission_executor_params)
     end
-    @mission_executor = @mission.mission_executors.build(save_params) 
    # Not the final implementation!
       # authorize completed_task   
     respond_to do |format|
@@ -38,6 +42,7 @@ class MissionExecutorsController < ApplicationController
         format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
+        @executor_lists = executor_list(@mission)
       end
     end
   end
@@ -50,6 +55,7 @@ class MissionExecutorsController < ApplicationController
         format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
+        @executor_lists = executor_list(@mission)
       end
     end
   end

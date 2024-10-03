@@ -24,7 +24,7 @@ class MissionsController < ApplicationController
 
   def new
     # authorize User
-    @mission = Mission.new
+    @mission = Mission.new(control_executor: current_user)
     @user_list = set_user_list
 
     # @control_users = current_user.subordinates.merge!(current_user)
@@ -108,6 +108,7 @@ class MissionsController < ApplicationController
         format.turbo_stream { flash.now[:success] = t('notice.record_create') }
       else
         format.html { render :new, status: :unprocessable_entity }
+        @user_list = set_user_list
       end
     end
   end
@@ -120,6 +121,7 @@ class MissionsController < ApplicationController
         format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :edit, status: :unprocessable_entity }
+        @user_list = set_user_list
       end
     end
   end

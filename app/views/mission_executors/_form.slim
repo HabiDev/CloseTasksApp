@@ -16,5 +16,5 @@
     .col-12.text-end
       span.p-2
         = f.submit "#{t('submit.save')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
-      span
-        = link_to "#{t('submit.cancel')}", mission_path(@mission), class: "btn btn-primary"
+      / span
+      /   = link_to "#{t('submit.cancel')}", mission_path(@mission), class: "btn btn-primary"

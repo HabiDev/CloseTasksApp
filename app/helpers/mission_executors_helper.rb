@@ -81,10 +81,10 @@ module MissionExecutorsHelper
       end
     elsif resource.close_at.present?
       if (resource.close_at.beginning_of_day < resource.limit_at.end_of_day)
-        content_tag(:span, "(выпол. за: #{distance_of_time_in_words(resource.close_at.end_of_day, resource.limit_at.end_of_day)})",
+        content_tag(:span, "(выпол.: #{distance_of_time_in_words(resource.close_at.end_of_day, resource.limit_at.end_of_day)})",
           class: 'text-success ps-1')
       elsif (resource.close_at.beginning_of_day > resource.limit_at.end_of_day)
-        content_tag(:span, "(просрочено на: #{distance_of_time_in_words(resource.close_at.end_of_day, resource.limit_at.end_of_day)})",
+        content_tag(:span, "(просрочено: #{distance_of_time_in_words(resource.close_at.end_of_day, resource.limit_at.end_of_day)})",
           class: 'text-danger ps-1')
       end
     end 
