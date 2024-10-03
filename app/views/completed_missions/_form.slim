@@ -18,5 +18,5 @@
           = f.submit "#{t('submit.save')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
         - else
           = f.submit "#{t('submit.agree')}", class: "btn btn-primary", data: { turbo_frame: "modal" }
-      span
-        = link_to "#{t('submit.cancel')}", mission_path(@mission_executor.mission), class: "btn btn-primary"
+      / span
+      /   = link_to "#{t('submit.cancel')}", mission_path(@mission_executor.mission), class: "btn btn-primary"

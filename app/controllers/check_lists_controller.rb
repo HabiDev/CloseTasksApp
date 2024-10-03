@@ -1,6 +1,6 @@
 class CheckListsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_check_list, except: [ :index, :new, :create]
+  before_action :set_check_list, except: [ :index, :new, :create, :report_check_list_xls]
   
   def index
     # authorize User
@@ -13,6 +13,7 @@ class CheckListsController < ApplicationController
     end
     @q.sorts = ['created_at desc'] if @q.sorts.empty?
     @pagy, @check_lists = pagy(@q.result(disinct: true).includes(:author, :check_list_type, :division), items: mobile_device? ? 3 : 10) 
+    $report_check_list = @q.result(disinct: true).includes(:author, :check_list_type, :division)
     @users = User.all
     # @mission_types = MissionType.all
     # @count_missions = @q.result.count
@@ -70,7 +71,29 @@ class CheckListsController < ApplicationController
     end
   end
 
+  def report_check_list_xls
+    respond_to do |format|
+      format.zip { respond_with_zipped_tasks($report_check_list) }
+    end
+  end
+
   private
+
+  def respond_with_zipped_tasks(check_lists)  
+    # users = User.where(id: ( @report_tasks.pluck(:user_id).uniq))
+    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+      check_lists.each do |check_list|
+        zos.put_next_entry "TO_#{check_list.division_id}.xlsx"
+        zos.print render_to_string(
+          layout: false, handlers: [:axlsx], formats: [:xlsx],
+          template: 'check_lists/check_list_report',
+          locals: { check_list:  check_list }
+        )
+      end
+    end
+    compressed_filestream.rewind
+    send_data compressed_filestream.read, filename: 'check_list_report.zip'    
+  end
 
   def partial_device
     if mobile_device?

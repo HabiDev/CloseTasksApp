@@ -14,7 +14,7 @@
       .row
         .col-12.small.lh-sm  
           span.fw-bold
-            = "#{mission.class.human_attribute_name(:author)}: #{mission.author.full_name}" 
+            = "#{mission.class.human_attribute_name(:author_id)}: #{mission.author.full_name}" 
       .row.mx-1
         span.d-block.small.text-truncate.text-muted
           = "#{mission.class.human_attribute_name(:description)}: #{mission.description}"

@@ -1,6 +1,6 @@
 .row
   .col-12.col-md-12.text-end
-    / = link_to t('sidebar.panels.report_xls'), report_tasks_xls_path(format: :zip), class: "btn btn-outline-primary btn-sm mx-1"
+    = link_to t('sidebar.panels.report_xls'), report_check_list_xls_path(format: :zip), class: "btn btn-outline-primary btn-sm mx-1"
     = link_to "#{t('button.new')}",  new_check_list_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: "modal" }
 
 .row

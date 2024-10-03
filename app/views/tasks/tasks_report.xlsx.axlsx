@@ -2,10 +2,10 @@ xlsx_package.use_autowidth = true
 wb = xlsx_package.workbook
 
 margins = {
-  left: 1,
-  right: 1,
-  top: 1,
-  bottom: 1,
+  left: 0.395,
+  right: 0.395,
+  top: 0.395,
+  bottom: 0.395
 }
 
 setup = {

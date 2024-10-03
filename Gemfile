@@ -85,6 +85,10 @@ gem "image_processing", ">= 1.2"
 
 gem "simple_calendar"
 
+gem "ed25519"
+
+gem "bcrypt_pbkdf"
+
 # gem 'active_record_extended'
 
 group :development, :test do
@@ -106,6 +110,7 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
+  gem 'capistrano-rails-console', require: false
 
   gem 'sshkit-sudo'
   gem 'pry'

@@ -174,7 +174,9 @@ class MissionsController < ApplicationController
 
   def update_status(*args) 
     @mission.update!(*args)
-    render turbo_stream: turbo_stream.replace(@mission, partial: partial_device, locals: { mission: @mission} )
+    @mission.mission_approvals.delete_all
+    redirect_to missions_path
+    # render turbo_stream: turbo_stream.replace(@mission, partial: partial_device, locals: { mission: @mission} )
   end
 
   def mission_params
