@@ -21,7 +21,7 @@ class MissionExecutor < ApplicationRecord
 
   validates :mission_id, :executor_id, :parent_executor_id, :description, presence: true
 
-  default_scope { order(parent_executor_id: :asc, limit_at: :desc) }
+  default_scope { order(parent_executor_id: :asc) }
 
   scope :last_status, ->{ order(updated_at: :desc) }
 
@@ -44,7 +44,7 @@ class MissionExecutor < ApplicationRecord
   end
 
   def self.parent_for_executor(mission)
-    MissionExecutor.where("mission_id = ? and parent_executor_id = 0", mission).order(["responsible", "limit_at ASC"])
+    MissionExecutor.includes(executor: :profile).where("mission_id = ? and parent_executor_id = 0", mission).order(["responsible DESC", "limit_at ASC", "profiles_users.full_name ASC"])
   end
 
   def self.replies_for_executor(mission)

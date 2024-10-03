@@ -30,12 +30,12 @@
   .table-body-cell
     .col-12
       span.small.d-block.text-truncate
-        - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator?
+        - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator? && !current_user.guide?
           = detlain_executor_executed_at(mission.mission_executors.executor_mission(current_user).last)
         - else
           = detlain_executed_at(mission) 
       span.d-block.small
-        - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator?
+        - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator? && !current_user.guide?
           = mission_closed(mission.mission_executors.executor_mission(current_user).last)
         - else 
           = mission_closed(mission)
@@ -44,7 +44,7 @@
     .row
       .col-11
     
-        - if current_user.control_executor_of?(mission) || current_user.admin? || current_user.moderator?
+        - if current_user.control_executor_of?(mission) || current_user.admin? || current_user.moderator? || current_user.guide?
           = content_tag(:span, class: "d-block fw-bolder text-#{status_classing(mission)}")
             / = content_tag(:span, class: "small d-block font-weight-bold text-truncate text-center text-white bg-#{status_classing(mission)} bg-gradient rounded")            
             = executed_mission_status(mission)
@@ -54,7 +54,7 @@
             = executed_mission_status(mission.mission_executors.executor_mission(current_user).last)
         span.d-block.small.text-muted.text-end
           em.small
-            - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator?
+            - if mission.execution_limit_at.present? && !current_user.control_executor_of?(mission) && !current_user.admin? && !current_user.moderator? && !current_user.guide?
               = mission_executor_limited(mission.mission_executors.executor_mission(current_user).last)
             - else 
               = mission_execution_limited(mission)

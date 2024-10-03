@@ -23,7 +23,14 @@
               small.lh-1
                 = "#{@mission.class.human_attribute_name(:author_id)}: "
               span.fst-italic.fw-normal.lh-1.small
-                = @mission.author.full_name 
+                = @mission.author.full_name
+          - if @mission.division.present?
+            .row
+              span.small.fst-italic.fw-bold.text-muted
+                small.lh-1
+                  = "#{@mission.class.human_attribute_name(:division_id)}/Торговый объект: "
+                span.fst-italic.fw-normal.lh-1.small.text-muted
+                  = @mission.division.name 
           hr.mt-1.mb-1
         .row
           .col-12.lh-1
@@ -49,6 +56,13 @@
                   = "#{@mission.class.human_attribute_name(:execution_limit_at)}: "                
                 span.fst-italic.fw-normal.small
                   = l(@mission.execution_limit_at, format: :normal)
+            - if @mission.close_at.present?
+              .col-12.text-end.lh-3
+                span.small.fst-italic.fw-bold
+                  small
+                    = "Исполнено (закрыта): "                
+                  span.fst-italic.fw-normal.small
+                    = l(@mission.close_at, format: :normal)
             hr.mt-1.mb-2
         - if !@mission.close_at.present?
           .row

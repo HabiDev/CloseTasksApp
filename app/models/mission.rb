@@ -27,9 +27,13 @@ class Mission < ApplicationRecord
 
   validates :author_id, :control_executor_id, :mission_type_id, 
             :description, presence: true
+  
+  alias_attribute :limit_at, :execution_limit_at
 
 
   scope :opened, ->(control_user) { where(control_executor_id: control_user).where(close_at: nil) }
+
+
 
 
   def looked!

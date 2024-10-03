@@ -14,7 +14,7 @@ class MissionsController < ApplicationController
     else
       @q = Mission.includes(:author, :control_executor, :mission_type).ransack(params[:q])
     end
-    @q.sorts = ['created_at desc', 'mission_type_id asc'] if @q.sorts.empty?
+    @q.sorts = ['created_at DESC', 'limit_at ASC', 'mission_type_id ASC'] if @q.sorts.empty?
     @pagy, @missions = pagy(@q.result(disinct: true).includes(:author, :mission_type, :mission_executors, :mission_approvals), items: mobile_device? ? 3 : 10)
     # @missions = @missions.distinct
     @users = User.all.includes(:profile)

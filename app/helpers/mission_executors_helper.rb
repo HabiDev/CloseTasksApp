@@ -43,7 +43,7 @@ module MissionExecutorsHelper
       elsif ((resource.limit_at.end_of_day - Date.today.end_of_day).to_i) <= 1
         content_tag(:span, "#{'Срок исп.: '}" + "#{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-warning')
       end
-    else
+    elsif resource.limit_at.present?
       content_tag(:span, "#{'Срок исп.: '}" + "#{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-secondary')
     end        
   end
@@ -57,7 +57,7 @@ module MissionExecutorsHelper
       elsif ((resource.limit_at.end_of_day - Date.today.end_of_day).to_i) <= 1
         content_tag(:span, "срок: #{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-warning')
       end
-    else
+    elsif resource.limit_at.present?
       content_tag(:span, "срок: #{l(resource.limit_at, format: :normal)}", class: 'ps-1 text-secondary')
     end        
   end
