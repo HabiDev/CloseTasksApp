@@ -139,13 +139,16 @@ class MissionsController < ApplicationController
   end
 
   def mission_calendar
-    @mission_executors = current_user.mission_executors.opened
+    @mission_executors = current_user.mission_executors.opened(current_user)
     @mission_control_executors = Mission.opened(current_user)
-    # if @mission_executors.present?
-    #   @mission_executors.each do |mission_executor|
-    #     limit_executors
-    #   end
-    # end
+    @events = []
+    @mission_control_executors.each do |control_executor|
+      @events << Event.new(mission_id: control_executor.id, number: control_executor.number, limit_at: control_executor.limit_at)
+    end
+
+    @mission_executors.each do |mission_executor|
+      @events << Event.new(mission_id: mission_executor.mission_id, number: mission_executor.mission.number, limit_at: mission_executor.limit_at)
+    end
   end
 
   private
@@ -158,16 +161,13 @@ class MissionsController < ApplicationController
     end
   end
 
-  # def set_priority
-  #   @priority = Category.find(task_params[:category_id]).priority
-  # end
-
   def set_user_list
-    if current_user.moderator? 
-      User.includes(:profile).moderator_control_user(current_user)
-    else
-      User.includes(:profile).control_user(current_user)
-    end
+    # if current_user.moderator? 
+    #   User.includes(:profile).moderator_control_user(current_user)
+    # else
+    #   User.includes(:profile).control_user(current_user)
+    # end
+    User.includes(:profile).control_user(current_user)
   end
 
   def set_mission

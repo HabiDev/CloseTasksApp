@@ -28,7 +28,7 @@ class MissionExecutor < ApplicationRecord
 
   scope :responsible_mission, ->{ where(responsible: true)}
 
-  scope :opened, ->{ where(close_at: nil)}
+  scope :opened, ->(current_user) { joins(:mission).where.not(mission: { control_executor: current_user } ).where(close_at: nil) }
 
   def mission_looked!
     unless self.read_at.present?

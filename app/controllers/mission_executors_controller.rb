@@ -101,15 +101,18 @@ class MissionExecutorsController < ApplicationController
   private
 
   def executor_list(mission)
-    if current_user.moderator?
-      User.includes(:profile).moderator_executor_users(current_user)
-      .except_control_on_author(mission.author, mission.control_executor)
-      .except_mission_executors(mission.mission_executors.pluck(:executor_id))
-    else
-      User.includes(:profile).executor_users(current_user)
-      .except_control_on_author(mission.author, mission.control_executor)
-      .except_mission_executors(mission.mission_executors.pluck(:executor_id))
-    end
+    # if current_user.moderator?
+    #   User.includes(:profile).moderator_executor_users(current_user)
+    #   .except_control_on_author(mission.author, mission.control_executor)
+    #   .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+    # else
+    #   User.includes(:profile).executor_users(current_user)
+    #   .except_control_on_author(mission.author, mission.control_executor)
+    #   .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+    # end
+    User.includes(:profile).executor_users(current_user)
+    .except_control_on_author(mission.author, mission.control_executor)
+    .except_mission_executors(mission.mission_executors.pluck(:executor_id))
 
   end 
 
