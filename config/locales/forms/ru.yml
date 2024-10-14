@@ -37,7 +37,10 @@ ru:
       executed: Добавить работу
       rework: На доработку
       agree: Принять
-      delayed: Отложить
+      delayed: Новый срок
+      delayed_week: Продлить на неделю
+      delayed_month: Продлить на месяц
+      delayed_own: Указать дату
       canceled: Отменить
       execution: Исполнение
       add_executor: Добавить исполнителя

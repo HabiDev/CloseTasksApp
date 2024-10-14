@@ -110,10 +110,16 @@ class MissionExecutorsController < ApplicationController
     #   .except_control_on_author(mission.author, mission.control_executor)
     #   .except_mission_executors(mission.mission_executors.pluck(:executor_id))
     # end
-    User.includes(:profile).executor_users(current_user)
-    .except_control_on_author(mission.author, mission.control_executor)
-    .except_mission_executors(mission.mission_executors.pluck(:executor_id))
-
+    if params[:manager].present? 
+      User.includes(:profile).executor_users_yours(current_user)
+      # .except_author(mission.author)
+      .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+  
+    else
+      User.includes(:profile).executor_users(current_user)
+      # .except_author(mission.author)
+      .except_mission_executors(mission.mission_executors.pluck(:executor_id))
+    end
   end 
 
   def update_status(*args) 

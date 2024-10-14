@@ -48,6 +48,18 @@ class Mission < ApplicationRecord
     self.mission_executors.where(executor: user).pluck(:status)
   end
 
+  # def extend_deadline(period)
+  #   if period.present? && elf.execution_limit_at.present?
+  #     day = (period - self.execution_limit_at).to_i
+  #     self.execution_limit_at = self.execution_limit_at + day.days
+  #     self.save!
+  #     self.mission_executors.where(close_at: nil).each do |mission_executor|
+  #       mission_executor.limit_at = mission_executor.limit_at + day.days 
+  #       mission_executor.save!
+  #     end
+  #   end
+  # end
+
   private
 
   def set_number_mission

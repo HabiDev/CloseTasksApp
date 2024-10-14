@@ -115,7 +115,7 @@ module MissionsHelper
         content_tag(:small, "(просрочено: #{distance_of_time_in_words(Date.today, resource.execution_limit_at)})",
           class: 'text-danger')
       end
-    elsif resource.close_at.present?
+    elsif resource.close_at.present? && resource.execution_limit_at.present?
       if (resource.close_at.beginning_of_day < resource.execution_limit_at.end_of_day)
         content_tag(:small, "(выпол.: #{distance_of_time_in_words(resource.close_at, resource.execution_limit_at)})",
           class: 'text-success')

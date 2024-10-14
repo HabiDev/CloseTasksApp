@@ -35,13 +35,17 @@ class User < ApplicationRecord
   default_scope { joins(:profile).order(full_name: :asc) }
 
   scope :list_all, ->(current_user) { where.not(id: current_user).where(locked_at: nil) }  
-  scope :control_user, ->(current_user) { where(manager: current_user.manager).or(where(manager: current_user)).or(where(id: current_user)).and(where(locked_at: nil)) }
+  scope :control_user, ->(current_user) { where(manager: current_user.manager).or(where(id: current_user)).and(where(locked_at: nil)) }
   scope :moderator_control_user, ->(current_user) { where(manager: current_user.manager).or(where(id: current_user)).and(where(locked_at: nil)) }
-  scope :executor_users, ->(current_user) { where(manager: current_user)
-                                            .or(where(manager: current_user.manager))
+  scope :executor_users, ->(current_user) { where(manager: current_user.manager)
+                                            # .or(where(manager: current_user.manager))
                                             .and(where(locked_at: nil))
-                                            .and(where.not(id: current_user)) 
+                                            .or(where(id: current_user)) 
                                           }
+  scope :executor_users_yours, ->(current_user) { where(manager: current_user)
+                                                  .and(where(locked_at: nil))
+                                                  .or(where(id: current_user)) 
+                                                }
   scope :moderator_executor_users, ->(current_user) { where(manager: current_user.manager)
                                                       .and(where(locked_at: nil))
                                                       .and(where.not(id: current_user)) 
@@ -49,6 +53,7 @@ class User < ApplicationRecord
   scope :except_control_on_author, ->(author, control_executor) {  where.not(id: author)
                                                                    .and(where.not(id: control_executor))
                                                                 }
+  scope :except_author, ->(author) {  where.not(id: author) }
   scope :except_mission_executors, ->(executor_ids) { where.not(id: executor_ids) }
 
   scope :sub_department_user, ->(sub_department) { joins(:profile).where(profile: { sub_department_id: sub_department }) }

@@ -37,7 +37,7 @@
             - if current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
               = link_to t('button.execute.execution'), new_completed_mission_path(mission_executor_id: mission_executor), data: { turbo_frame: "modal" }, class: "btn btn-small btn-outline-success ms-1"
             - if current_user.subordinates.present? && current_user.executor_of?(mission_executor) && !mission_executor.in_approval? && mission_executor.mission.execution_limit_at.present? && !mission_executor.close_at.present?
-              = link_to t('button.execute.add_executor'), new_mission_executor_path(mission_id: mission_executor.mission), data: { turbo_frame: "modal" }, class: "btn btn-small btn-outline-primary ms-1" 
+              = link_to t('button.execute.add_executor'), new_mission_executor_path(mission_id: mission_executor.mission, manager: true), data: { turbo_frame: "modal" }, class: "btn btn-small btn-outline-primary ms-1" 
             - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && current_user.subordinates.present? && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
               = link_to t('button.execute.canceled'), canceled_mission_executor_path(mission_executor), data: { turbo_method: :patch }, class: "btn btn-small btn-outline-secondary ms-1"       
           / .comment__date.opacity-75

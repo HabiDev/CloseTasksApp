@@ -78,6 +78,8 @@ class MissionsController < ApplicationController
   end
  
   def delayed
+    # @er = between_day(params[:delayed_date]) 
+    # dsd
     if @mission.mission_executors.present?
       @mission.mission_executors.each do |mission_executor|
         unless mission_executor.close_at.present?
@@ -152,6 +154,14 @@ class MissionsController < ApplicationController
   end
 
   private
+
+  def between_day(date)
+    if date.present?
+      (date.to_datetime - @mission.limit_at.to_datetime).to_i
+    else
+      return 0
+    end
+  end
 
   def partial_device
     if mobile_device?
