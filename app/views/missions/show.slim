@@ -34,6 +34,18 @@
                     = "#{@mission.class.human_attribute_name(:division_id)}/Торговый объект: "
                   span.fst-italic.fw-normal.lh-3.text-muted
                     = @mission.division.name
+            .row.pt-2
+              .col-12.lh-1
+                span.fst-italic.fw-bold.text-muted                    
+                  ul.list-inline.m-0
+                    = "Предшествующие: "
+                    - if (current_user.author_of?(@mission) && !@mission.close_at.present?)
+                      = link_to "(Добавить)", new_related_mission_path(mission_id: @mission.id), data: { turbo_frame: "modal" }, class: "fw-bold link-success link-offset-3 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover small"
+                    - else 
+                      = "Предшествующие: "
+                    = turbo_frame_tag "related_missions" 
+                      - if @mission&.related_missions.present?                
+                        = render 'related_missions/related_missions', resource: @mission   
             hr.mt-2.mb-2
           .row
             .col-12.lh-3

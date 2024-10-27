@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_24_061751) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_27_182352) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -155,8 +155,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_24_061751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "parent_executor_id", default: 0, null: false
-    t.boolean "responsible", default: false
     t.integer "coordinator_id", default: 0, null: false
+    t.boolean "responsible", default: false
     t.index ["executor_id"], name: "index_mission_executors_on_executor_id"
     t.index ["mission_id"], name: "index_mission_executors_on_mission_id"
   end
@@ -230,6 +230,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_24_061751) do
     t.index ["position_id"], name: "index_profiles_on_position_id"
     t.index ["sub_department_id"], name: "index_profiles_on_sub_department_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "related_missions", force: :cascade do |t|
+    t.bigint "mission_id", null: false
+    t.integer "related", default: 0, null: false
+    t.string "number_mission"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mission_id"], name: "index_related_missions_on_mission_id"
   end
 
   create_table "sub_categories", force: :cascade do |t|
@@ -339,6 +348,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_24_061751) do
   add_foreign_key "profiles", "positions"
   add_foreign_key "profiles", "sub_departments"
   add_foreign_key "profiles", "users"
+  add_foreign_key "related_missions", "missions"
   add_foreign_key "sub_categories", "categories"
   add_foreign_key "sub_check_lists", "check_list_groups"
   add_foreign_key "sub_check_lists", "check_list_types"

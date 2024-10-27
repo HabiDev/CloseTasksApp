@@ -24,6 +24,7 @@ class Mission < ApplicationRecord
   has_many :mission_executors, dependent: :destroy
   has_many :completed_missions, dependent: :destroy, through: :mission_executors, foreign_key: :mission_id
   has_many :mission_approvals, dependent: :destroy
+  has_many :related_missions, dependent: :destroy
 
   validates :author_id, :control_executor_id, :mission_type_id, 
             :description, presence: true
@@ -32,6 +33,8 @@ class Mission < ApplicationRecord
 
 
   scope :opened, ->(control_user) { where(control_executor_id: control_user).where(close_at: nil) }
+
+  scope :except_related_mission, ->(mission_ids) { where.not(id: mission_ids) }
 
 
 

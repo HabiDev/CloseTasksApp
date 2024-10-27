@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     get 'not_executed', on: :member
     get 'canceled', on: :member   
   end
+  
+  resources :related_missions, only: %w(new create destroy)
 
   resources :check_lists do
     patch 'check_status', on: :member, defaults: { format: :turbo_stream }    

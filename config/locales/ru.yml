@@ -56,6 +56,7 @@ ru:
           not_executed: Не исполнено
           delayed: Отложен
           canceled: Отменен
+
     models:
       user: Сотрудники
       profile: Профили
@@ -70,6 +71,7 @@ ru:
       task: Заявка
       mission: Задание
       mission_type: Категория
+      related_mission: Предшествующие
       priority: Приоритет
       performed_work: Выполненная работа
       completed_mission: Исполнение задания/поручения
@@ -165,6 +167,10 @@ ru:
         close_at: Закрыта
         created_at: Дата
         read_at: Прочитано
+      related_mission:
+        mission_id: Задание
+        related: Предшествующие (Задания/поручения)
+        number_mission: Номер
       completed_mission:
         mission_executor_id: Испонитель
         description: Описание

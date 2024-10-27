@@ -1,0 +1,8 @@
+.container
+  = turbo_frame_tag "modal"
+    .modal-header
+      h3#modalPhotoLabel.modal-title
+        = t('resource.create')  
+      button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]         
+    .modal-body
+      = render 'related_missions/form', related_mission: @related_mission
