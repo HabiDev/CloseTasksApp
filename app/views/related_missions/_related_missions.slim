@@ -1,7 +1,7 @@
 - resource&.related_missions.find_each do |related_mission| 
   = turbo_frame_tag related_mission
-    li.list-inline-item
+    li.list-inline-item.small
       = link_to "#{related_mission.number_mission}", mission_path(id: related_mission.related), class: "mx-1", target: "_blank"
-      - if current_user.author_of?(related_mission.mission)  
+      - if current_user.author_of?(related_mission.mission) || current_user&.moderator? 
         / = link_to '(x)', destroy_photo_task_path(photo_id: photo.id, id: resource.id), data: { turbo_method: :delete }, class: "small text-danger"
         = link_to '(X)', related_mission, data: { turbo_method: :delete }, class: "small text-danger"
