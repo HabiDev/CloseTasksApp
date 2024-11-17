@@ -1,19 +1,44 @@
 class MissionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_mission, except: [ :index, :new, :create, :mission_calendar]
+  before_action :set_mission, except: [ :index, :new, :create, :mission_calendar, :search]
   # before_action :set_priority, only: [ :create, :update]
   
   def index
     # authorize User
-    if current_user.user? || current_user.guide?    
-      @q = Mission.includes(:author, :mission_type, :mission_executors, :mission_approvals).joins(:mission_executors)
-                        .where(author_id: current_user)
-                        .or(Mission.where(control_executor_id: current_user))
-                        .or(Mission.where("mission_executors.executor_id = ?", current_user))
-                        .ransack(params[:q])
+    if params[:q] && params[:q][:find_all]
+      if current_user.user? || current_user.guide?    
+        @q = Mission.includes(:author, :mission_type, :mission_executors, :mission_approvals).joins(:mission_executors)
+                          .where(author_id: current_user)
+                          .or(Mission.where(control_executor_id: current_user))
+                          .or(Mission.where("mission_executors.executor_id = ?", current_user)).ransack(params[:q])                         
+      else
+        @q = Mission.includes(:author, :control_executor, :mission_type).ransack(params[:q])
+      end
     else
-      @q = Mission.includes(:author, :control_executor, :mission_type).ransack(params[:q])
+      if current_user.user? || current_user.guide?    
+        @q = Mission.includes(:author, :mission_type, :mission_executors, :mission_approvals).joins(:mission_executors)
+                          .where(author_id: current_user)
+                          .or(Mission.where(control_executor_id: current_user))
+                          .or(Mission.where("mission_executors.executor_id = ?", current_user))
+                          .and(Mission.where(close_at: nil)).ransack(params[:q])
+                          
+      else
+        @q = Mission.includes(:author, :control_executor, :mission_type).where(close_at: nil).ransack(params[:q])
+      end      
     end
+
+
+    if (params[:overdue].present?) 
+      if (current_user.user? || current_user.guide? )
+        @q = Mission.includes(:author, :mission_type, :mission_executors, :mission_approvals).joins(:mission_executors)
+                                .where(author_id: current_user)
+                                .or(Mission.where(control_executor_id: current_user))
+                                .or(Mission.where("mission_executors.executor_id = ?", current_user)).overdue.ransack(params[:q])
+      else
+        @q = Mission.includes(:author, :control_executor, :mission_type).overdue.ransack(params[:q])
+      end
+    end
+    
     @q.sorts = ['created_at DESC', 'limit_at ASC', 'mission_type_id ASC'] if @q.sorts.empty?
     @pagy, @missions = pagy(@q.result(disinct: true).includes(:author, :mission_type, :mission_executors, :mission_approvals), items: mobile_device? ? 3 : 10)
     # @missions = @missions.distinct

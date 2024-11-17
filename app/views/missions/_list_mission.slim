@@ -1,22 +1,23 @@
 .row
   .col-12.col-md-10
-    = link_to "#{t('button.all')}", missions_path, class: "btn btn-outline-warning btn-sm ms-2", data: { turbo_frame: 'missions_list' }
+    = link_to "#{t('button.all')}", missions_path(q: { find_all: true }), class: "btn btn-outline-warning btn-sm ms-2", data: { turbo_frame: ['missions_list', 'count_record'] }
+    = link_to "#{t('button.work')}", missions_path, class: "btn btn-outline-success btn-sm ms-2", data: { turbo_frame:  ['missions_list', 'count_record']}
     - if current_user&.admin? || current_user&.moderator?
-      = link_to missions_path(q: { status_eq: 0 }), class: "btn btn-outline-primary btn-sm ms-2 position-relative", data: { turbo_frame: 'missions_list' }
+      = link_to missions_path(q: { status_eq: 0 }), class: "btn btn-outline-primary btn-sm ms-2 position-relative", data: { turbo_frame:  ['missions_list', 'count_record'] }
         = t('button.read')
         = show_badge(current_user.missions.registred) 
     - else
-      = link_to missions_path(q: { mission_executors_status_eq: 0 }), class: "btn btn-outline-primary btn-sm ms-2 position-relative", data: { turbo_frame: 'missions_list' }
+      = link_to missions_path(q: { mission_executors_status_eq: 0,  mission_executors_executor_id_eq: current_user.id }), class: "btn btn-outline-primary btn-sm ms-2 position-relative", data: { turbo_frame:  ['missions_list', 'count_record'] }
         = t('button.read')
         = show_badge(current_user.mission_executors.registred) 
-    = link_to missions_path(q: { mission_approvals_coordinator_id_eq: current_user.id }), class: "btn btn-outline-info btn-sm ms-2 position-relative", data: { turbo_frame: 'missions_list' }
+    = link_to missions_path(q: { mission_approvals_coordinator_id_eq: current_user.id }), class: "btn btn-outline-info btn-sm ms-2 position-relative", data: { turbo_frame:  ['missions_list', 'count_record']}
       = t('button.for_approval')
       = show_badge(current_user.mission_approvals) 
-    = link_to missions_path(q: { mission_executors_status_eq: 3 }), class: "btn btn-outline-secondary btn-sm ms-2 position-relative", data: { turbo_frame: 'missions_list' }
+    = link_to missions_path(q: { mission_executors_status_eq: 3 }), class: "btn btn-outline-secondary btn-sm ms-2 position-relative", data: { turbo_frame:  ['missions_list', 'count_record'] }
       = t('button.approval')
       = show_badge(current_user.mission_executors.in_approval) 
     = link_to "#{t('button.calendar')}", mission_calendar_path, class: "btn btn-outline-danger btn-sm ms-2", data: { turbo_frame: "modal", bs_toggle: "tooltip", bs_text: "Заголовок поповера" }
-      
+    = link_to "#{t('button.overdue')}", missions_path(overdue: true), class: "btn btn-outline-warning btn-sm ms-2", data: { turbo_frame:  ['missions_list', 'count_record'] }   
   .col-12.col-md-2.text-end 
     = link_to "#{t('button.create')}",  new_mission_path, class: "btn btn-outline-success btn-sm ms-3", data: { turbo_frame: "modal" }
 hr.mt-2.mb-0
@@ -47,4 +48,4 @@ hr.mt-2.mb-0
           = render @missions
           .row.fixed-bottom.bg-white.bg-gradient.justify-content-md-center
             .col-5
-              == pagy_bootstrap_nav(@pagy) if @missions&.exists?
+              == pagy_bootstrap_nav(@pagy) if @pagy.pages > 1

@@ -36,7 +36,16 @@ class Mission < ApplicationRecord
 
   scope :except_related_mission, ->(mission_ids) { where.not(id: mission_ids) }
 
-
+  scope :overdue, -> { joins(:mission_executors)
+                       .where('missions.close_at > missions.execution_limit_at')
+                       .or(where('mission_executors.close_at > mission_executors.limit_at'))
+                       .or(where(close_at: nil).where('missions.execution_limit_at < ?', Date.today.end_of_day))
+                       .distinct 
+                     }
+  # scope :overdue, -> { joins(:mission_executors)
+  #                    .where(:execution_limit_at > :close_at)
+  #                    .distinct 
+  #                  }
 
 
   def looked!

@@ -6,7 +6,8 @@ aside
           = t('sidebar.missions.title') 
       .col-8.text-end
         h5.pt-1.m-0
-          span.badge.rounded-pill.text-bg-secondary
-            = "#{t('sidebar.missions.find')}: #{@count_missions}"
+          #count_record
+            span.badge.rounded-pill.text-bg-secondary
+              = "#{t('sidebar.missions.find')}: #{@count_missions}"
       hr.m-1.p-1 
         = render 'missions/search_form'  

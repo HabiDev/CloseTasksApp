@@ -26,13 +26,15 @@ ru:
     destroy: Удалить
     back: Назад
     close: Закрыть
-    for_approval: Мне для согласования
+    for_approval: Мне для соглас-я
     approval: На согласовании
-    read: Поступило (новые)
+    read: Поступ.(новые)
     send_agree: Отправить на согласование
     reset_password: Изменение пароля
     lock_user: Заблокировать
     unlock_user: Разблокировать
+    overdue: Просроченные
+    work: В работе
     execute:
       executed: Добавить работу
       rework: На доработку

@@ -5,7 +5,7 @@
         = l(mission.created_at, format: :small)
       = content_tag(:span, class: "d-block small text-truncate text-#{mission.mission_type.view_classing}")
         em
-          = mission.mission_type.name
+          = mission.number
   .table-body-cell
     .col-12
       span.small.d-block.text-truncate

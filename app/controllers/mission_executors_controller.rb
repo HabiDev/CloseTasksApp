@@ -73,7 +73,7 @@ class MissionExecutorsController < ApplicationController
   end
 
   def agree 
-    update_status(status: :agree, close_at: DateTime.now)       
+    update_status(status: :executed, close_at: DateTime.now)       
   end
 
   def canceled
