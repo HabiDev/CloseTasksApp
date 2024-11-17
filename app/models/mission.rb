@@ -1,6 +1,8 @@
 class Mission < ApplicationRecord
   attr_accessor :responsible_executor_id
 
+  before_save :save_of_day
+
   enum status: { registred: 0, 
     in_work: 1, 
     in_approval: 3, 
@@ -80,5 +82,10 @@ class Mission < ApplicationRecord
       mission_type = MissionType.find(self.mission_type_id)    
       self.number = "#{mission_number}/#{mission_type.name[0, 1].upcase}-#{Date.today.year}" 
     end
+  end
+
+  def save_of_day
+    self.execution_limit_at = self.execution_limit_at.end_of_day if self.execution_limit_at.present?
+    self.close_at = self.close_at.end_of_day if self.close_at.present?
   end
 end

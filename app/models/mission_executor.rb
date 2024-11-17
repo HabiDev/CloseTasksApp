@@ -1,5 +1,7 @@
 class MissionExecutor < ApplicationRecord
 
+  before_save :save_of_day
+
   enum status: { registred: 0, 
     in_work: 1, 
     in_approval: 3, 
@@ -48,6 +50,13 @@ class MissionExecutor < ApplicationRecord
 
   def self.replies_for_executor(mission)
     MissionExecutor.where("mission_id = ? and parent_executor_id != 0", mission).order(["executor_id", "id"]).group_by {|mission_executor| mission_executor["parent_executor_id"] }
+  end
+
+  private
+
+  def save_of_day
+    self.limit_at = self.limit_at.end_of_day if self.limit_at.present?
+    self.close_at = self.close_at.end_of_day if self.close_at.present?
   end
 
 end

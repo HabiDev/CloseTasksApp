@@ -268,3 +268,15 @@
 # Division.create(name: 'Татарстан-52 (МЭМ)', department: department, address: 'г.Казань, ул. Татарстан, д.52', email: 'shop@mail.ru')
 # Division.create(name: 'Центральная-25 (МЭМ) (Чернышевка)', department: department, address: 'Высокогорский р-н, с.п.Чернышевское, д.Чернышевка, ул. Центральная, д.25', email: 'shop@mail.ru')
 # Division.create(name: 'Маршальская-25 (МЭМ) ', department: department, address: 'г.Казань, ул. Маршальская, д.25', email: 'shop@mail.ru')
+
+Mission.all.each do |mission|
+  mission.execution_limit_at = mission.execution_limit_at.end_of_day if mission.execution_limit_at.present?
+  mission.close_at = mission.close_at.end_of_day if mission.close_at.present?
+  mission.save
+end
+
+MissionExecutor.all.each do |mission_executor|
+  mission_executor.limit_at = mission_executor.limit_at.end_of_day if mission_executor.limit_at.present?
+  mission_executor.close_at = mission_executor.close_at.end_of_day if mission_executor.close_at.present?
+  mission_executor.save
+end

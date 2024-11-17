@@ -20,7 +20,7 @@ class MissionsController < ApplicationController
                           .where(author_id: current_user)
                           .or(Mission.where(control_executor_id: current_user))
                           .or(Mission.where("mission_executors.executor_id = ?", current_user))
-                          .and(Mission.where(close_at: nil)).ransack(params[:q])
+                          .and(Mission.where(mission_executors: { close_at: nil })).ransack(params[:q])
                           
       else
         @q = Mission.includes(:author, :control_executor, :mission_type).where(close_at: nil).ransack(params[:q])
