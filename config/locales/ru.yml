@@ -43,6 +43,7 @@ ru:
           agree: Согласован 
           executed: Исполнено
           not_executed: Не исполнено
+          overdue: Просрочен
           delayed: Отложен
           canceled: Отменен
       mission_executor:
@@ -54,6 +55,7 @@ ru:
           agree: Согласован 
           executed: Исполнено
           not_executed: Не исполнено
+          overdue: Просрочен
           delayed: Отложен
           canceled: Отменен
 

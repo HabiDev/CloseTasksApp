@@ -5,7 +5,7 @@ class MissionsController < ApplicationController
   
   def index
     # authorize User
-    if params[:q] && params[:q][:find_all]
+    if params[:q] && params[:q][:find_all] && !params[:q][:overdue].present?
       if current_user.user? || current_user.guide?    
         @q = Mission.includes(:author, :mission_type, :mission_executors, :mission_approvals).joins(:mission_executors)
                           .where(author_id: current_user)
@@ -28,7 +28,7 @@ class MissionsController < ApplicationController
     end
 
 
-    if (params[:overdue].present?) 
+    if params[:q] && params[:q][:overdue].present?
       if (current_user.user? || current_user.guide? )
         @q = Mission.includes(:author, :mission_type, :mission_executors, :mission_approvals).joins(:mission_executors)
                                 .where(author_id: current_user)

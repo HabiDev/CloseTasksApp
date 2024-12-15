@@ -17,7 +17,7 @@
       = t('button.approval')
       = show_badge(current_user.mission_executors.in_approval) 
     = link_to "#{t('button.calendar')}", mission_calendar_path, class: "btn btn-outline-danger btn-sm ms-2", data: { turbo_frame: "modal", bs_toggle: "tooltip", bs_text: "Заголовок поповера" }
-    = link_to "#{t('button.overdue')}", missions_path(overdue: true), class: "btn btn-outline-warning btn-sm ms-2", data: { turbo_frame:  ['missions_list', 'count_record'] }   
+    = link_to "#{t('button.overdue')}", missions_path(q: { overdue: true }), class: "btn btn-outline-warning btn-sm ms-2", data: { turbo_frame:  ['missions_list', 'count_record'] }   
   .col-12.col-md-2.text-end 
     = link_to "#{t('button.create')}",  new_mission_path, class: "btn btn-outline-success btn-sm ms-3", data: { turbo_frame: "modal" }
 hr.mt-2.mb-0
