@@ -1,0 +1,8 @@
+.container
+  = turbo_frame_tag "modal_small"
+    .modal-header
+      h3#modalPhotoLabel.modal-title
+        = t('resource.deadline')  
+      button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]         
+    .modal-body
+      = render 'shared/form_deadline', resource: @mission, resource_path: create_deadline_mission_path

@@ -1,5 +1,5 @@
 class Mission < ApplicationRecord
-  attr_accessor :responsible_executor_id
+  attr_accessor :responsible_executor_id, :new_deadline, :all_recursive
 
   before_save :save_of_day
 

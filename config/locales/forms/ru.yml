@@ -39,7 +39,8 @@ ru:
       executed: Добавить работу
       rework: На доработку
       agree: Принять
-      delayed: Новый срок
+      deadline: Новый срок
+      delayed: Отложить
       delayed_week: Продлить на неделю
       delayed_month: Продлить на месяц
       delayed_own: Указать дату

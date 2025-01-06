@@ -3,9 +3,29 @@ ru:
     previous: "<<"
     next: ">>"
     week: Неделя
-    today: Сегодня
+    today: Сегодня      
   activerecord:
     errors:
+      models:
+        mission:
+          attributes:
+            base:
+              user_error: "Исполнитель выбран более 1 раза или назначена ему(ей) на контроль"
+              executor_not_error: "Ответсвенный исполнитель не определен"
+              date_executor_error: "Срок исполнения у ответственного исполнителя некоректен"
+              date_coexecutor_error: "Срок исполнения у исполнителя некоректен"
+              executor_error: "Ответсвенный исполнитель может быть только один"
+              executor_not_error: "Ответсвенный исполнитель не определен"
+            new_deadline:
+              date_less: "меньше текущего срока исполнения"
+              date_empty: 'не может быть пустым'
+              date_execution_more_30_days: "больше даты поручения более 30 дней"
+              date_less_today: "Дата поручения меньше текущий даты"
+            date_closed:
+              date_closed_error: "Дата закрытия заявки некоректен"
+              #date_closed_less: "Дата меньше даты срока исполнения заявки"
+              date_closed_less_open: "Дата закрытия заявки меньше даты заявки"
+              date_closed_more_30_days: "Дата больше даты испольнения заявки более 30 дней"
       access_denied: "В доступе отказано!"
       messages:
         record_invalid: 'Возникли ошибки: %{errors}'
@@ -160,6 +180,8 @@ ru:
         close_at: Закрыта
         created_at: Дата
         read_at: Прочитано
+        new_deadline: Новый срок исполнения
+        all_recursive: Пременить ко всем
       mission_executor:
         mission_id: Задание
         status: Статус

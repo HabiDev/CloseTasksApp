@@ -20,7 +20,9 @@ export default class extends Controller {
     flatpickr("#mission_executor_limit_date", config)
     flatpickr("#mission_mission_executors_limit_date", config)
     flatpickr("#start_search_limit_date", config)
-    flatpickr("#end_search_limit_date", config)
+    flatpickr("#end_search_limit_date", config),
+    flatpickr("#new_delayed_limit_date", config),
+    flatpickr("#new_deadline_limit_date", config)     
 
   }
 }

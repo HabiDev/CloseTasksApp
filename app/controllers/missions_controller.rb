@@ -58,10 +58,12 @@ class MissionsController < ApplicationController
   def show
     # authorize @division
     @mission.looked! unless current_user.author_of?(@mission) || current_user.control_executor_of?(@mission)
-    @mission_executors = @mission.mission_executors
-    @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
-    @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
-    @mission_executor = @mission_executors.where(executor: current_user)
+    # @mission_executors = @mission.mission_executors
+    # @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
+    # @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
+    # @mission_executor = @mission_executors.where(executor: current_user)
+    # @mission_executor.each { |mission| mission.mission_looked! }
+    set_show_parametrs
     @mission_executor.each { |mission| mission.mission_looked! }
 
   end
@@ -103,8 +105,6 @@ class MissionsController < ApplicationController
   end
  
   def delayed
-    # @er = between_day(params[:delayed_date]) 
-    # dsd
     if @mission.mission_executors.present?
       @mission.mission_executors.each do |mission_executor|
         unless mission_executor.close_at.present?
@@ -113,7 +113,39 @@ class MissionsController < ApplicationController
       end
     end
     update_status(status: :delayed, execution_limit_at: 1.month.since)   
-  end  
+  end 
+  
+  def new_deadline;  end
+
+  def create_deadline
+    respond_to do |format|
+      if params[:mission][:new_deadline].blank?
+        @mission.errors.add(:new_deadline, :date_empty)
+        format.html { render :new_deadline, status: :unprocessable_entity }        
+      elsif @mission.execution_limit_at.present?
+        new_deadline= params[:mission][:new_deadline].to_datetime
+        if new_deadline <= @mission.execution_limit_at
+          @mission.new_deadline = new_deadline
+          @mission.errors.add(:new_deadline, :date_less)
+          format.html { render :new_deadline, status: :unprocessable_entity }
+        elsif params[:mission][:all_recursive] == '0'
+          @mission.update(execution_limit_at: new_deadline)
+          format.turbo_stream { flash.now[:success] = t('notice.record_edit') }
+        else
+          day_deadline = (@mission.execution_limit_at.to_date..new_deadline).count - 1
+          @mission.update(execution_limit_at: new_deadline)
+          @mission.mission_executors.each do |mission_executor|
+            mission_executor.update(limit_at: mission_executor.limit_at + day_deadline.day) unless mission_executor.close_at.present?
+          end
+          format.turbo_stream { flash.now[:success] = t('notice.record_edit') }
+        end
+      else
+        @mission.update(execution_limit_at: new_deadline)
+        format.turbo_stream { flash.now[:success] = t('notice.record_edit') }
+      end      
+    end   
+    set_show_parametrs
+  end
 
   def create
     if current_user&.moderator?
@@ -207,6 +239,14 @@ class MissionsController < ApplicationController
 
   def set_mission
     @mission = Mission.find(params[:id])
+  end
+
+  def set_show_parametrs
+    @mission = Mission.find(params[:id])
+    @mission_executors = @mission.mission_executors
+    @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
+    @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
+    @mission_executor = @mission_executors.where(executor: current_user)
   end
 
   def update_status(*args) 

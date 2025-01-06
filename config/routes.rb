@@ -35,7 +35,9 @@ Rails.application.routes.draw do
     get 'executed', on: :member
     get 'delayed', on: :member
     get 'not_executed', on: :member
-    get 'canceled', on: :member   
+    get 'canceled', on: :member 
+    post "create_deadline", on: :member
+    get "new_deadline", on: :member  
   end
   
   resources :related_missions, only: %w(new create destroy)

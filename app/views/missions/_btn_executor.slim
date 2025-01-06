@@ -11,19 +11,19 @@
     - if current_user.control_executor_of?(@mission)
       = link_to t('sidebar.missions.executed'), executed_mission_path(@mission), class: "btn btn-outline-success"
     - if current_user.control_executor_of?(@mission) && (@mission.in_approval? || @mission.in_work? || @mission.in_rework? || @mission.registred?)
-      / .btn-group.btn-group-sm[role="group"]
-        
-      /   a#dropdownMenuLink.btn.btn-outline-success.dropdown-toggle[href="#" data-bs-toggle="dropdown" aria-expanded="false"]
-      /     / button.btn.btn-outline-success.dropdown-toggle[type="button" data-bs-toggle="dropdown" aria-expanded="false"]
-      /     = t('button.execute.delayed')
-      /   ul.dropdown-menu
-      /     li
-      /       = link_to t('button.execute.delayed_week'), delayed_mission_path(@mission, delayed_date: @mission.limit_at + 1.week), class: "dropdown-item"
-      /     li
-      /       = link_to t('button.execute.delayed_month'), delayed_mission_path(@mission, delayed_date: @mission.limit_at + 1.month), class: "dropdown-item"
-      /     li
-            = link_to t('button.execute.delayed_own'), delayed_mission_path(@mission), data: { turbo_frame: "modal" }, class: "dropdown-item"
+      / .btn-group.btn-group-sm[role="group"]       
+      / a#dropdownMenuLink.btn.btn-outline-success.dropdown-toggle[href="#" data-bs-toggle="dropdown" aria-expanded="false"]
+      /   / button.btn.btn-outline-success.dropdown-toggle[type="button" data-bs-toggle="dropdown" aria-expanded="false"]
+      /   = t('button.execute.delayed')
+      / ul.dropdown-menu
+      /   li
+      /     = link_to t('button.execute.delayed_week'), delayed_mission_path(@mission, delayed_date: @mission.limit_at + 1.week), class: "dropdown-item"
+      /   li
+      /     = link_to t('button.execute.delayed_month'), delayed_mission_path(@mission, delayed_date: @mission.limit_at + 1.month), class: "dropdown-item"
+      /   li
+      /     = link_to t('button.execute.delayed_own'), delayed_mission_path(@mission), data: { turbo_frame: "modal" }, class: "dropdown-item"
+      = link_to t('button.execute.deadline'), new_deadline_mission_path(@mission), data: { turbo_frame: "modal_small" }, class: "btn btn-outline-success"
       = link_to t('button.execute.delayed'), delayed_mission_path(@mission), class: "btn btn-outline-success"                 
       / - if current_user.control_executor_of?(@mission) && (@mission.in_approval? || @mission.in_work? || @mission.in_rework?)
       = link_to t('button.execute.canceled'), canceled_mission_path(@mission), class: "btn btn-outline-success"
-               
+              

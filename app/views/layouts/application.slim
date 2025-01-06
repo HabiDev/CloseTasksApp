@@ -38,6 +38,10 @@ html
             .modal-dialog.modal-lg.modal-dialog-centered
               .modal-content.bg-light.shadow-lg.p-2.mb-5.bg-body.rounded
                 = turbo_frame_tag "modal"
+          #modalSmall.modal[tabindex="-1" aria-hidden="true" data-controller="modal-small" data-modal-small-target="modalSmall" data-action="turbo:frame-load->modal-small#open turbo:submit-end->modal-small#close"]
+            .modal-dialog.modal-dialog-centered
+              .modal-content
+                = turbo_frame_tag "modal_small"
             / footer
             /   = render 'layouts/footer'
   

@@ -1,0 +1,14 @@
+= simple_form_for resource, url: resource_path, method: :post do |f|
+  = f.error_notification
+  .row
+    .col-12.col-md-6
+      / = f.input :new_delayed, as: :file, input_html: { class: 'form-control form-control-sm my-3', multiple: true, direct_upload: true, include_hidden: false }
+      = f.input :new_deadline, as: :string, required: true, autofocus: true, class: 'form-control form-control-sm', input_html: { data: { controller: 'flatpickr' }, id: "new_deadline_limit_date" }
+  .row
+    .col-12.col-md-12
+      / = f.input :new_delayed, as: :file, input_html: { class: 'form-control form-control-sm my-3', multiple: true, direct_upload: true, include_hidden: false }
+      = f.input :all_recursive, as: :boolean, class: 'form-control'
+  .row  
+    .col-12.col-md-12.text-end
+      span.p-2
+        = f.submit "#{t('submit.save')}", class: "btn btn-primary"

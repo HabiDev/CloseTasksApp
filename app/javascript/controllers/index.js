@@ -22,6 +22,9 @@ application.register("modal-search", ModalSearchController)
 import ModalPhotoController from "./modal_photo_controller"
 application.register("modal-photo", ModalPhotoController)
 
+import ModalSmallController from "./modal_small_controller"
+application.register("modal-small", ModalSmallController)
+
 import Select2Controller from "./select2_controller"
 application.register("select2", Select2Controller)
 
