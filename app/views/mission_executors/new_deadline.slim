@@ -5,4 +5,4 @@
         = t('resource.deadline')  
       button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]         
     .modal-body
-      = render 'shared/form_deadline', resource: @mission, resource_path: create_deadline_mission_path, visible_recursive: true
+      = render 'shared/form_deadline', resource: @mission_executor, resource_path: create_deadline_mission_executor_path, visible_recursive: false

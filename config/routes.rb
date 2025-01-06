@@ -58,6 +58,8 @@ Rails.application.routes.draw do
     get 'rework', on: :member, defaults: { format: :turbo_stream }
     patch 'agree', on: :member, defaults: { format: :turbo_stream }
     patch 'canceled', on: :member, defaults: { format: :turbo_stream } 
+    post "create_deadline", on: :member
+    get "new_deadline", on: :member  
   end
 
   get :reports, action: :index, controller: 'reports'

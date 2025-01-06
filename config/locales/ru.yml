@@ -19,6 +19,7 @@ ru:
             new_deadline:
               date_less: "меньше текущего срока исполнения"
               date_empty: 'не может быть пустым'
+              date_more: "больше срока исполнения поручения или руководителя"
               date_execution_more_30_days: "больше даты поручения более 30 дней"
               date_less_today: "Дата поручения меньше текущий даты"
             date_closed:
@@ -26,6 +27,14 @@ ru:
               #date_closed_less: "Дата меньше даты срока исполнения заявки"
               date_closed_less_open: "Дата закрытия заявки меньше даты заявки"
               date_closed_more_30_days: "Дата больше даты испольнения заявки более 30 дней"
+        mission_executor:
+          attributes:
+            new_deadline:
+              date_less: "меньше текущего срока исполнения"
+              date_empty: 'не может быть пустым'
+              date_more: "больше срока исполнения поручения или руководителя"
+              date_execution_more_30_days: "больше даты поручения более 30 дней"
+              date_less_today: "меньше текущий даты"
       access_denied: "В доступе отказано!"
       messages:
         record_invalid: 'Возникли ошибки: %{errors}'
@@ -191,6 +200,7 @@ ru:
         close_at: Закрыта
         created_at: Дата
         read_at: Прочитано
+        new_deadline: Новый срок исполнения
       related_mission:
         mission_id: Задание
         related: Предшествующие (Задания/поручения)

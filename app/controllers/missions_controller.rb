@@ -119,32 +119,23 @@ class MissionsController < ApplicationController
 
   def create_deadline
     respond_to do |format|
-      if params[:mission][:new_deadline].blank?
-        @mission.errors.add(:new_deadline, :date_empty)
-        format.html { render :new_deadline, status: :unprocessable_entity }        
-      elsif @mission.execution_limit_at.present?
-        new_deadline= params[:mission][:new_deadline].to_datetime
-        if new_deadline <= @mission.execution_limit_at
-          @mission.new_deadline = new_deadline
-          @mission.errors.add(:new_deadline, :date_less)
-          format.html { render :new_deadline, status: :unprocessable_entity }
-        elsif params[:mission][:all_recursive] == '0'
+      if @mission.valid_date_deadline?(params[:mission][:new_deadline])
+        new_deadline = params[:mission][:new_deadline].to_date
+        if params[:mission][:all_recursive] == '0'
           @mission.update(execution_limit_at: new_deadline)
-          format.turbo_stream { flash.now[:success] = t('notice.record_edit') }
         else
           day_deadline = (@mission.execution_limit_at.to_date..new_deadline).count - 1
           @mission.update(execution_limit_at: new_deadline)
           @mission.mission_executors.each do |mission_executor|
-            mission_executor.update(limit_at: mission_executor.limit_at + day_deadline.day) unless mission_executor.close_at.present?
+            mission_executor.update(limit_at: mission_executor.limit_at + day_deadline.day) unless mission_executor.close_at.present?     
           end
-          format.turbo_stream { flash.now[:success] = t('notice.record_edit') }
         end
-      else
-        @mission.update(execution_limit_at: new_deadline)
-        format.turbo_stream { flash.now[:success] = t('notice.record_edit') }
-      end      
+        format.turbo_stream { flash.now[:success] = t('notice.record_edit') } 
+        set_show_parametrs        
+      else        
+        format.html { render :new_deadline, status: :unprocessable_entity } 
+      end
     end   
-    set_show_parametrs
   end
 
   def create

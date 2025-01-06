@@ -72,6 +72,20 @@ class MissionExecutorsController < ApplicationController
     end
   end
 
+  def new_deadline;  end
+
+  def create_deadline
+    respond_to do |format|
+      if @mission_executor.valid_date_deadline?(params[:mission_executor][:new_deadline])
+        @mission_executor.update(limit_at: params[:mission_executor][:new_deadline].to_datetime)
+        format.turbo_stream { flash.now[:success] = t('notice.record_edit') } 
+        set_show_parametrs        
+      else
+        format.html { render :new_deadline, status: :unprocessable_entity } 
+      end
+    end
+  end
+
   def agree 
     update_status(status: :executed, close_at: DateTime.now)       
   end
@@ -135,6 +149,14 @@ class MissionExecutorsController < ApplicationController
 
   def set_mission_executor 
     @mission_executor  = MissionExecutor.find(params[:id])
+  end
+
+  def set_show_parametrs
+    # @mission = @mission_executor.mission
+    @mission_executors = @mission.mission_executors
+    @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
+    @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
+    @mission_executor = @mission_executors.where(executor: current_user)
   end
 
   def mission_executor_params

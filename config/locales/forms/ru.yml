@@ -35,6 +35,7 @@ ru:
     unlock_user: Разблокировать
     overdue: Просроченные
     work: В работе
+    deadline: Продлить срок
     execute:
       executed: Добавить работу
       rework: На доработку

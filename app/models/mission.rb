@@ -62,6 +62,20 @@ class Mission < ApplicationRecord
     self.mission_executors.where(executor: user).pluck(:status)
   end
 
+  def valid_date_deadline?(new_date)
+
+    if new_date.blank?
+      self.errors.add(:new_deadline, :date_empty)
+      return false
+    end
+
+    if (self.execution_limit_at.present? && new_date.to_date <= self.execution_limit_at.to_date) || (new_date.to_date <= self.created_at.to_date)
+      self.errors.add(:new_deadline, :date_less)
+      return false
+    end
+
+    return true
+  end
   # def extend_deadline(period)
   #   if period.present? && elf.execution_limit_at.present?
   #     day = (period - self.execution_limit_at).to_i

@@ -1,4 +1,5 @@
 class MissionExecutor < ApplicationRecord
+  attr_accessor :new_deadline
 
   before_save :save_of_day
 
@@ -28,6 +29,8 @@ class MissionExecutor < ApplicationRecord
 
   scope :executor_mission, ->(current_user) { where(executor_id: current_user) }
 
+  scope :parent_executor_mission, ->(parent_user) { where(parent_executor_id: parent_user) }
+
   scope :responsible_mission, ->{ where(responsible: true)}
 
   scope :opened, ->(current_user) { joins(:mission).where.not(mission: { control_executor: current_user } ).where(close_at: nil) }
@@ -50,6 +53,51 @@ class MissionExecutor < ApplicationRecord
 
   def self.replies_for_executor(mission)
     MissionExecutor.where("mission_id = ? and parent_executor_id != 0", mission).order(["executor_id", "id"]).group_by {|mission_executor| mission_executor["parent_executor_id"] }
+  end
+
+  def parent_executor(mission, parent)
+    MissionExecutor.where("mission_id = ? and executor_id = ?", mission, parent)
+  end
+
+  def coordinator_executor(mission, coordinator)
+    MissionExecutor.where("mission_id = ? and executor_id = ?", mission, coordinator)
+  end
+
+  def valid_date_deadline?(new_date)
+    coordinator = coordinator_executor(self.mission_id, self.coordinator_id).first
+    parent = parent_executor(self.mission_id, self.parent_executor_id).first
+
+    if new_date.blank?
+      self.errors.add(:new_deadline, :date_empty)
+      return false
+    end
+
+    if (new_date.to_date == self.limit_at.to_date) || (new_date.to_date <= self.mission.created_at.to_date)
+      self.errors.add(:new_deadline, :date_less)
+      return false
+    end
+
+    if parent.present? && new_date.to_date >= parent.limit_at.to_date
+      self.errors.add(:new_deadline, :date_more)
+      return false
+    end
+
+    if coordinator.present?
+      if (coordinator.executor_id == self.executor_id) && (new_date.to_date > self.mission.execution_limit_at.to_date)
+        self.errors.add(:new_deadline, :date_more)
+        return false
+      elsif (coordinator.executor_id != self.executor_id) && (new_date.to_date >= coordinator.limit_at.to_date)
+        self.errors.add(:new_deadline, :date_more)
+        return false
+      end
+    end
+
+    if (new_date.to_date >= self.mission.execution_limit_at.to_date)
+      self.errors.add(:new_deadline, :date_more)
+      return false
+    end
+
+    return true
   end
 
   private
