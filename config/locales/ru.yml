@@ -191,6 +191,7 @@ ru:
         read_at: Прочитано
         new_deadline: Новый срок исполнения
         all_recursive: Пременить ко всем
+        app_files: Прекрепить файл
       mission_executor:
         mission_id: Задание
         status: Статус
@@ -201,6 +202,7 @@ ru:
         created_at: Дата
         read_at: Прочитано
         new_deadline: Новый срок исполнения
+        app_files: Прекрепить файл
       related_mission:
         mission_id: Задание
         related: Предшествующие (Задания/поручения)
@@ -209,6 +211,7 @@ ru:
         mission_executor_id: Испонитель
         description: Описание
         comment: Замечание
+        app_files: Прекрепить файл
       task:
         division_id: Подразделение
         priority_id: Приоритет 

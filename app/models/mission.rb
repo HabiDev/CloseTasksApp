@@ -14,6 +14,7 @@ class Mission < ApplicationRecord
     canceled: 9
    }
   
+  has_many_attached :app_files
   before_save :set_number_mission
   belongs_to :author, class_name: "User", optional: true  
   belongs_to :control_executor, class_name: "User", optional: true

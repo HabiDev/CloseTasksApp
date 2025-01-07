@@ -21,6 +21,8 @@ ru:
     reset_password: Изменение пароля
   photos:
     create: Прекрепить фото
+  app_files:
+    create: Прекрепить файл
   divisions:
     title: Подразделения
   shared:

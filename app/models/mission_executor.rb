@@ -13,7 +13,8 @@ class MissionExecutor < ApplicationRecord
     delayed: 8,
     canceled: 9
    }
-
+  
+  has_many_attached :app_files
   belongs_to :mission
   belongs_to :executor, class_name: "User", optional: true
   counter_culture :mission

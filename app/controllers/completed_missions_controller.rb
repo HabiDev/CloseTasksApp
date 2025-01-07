@@ -24,6 +24,7 @@ class CompletedMissionsController < ApplicationController
     @mission_executor = MissionExecutor.find(params[:completed_mission][:mission_executor_id])
     @completed_mission = @mission_executor.completed_missions.build(completed_mission_params)    # Not the final implementation!
       # authorize completed_task   
+    @completed_mission.app_files.attach(params[:completed_mission][:app_files])
     respond_to do |format|
       if @completed_mission.save
         @completed_mission.mission_executor.update!(status: :in_approval)
@@ -60,6 +61,17 @@ class CompletedMissionsController < ApplicationController
     end
   end
 
+  def new_app_file;  end
+
+  def create_app_file
+    @completed_mission.app_files.attach(params[:completed_missions][:app_files])
+  end
+
+  def destroy_app_files
+    @app_files = ActiveStorage::Attachment.find(params[:app_file_id])
+    @app_files.purge
+  end
+
   private
 
   def set_mission
@@ -71,6 +83,6 @@ class CompletedMissionsController < ApplicationController
   end
 
   def completed_mission_params
-    params.require(:completed_mission).permit(:mission_executor_id, :description, :comment)
+    params.require(:completed_mission).permit(:mission_executor_id, :description, :comment, :app_files)
   end
 end

@@ -37,7 +37,10 @@ Rails.application.routes.draw do
     get 'not_executed', on: :member
     get 'canceled', on: :member 
     post "create_deadline", on: :member
-    get "new_deadline", on: :member  
+    get "new_deadline", on: :member 
+    delete "destroy_app_file", on: :member, defaults: { format: :turbo_stream } 
+    post "create_app_file", on: :member, defaults: { format: :turbo_stream }
+    get "new_app_file", on: :member 
   end
   
   resources :related_missions, only: %w(new create destroy)
@@ -60,6 +63,9 @@ Rails.application.routes.draw do
     patch 'canceled', on: :member, defaults: { format: :turbo_stream } 
     post "create_deadline", on: :member
     get "new_deadline", on: :member  
+    delete "destroy_app_file", on: :member, defaults: { format: :turbo_stream } 
+    post "create_app_file", on: :member, defaults: { format: :turbo_stream }
+    get "new_app_file", on: :member
   end
 
   get :reports, action: :index, controller: 'reports'
@@ -72,7 +78,11 @@ Rails.application.routes.draw do
     get "new_photo", on: :member
   end
   # resources :mission_executors, except: %w(index show)
-  resources :completed_missions, except: %w(index show)  
+  resources :completed_missions, except: %w(index show)  do
+    delete "destroy_app_file", on: :member, defaults: { format: :turbo_stream } 
+    post "create_app_file", on: :member, defaults: { format: :turbo_stream }
+    get "new_app_file", on: :member
+  end
 
   namespace :admin do
     root 'panels#home'

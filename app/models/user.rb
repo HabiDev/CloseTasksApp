@@ -82,6 +82,10 @@ class User < ApplicationRecord
     self.id == resource.control_executor_id
   end
 
+  def coordinator_of?(resource)
+    self.id == resource.coordinator_id
+  end
+
   def manager_of?(resource)
     self.id == resource.executor.manager_id
   end

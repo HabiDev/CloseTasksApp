@@ -51,7 +51,19 @@
           .col-12.lh-3
             span.fst-italic.ms-5
               = @mission.description
-            hr.mt-2.mb-2            
+            hr.mt-2.mb-2  
+          .row.pt-2
+            .col-12.lh-1
+              span.small.fst-italic                    
+                ul.list-inline.m-0.small
+                  - if (current_user.author_of?(@mission)  && (@mission.in_work? || @mission.in_rework? || @mission.registred? || @mission.delayed?))
+                    = link_to "Прикрепить файл:", new_app_file_mission_path(@mission), data: { turbo_frame: "modal_photo" }, class: "fw-bold link-success link-offset-3 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                  - else 
+                    span.fst-italic.fw-bold.ms-2
+                      = "Файлы: "
+                  = turbo_frame_tag "mission_app_files" 
+                    - if @mission&.app_files.present?                
+                      = render 'missions/list_app_files', resource: @mission          
         .row
           .col-12.text-end.lh-3              
             span.fst-italic.fw-bold

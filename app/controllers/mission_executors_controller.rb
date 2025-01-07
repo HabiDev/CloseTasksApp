@@ -1,7 +1,7 @@
 class MissionExecutorsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_mission_executor, except: [ :new, :create]
-  before_action :set_mission, except: [ :new, :create]
+  before_action :set_mission, except: [ :new, :create, :new_app_fil, :create_app_file, :destroy_app_file]
 
   def new
     # authorize User
@@ -32,6 +32,7 @@ class MissionExecutorsController < ApplicationController
     else
       @mission_executor =  @mission.mission_executors.build(mission_executor_params)
     end
+    @mission_executor.app_files.attach(params[:mission_executor][:app_files])
    # Not the final implementation!
       # authorize completed_task   
     respond_to do |format|
@@ -112,6 +113,17 @@ class MissionExecutorsController < ApplicationController
     update_status(status: :executed, close_at: DateTime.now)
   end
 
+  def new_app_file;  end
+
+  def create_app_file
+    @mission_executor.app_files.attach(params[:mission_executor][:app_files])
+  end
+
+  def destroy_app_file
+    @app_file = ActiveStorage::Attachment.find(params[:app_file_id])
+    @app_file.purge
+  end
+
   private
 
   def executor_list(mission)
@@ -160,7 +172,7 @@ class MissionExecutorsController < ApplicationController
   end
 
   def mission_executor_params
-    params.require(:mission_executor).permit(:mission_id, :executor_id, :description, :limit_at)
+    params.require(:mission_executor).permit(:mission_id, :executor_id, :description, :limit_at, :app_files)
   end
 
   def partial_device

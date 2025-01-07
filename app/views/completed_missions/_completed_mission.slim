@@ -19,6 +19,15 @@
               span.small.fw-bold
                 span.small
                   = completed_mission.description
+          - if completed_mission&.app_files.present?
+            .row.mt-1.ms-1
+              .col-12.lh-2
+                span.small.fst-italic                    
+                  ul.list-inline.m-0.small
+                    span.small.fst-italic.fw-bold.ms-2
+                      = "Файлы: "
+                    = turbo_frame_tag "completed_mission_app_files"               
+                      = render 'completed_missions/list_app_files', resource: completed_mission
           - if completed_mission.comment.present?
             .row.mt-1
               .col-12.smalltext-muted

@@ -144,6 +144,7 @@ class MissionsController < ApplicationController
     else
       @mission = current_user.missions.build(mission_params.merge(status: :registred))   # Not the final implementation!
     end
+    @mission.app_files.attach(params[:mission][:app_files])
     # @mission = current_user.missions.build(mission_params.merge(status: :registred))   # Not the final implementation!
       # authorize @division   
     respond_to do |format|
@@ -201,6 +202,18 @@ class MissionsController < ApplicationController
     end
   end
 
+
+  def new_app_file;  end
+
+  def create_app_file
+    @mission.app_files.attach(params[:mission][:app_files])
+  end
+
+  def destroy_app_file
+    @app_file = ActiveStorage::Attachment.find(params[:app_file_id])
+    @app_file.purge
+  end
+
   private
 
   def between_day(date)
@@ -249,7 +262,7 @@ class MissionsController < ApplicationController
 
   def mission_params
     params.require(:mission).permit(:mission_type_id, :control_executor_id, :execution_limit_at, 
-                                    :description, :division_id, :author_id, :responsible_executor_id)
+                                    :description, :division_id, :author_id, :responsible_executor_id, :app_files)
   end
 
 end

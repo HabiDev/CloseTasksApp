@@ -1,0 +1,3 @@
+= turbo_stream.prepend("mission_app_files", partial: "missions/list_app_files", locals: { resource: @mission })
+/ = turbo_stream.prepend "task_photos", @task
+= render_turbo_stream_flash_messages

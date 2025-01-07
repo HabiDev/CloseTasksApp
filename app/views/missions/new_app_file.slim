@@ -1,0 +1,8 @@
+.container
+  = turbo_frame_tag "modal_photo"
+    .modal-header
+      h3#modalPhotoLabel.modal-title
+        = t('app_files.create')  
+      button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]         
+    .modal-body
+      = render 'shared/form_app_files', resource: @mission, resource_path: create_app_file_mission_path
