@@ -1,7 +1,7 @@
 - resource&.app_files.find_each do |app_file| 
   = turbo_frame_tag app_file
     li.small.list-inline-item
-      = link_to "Файл_#{app_file.id}", rails_blob_path(app_file), class: "mx-1", target: "_blank"
+      = link_to "#{app_file.filename.to_s}", rails_blob_path(app_file), class: "mx-1", target: "_blank"
       - if (current_user.id == resource.mission_executor_id)  && (resource.mission_executor.in_rework?)
         / = link_to '(x)', destroy_photo_task_path(photo_id: photo.id, id: resource.id), data: { turbo_method: :delete }, class: "small text-danger"
         = link_to '(x)', [:destroy_app_file, resource, { app_file_id: app_file.id }], data: { turbo_method: :delete }, class: "small text-danger"
