@@ -12,6 +12,9 @@
       = f.input :number_cont_all, label: "Номер", input_html: { class: "form-control form-control-sm" }
   .row
     .col-12
+      = f.input :description_cont_all, label: "Описание", input_html: { class: "form-control form-control-sm" }
+  .row
+    .col-12
       = f.input :control_executor_id_eq, collection: @users, label_method: :full_name, value_method: :id, label: "На контроле", input_html: { class: "form-control form-control-sm" }
   .row
     .col-12

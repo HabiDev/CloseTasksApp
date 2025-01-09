@@ -51,7 +51,7 @@
               = link_to t('button.execute.add_executor'), new_mission_executor_path(mission_id: mission_executor.mission, manager: true), data: { turbo_frame: "modal" }, class: "btn btn-small btn-outline-primary ms-1" 
             - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && current_user.subordinates.present? && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
               = link_to t('button.execute.canceled'), canceled_mission_executor_path(mission_executor), data: { turbo_method: :patch }, class: "btn btn-small btn-outline-secondary ms-1"       
-            - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && current_user.subordinates.present? && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
+            - if (current_user.manager_of?(mission_executor) || current_user.control_executor_of?(mission_executor.mission)) && !mission_executor.close_at.present? && mission_executor.mission.execution_limit_at.present? 
               = link_to t('button.deadline'), new_deadline_mission_executor_path(mission_executor), data: { turbo_frame: "modal_small" }, class: "btn btn-small btn-outline-warning ms-1"  
           / .comment__date.opacity-75
             

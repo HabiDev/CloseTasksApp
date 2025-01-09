@@ -1,13 +1,13 @@
 aside
   nav#bd-docs-nav aria-label=t('sidebar.missions.title')
     .row
-      .col-4
-        h3 
+      .col-8
+        h5.text-bold 
           = t('sidebar.missions.title') 
-      .col-8.text-end
-        h5.pt-1.m-0
+      .col-4.text-end
+        h6.pt-1.m-0
           #count_record
             span.badge.rounded-pill.text-bg-secondary
               = "#{t('sidebar.missions.find')}: #{@count_missions}"
-      hr.m-1.p-1 
+      hr.m-1
         = render 'missions/search_form'  

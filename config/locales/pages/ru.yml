@@ -20,9 +20,9 @@ ru:
     edit: Редактирование
     reset_password: Изменение пароля
   photos:
-    create: Прекрепить фото
+    create: Прикрепить фото
   app_files:
-    create: Прекрепить файл
+    create: Прикрепить файл
   divisions:
     title: Подразделения
   shared:
