@@ -36,7 +36,7 @@
                 - elsif mission_executor&.app_files.present?
                   span.fst-italic.fw-bold.ms-2
                     = "Файлы: "
-                = turbo_frame_tag "mission_executor_app_files" 
+                = turbo_frame_tag "mission_executor_app_files_#{mission_executor.id}" 
                   - if mission_executor&.app_files.present?                
                     = render 'mission_executors/list_app_files', resource: mission_executor 
           spam.d-block.fw-bold.mt-3.text-executed
