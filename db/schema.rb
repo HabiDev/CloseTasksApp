@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_27_182352) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_23_172455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -227,6 +227,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_27_182352) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "gender", default: 0, null: false
+    t.string "telegram_id"
     t.index ["position_id"], name: "index_profiles_on_position_id"
     t.index ["sub_department_id"], name: "index_profiles_on_sub_department_id"
     t.index ["user_id"], name: "index_profiles_on_user_id"

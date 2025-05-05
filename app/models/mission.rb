@@ -77,6 +77,7 @@ class Mission < ApplicationRecord
 
     return true
   end
+
   # def extend_deadline(period)
   #   if period.present? && elf.execution_limit_at.present?
   #     day = (period - self.execution_limit_at).to_i

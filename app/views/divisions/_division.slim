@@ -1,18 +1,20 @@
-= turbo_frame_tag division
-  .col
-    .card
-      .card-body
-        .row   
-          .col-10.col-md-10
-            h4.card-title
-              = division.name
-          .col-2.col-md-2
-            = render 'divisions/control', division: division
-        .row
-          .col-12.col-md-12
-            h6.card-subtitle.mb-2.text-muted
-              = division.department.name
-            p.card-text
-              = division.address
+tr id="#{dom_id(division)}"
+  td.align-middle.text-center.m-0.p-0
+    = closed_at(division)
+  td.small.fw-semibold.w-25
+    = division.name
+    .small
+      span.d-block.small.text-muted.fst-italic
+        = division.department&.name
+  td.small.align-middle.w-100
+    = division.address
+  / td.small.align-middle
+  /   = division.department&.name
+  / td.small.align-middle
+  /   = division.email
+  td.text-end.px-3.align-middle
+    span.d-block.font-weight-bold
+      = render "divisions/control", division: division
+
 
 

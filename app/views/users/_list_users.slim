@@ -1,0 +1,47 @@
+/ .row
+/   .contetnt-users.px-0.ps-0[data-controller="my-loading" data-action="turbo:before-fetch-request@document->my-loading#displayUsersLoading turbo:before-fetch-response@document->my-loading#displayContentUsers"]
+/     / = render 'shared/loading_data'
+/ .container
+.container-fluid
+  .row.justify-content-end
+    .col-6
+      = render 'search_form'
+  = turbo_frame_tag "users"
+    / .fixed-header.small.small
+  .container-fluid.sticky-top.p-0.my-h-100
+    .fixed-header
+      table.table.table-light.table-striped
+        thead.align-middle.table-success.thead
+          tr
+            th.text-center 
+              = "#"
+            th
+              / = sort_link(@q, 'profile_full_name', class: 'd-block text-decoration-none text-dark')
+              = "Пользователь"
+                / = show_icon_filter(:store_id_in)
+            th
+              / = sort_link(@q, :profile_sub_department_name, class: 'd-block text-decoration-none text-dark')
+              = "Подразделение"
+            th
+              / = sort_link(@q, :manager_full_name, class: 'd-block text-decoration-none text-dark')
+              = "Руководитель"
+            th
+              / = sort_link(@q, :type_role, class: 'd-block text-decoration-none text-dark')
+              = "Роль в системе" 
+            th
+              / = sort_link(@q, :type_role, class: 'd-block text-decoration-none text-dark')
+              = "В системе"
+            th
+              / = sort_link(@q, :average_sales, class: 'd-block text-decoration-none text-dark')
+              = "Последний сеанс" 
+            th.text-end.font-weight-bold.px-3
+              i.bi.bi-grip-vertical                                                                  
+        tbody#body-users[data-my-loading-target="contentUsers"]
+          = render @users
+      - if @pagy.next.present?
+        = turbo_frame_tag :pagination, loading: :lazy,
+          src: users_path(format: :turbo_stream, page: @pagy&.next&-1)
+
+    / == pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1
+
+

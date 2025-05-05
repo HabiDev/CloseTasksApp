@@ -2,6 +2,8 @@ class MissionExecutor < ApplicationRecord
   attr_accessor :new_deadline
 
   before_save :save_of_day
+  before_create :notify_user_of_new_task
+  before_update :notify_user_of_status_change
 
   enum status: { registred: 0, 
     in_work: 1, 
@@ -106,6 +108,26 @@ class MissionExecutor < ApplicationRecord
   def save_of_day
     self.limit_at = self.limit_at.end_of_day if self.limit_at.present?
     self.close_at = self.close_at.end_of_day if self.close_at.present?
+  end
+
+  def executor_has_telegram_id?
+    self.executor.telegram_id.present?
+  end
+
+  def notify_user_of_new_task
+    return unless executor_has_telegram_id?
+
+    text = "У Вас новое задание: \n#{self.description}\nСрок исполнения: #{I18n.l(self.limit_at, format: :small)}"
+    send_telegramm(executor.telegram_id, text)
+  end
+
+  def notify_user_of_status_change
+    return unless executor_has_telegram_id?
+
+    return if registred? || in_work? || in_approval?
+
+    text = "У Вашего задания: \n#{self.description}\nИзменился статус на: '#{self.human_enum_name(:status, self.status)}'"
+    send_telegramm(executor.telegram_id, text)
   end
 
 end

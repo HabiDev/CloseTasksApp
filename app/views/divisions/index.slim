@@ -1,16 +1,17 @@
 .container
   .row
-    .col-9.col-md-10
-      h2.text-right
-        b 
-        = t('divisions.title')
-    .col-3.col-md-2.text-end
-      = link_to "#{t('button.new')}",  new_division_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: dom_id(Division.new) }
-    hr
-    .row
-      = turbo_frame_tag Division.new 
-  
-      = turbo_frame_tag "divisions", class: "row row-cols-1 row-cols-md-3 g-1"
-        = render @divisions
-        .row.mt-3
-          == pagy_bootstrap_nav(@pagy) if @divisions&.exists?
+    .col-4.col-md-4
+      h3.text-right
+        b= t('divisions.title')
+    .col-8.col-md-8.text-end
+      / button.btn.btn-outline-success.btn-sm type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"
+      /   i.bi.bi-funnel-fill
+      /   | Фильтр
+      - if params[:q].present?
+        = link_to t('submit.clear'), request.path, class: 'btn btn-outline-secondary btn-sm mx-1'
+      / = link_to t('button.export_xls'), "#", class: 'btn btn-outline-warning btn-sm mx-1'
+      = link_to "#{t('button.new')}",  new_division_path, class: "btn btn-outline-success btn-sm", data: { turbo_frame: "modal" }
+    hr.mb-2
+  .row
+    #list_divisions.p-0
+      = render "list_divisions"

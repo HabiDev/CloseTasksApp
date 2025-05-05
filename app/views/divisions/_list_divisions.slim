@@ -1,0 +1,34 @@
+.container-fluid
+  .row.justify-content-end
+    .col-6
+      = render 'divisions/search_form'
+  = turbo_frame_tag "divisions"
+  .container-fluid.sticky-top.p-0.my-h-100
+    .fixed-header
+      table.table.table-light.table-striped
+        thead.align-middle.table-warning.thead
+          tr
+            th.text-center 
+              = "#"
+            th
+              / = sort_link(@q, :name, class: 'd-block text-decoration-none text-dark')
+              = "Наименование"
+            th
+              / = sort_link(@q, :address, class: 'd-block text-decoration-none text-dark')
+              = "Адрес(местонахождения)"
+            / th
+            /   / = sort_link(@q, :type_role, class: 'd-block text-decoration-none text-dark')
+            /   = "Тип обьекта" 
+            / th
+            /   / = sort_link(@q, :type_role, class: 'd-block text-decoration-none text-dark')
+            /   = "E-mail"
+            th.text-end.font-weight-bold.px-3
+              i.bi.bi-grip-vertical                                                                  
+        tbody#body-divisions[data-my-loading-target="contentDivisions"]
+          = render @divisions
+      - if @pagy.next.present?
+        = turbo_frame_tag :pagination, loading: :lazy,
+          src: divisions_path(format: :turbo_stream, page: @pagy.next-1)
+
+    / == pagy_bootstrap_nav(@pagy).html_safe if @pagy.pages > 1
+

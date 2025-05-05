@@ -1,19 +1,19 @@
-h5.text-end          
+h6.text-end          
   .dropdown
     a#dopdownMenuLink.nav-link aria-expanded="false" aria-haspopup="true" data-bs-toggle="dropdown" href="#"
       i.bi.bi-three-dots-vertical
     ul.dropdown-menu.dropdown-menu-end aria-labelledby="dopdownMenuLink"
       li
-        = link_to t('button.edit'), edit_user_path(user), class: "dropdown-item"
+        = link_to t('button.edit'), edit_user_path(user), class: "dropdown-item", data: { turbo_frame: "modal" }
       - if current_user.admin?
         li
           = link_to t('button.destroy'), user, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 
         - if user.locked_at.present?
           li
-            = link_to t('button.unlock_user'), unlock_user_path(user), class: "dropdown-item"
+            = link_to t('button.unlock_user'), unlock_user_path(user), class: "dropdown-item", data: {turbo_method: :patch}
         - else
           li
-            = link_to t('button.lock_user'), lock_user_path(user), class: "dropdown-item"
+            = link_to t('button.lock_user'), lock_user_path(user), class: "dropdown-item", data: {turbo_method: :patch}
         
         li
-          = link_to t('button.reset_password'), edit_password_reset_path(id: user), class: "dropdown-item"
+          = link_to t('button.reset_password'), edit_password_reset_path(id: user), class: "dropdown-item", data: { turbo_frame: "modal" }

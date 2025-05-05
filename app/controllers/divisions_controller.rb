@@ -7,7 +7,13 @@ class DivisionsController < ApplicationController
     # @q = User.includes(:profile).where(admin: false).search(params[:q])
     # @q.sorts = ['profile_surname asc', 'created_at desc'] if @q.sorts.empty?
     # @divisions = @q.result(disinct: true)
-    @pagy, @divisions = pagy(Division.ordered, items: mobile_device? ? 3 : 12 )
+    @q = Division.includes(:department).ransack(params[:q])
+    @q.sorts = ['name ASC'] if @q.sorts.empty?
+    @pagy, @divisions = pagy_countless(@q.result(disinct: true).includes(:department), items: mobile_device? ? 3 : 12 )
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def new

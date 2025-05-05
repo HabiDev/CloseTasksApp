@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
   has_one :sub_department, through: :profile
 
-  delegate :full_name, to: :profile
+  delegate :full_name, :telegram_id, to: :profile
   
   accepts_nested_attributes_for :profile, allow_destroy: true
 
@@ -89,7 +89,6 @@ class User < ApplicationRecord
   def manager_of?(resource)
     self.id == resource.executor.manager_id
   end
-
 
   def subordinates_of?(user)
     self.subordinates.include?(user)

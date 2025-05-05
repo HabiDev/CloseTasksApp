@@ -11,15 +11,15 @@ Rails.application.routes.draw do
     collection do 
       get :fetch_department
     end
-    get "lock", on: :member
-    get "unlock", on: :member
+    patch "lock", on: :member, defaults: { format: :turbo_stream }
+    patch "unlock", on: :member, defaults: { format: :turbo_stream }
   end
   resources :divisions
   resources :completed_tasks, except: %w(show)
   get :report_xls, action: :report_xls, controller: 'completed_tasks'
   get :report_tasks_xls, action: :report_tasks_xls, controller: 'tasks'
   resources :tasks do
-    patch 'approval', on: :member, defaults: { format: :turbo_stream }
+    patch 'approval', on: :member, defaults: { format: :turbo_stream}
     patch 'rework', on: :member, defaults: { format: :turbo_stream }
     patch 'executed', on: :member, defaults: { format: :turbo_stream }
     patch 'delayed', on: :member, defaults: { format: :turbo_stream }  

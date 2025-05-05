@@ -9,6 +9,9 @@
       = m.input :sub_department_id, collection: Department.all, as: :grouped_select, group_method: :sub_departments, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
     .col-12.col-md-5
       = m.input :position_id, collection: Position.all, label_method: :name, value_method: :id, required: true, autofocus: true, prompt: t('simple_form.prompt'), class: 'form-control form-control-sm'
+  .row 
+    .col-12.col-md-6 
+      = m.input :telegram_id, autofocus: true, class: 'form-control form-control-sm'    
   .row
     .col-12.col-md-4
       = m.input :mobile, required: true, autofocus: true, class: 'form-control form-control-sm'

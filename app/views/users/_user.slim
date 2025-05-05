@@ -1,28 +1,27 @@
-= turbo_frame_tag user
-  .col-12.col-md-12.m-2    
-    .card
-      .card-body
-        .row   
-          .col-10.col-md-10
-            h4.card-title
-              = locked_at(user)
-              = user.profile.full_name              
-          .col-2.col-md-2
-            = render 'users/control', user: user
-        .row
-          .col-12.col-md-12
-            h6.card-subtitle.mb-2.text-muted
-              = user.profile.position.name
-            p.card-text
-              = user.profile.sub_department.name
-        hr.p-0.mt-1.mb-1 
-        .small.text-muted
-          .row            
-            span.col-12.col-md-6  
-              em
-                = current_sign_in_at(user)
-            span.col-12.col-md-6.text-end 
-              em
-                = last_sign_in_at(user)
-                
+tr id="#{dom_id(user)}"
+  td.align-middle.text-center.m-0.p-0
+    = locked_at(user) || manager(user)
+  td.small.fw-semibold
+    = user.profile&.full_name
+    .small
+      span.d-block.small.text-muted.fst-italic
+        = user.profile&.position&.name
+  td.small.align-middle
+    = user.profile&.sub_department&.name
+  td.small.align-middle
+    = user.manager&.full_name
+  td.align-middle
+    = role_user(user)
+  td.small.align-middle
+    / = l(user.last_sign_in_at, format: :normal)
+    .small
+      = current_sign_in_at(user)
+  td.small.align-middle
+    .small
+      = last_sign_in_at(user)
+  td.text-end.px-3.align-middle
+    span.d-block.font-weight-bold
+      = render "users/control", user: user
+
+
 

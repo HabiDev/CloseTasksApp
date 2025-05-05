@@ -1,13 +1,17 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, except: [ :index, :new, :create, :fetch_department]
-  
+
   def index
     # authorize User
-    # @q = User.includes(:profile).where(admin: false).search(params[:q])
+    @q = User.includes(profile: [:position, :sub_department]).ransack(params[:q])
     # @q.sorts = ['profile_surname asc', 'created_at desc'] if @q.sorts.empty?
     # @users = @q.result(disinct: true)
-    @pagy, @users = pagy(User.all, items: mobile_device? ? 3 : 10) 
+    @pagy, @users = pagy_countless(@q.result(disinct: true).includes(profile: [:position, :sub_department]), items: mobile_device? ? 3 : 10) 
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def new
@@ -91,8 +95,12 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(locked_at: DateTime.now)
         format.html { redirect_to users_path, notice: t('notice.record_edit') }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@user) }
-        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
+        # format.turbo_stream { render turbo_stream: turbo_stream.replace(@user) }
+        format.turbo_stream do 
+          flash.now[:warning] = t('notice.record_edit')
+          render layout: false 
+        end
+        # format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
       else
         format.html { render :lock, status: :unprocessable_entity }
       end
@@ -103,7 +111,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(locked_at: "")
         format.html { redirect_to users_path, notice: t('notice.record_edit') }
-        format.turbo_stream { flash.now[:warning] = t('notice.record_edit') }
+        format.turbo_stream do 
+          flash.now[:warning] = t('notice.record_edit')
+          render layout: false 
+        end
       else
         format.html { render :lock, status: :unprocessable_entity }
       end
@@ -127,7 +138,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :type_role, :password, :password_confirmation, :manager_id,
-                                 profile_attributes: [:full_name, :sub_department_id, :position_id, :gender, :mobile])
+                                 profile_attributes: [:full_name, :sub_department_id, :position_id, :gender, :mobile, :telegram_id])
   end
 
 end

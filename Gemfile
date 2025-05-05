@@ -89,6 +89,8 @@ gem "ed25519"
 
 gem "bcrypt_pbkdf"
 
+gem "telegram-bot-ruby"
+
 # gem 'active_record_extended'
 
 group :development, :test do

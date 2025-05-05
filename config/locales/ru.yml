@@ -123,6 +123,7 @@ ru:
         mobile: Телефон
         sub_department_id: Подразделение
         position_id: Должность
+        telegram_id: TelegramID
       profile/sub_departments:
         name: Подразделение
       profile/positions:

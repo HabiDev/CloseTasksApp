@@ -1,4 +1,5 @@
 class Division < ApplicationRecord
+
   belongs_to :department
   has_many :completed_tasks, dependent: :destroy
   has_many :check_lists, dependent: :destroy
@@ -15,4 +16,5 @@ class Division < ApplicationRecord
   scope :ordered, -> { order(name: :asc) }
 
   scope :list_active, -> { where(active: true) }
+
 end

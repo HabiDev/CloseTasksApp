@@ -2,6 +2,9 @@ class Task < ApplicationRecord
   attr_accessor :sub_department_id
   
   before_save :set_execution_limit
+  before_create :notify_user_of_new_task
+  before_update :notify_task_of_status_change
+
   enum status: { registred: 0, 
                  in_work: 1, 
                  in_approval: 3, 
@@ -59,5 +62,32 @@ class Task < ApplicationRecord
     end
   end
 
+  def executor_has_telegram_id?
+    self.executor&.telegram_id.present?
+  end
 
+  def author_has_telegram_id?
+    self.author&.telegram_id.present?
+  end
+
+  def notify_task_of_status_change
+    return if registred? || in_work?
+
+    if in_rework? || executed? || delayed? || canceled?
+      return unless executor_has_telegram_id?
+      text = "У Вашей заявки: \n#{self.description}\nИзменился статус на: '#{self.human_enum_name(:status, self.status)}'"
+      send_telegramm(executor.telegram_id, text)
+    elsif in_approval?
+      return unless author_has_telegram_id?
+      text = "Вам поступило заявка для согласования"
+      send_telegramm(author.telegram_id, text)  
+    end
+  end
+
+  def notify_user_of_new_task
+    return unless executor_has_telegram_id?
+
+    text = "У Вас новая заявка: \n#{self.description}\nСрок исполнения: #{I18n.l(self.execution_limit_at, format: :small)}"
+    send_telegramm(executor.telegram_id, text)
+  end
 end

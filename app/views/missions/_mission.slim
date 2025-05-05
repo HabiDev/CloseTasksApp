@@ -29,7 +29,7 @@
         /       = mission_executed_at(mission) 
         span.d-block.small.text-muted.text-truncate
           em
-            = "отв. испол.: #{mission.mission_executors.responsible_mission.first.executor.full_name}"
+            = "отв. испол.: #{mission.mission_executors.responsible_mission.first&.executor&.full_name}"
   .table-body-cell
     .col-12
       span.small.d-block.text-truncate
