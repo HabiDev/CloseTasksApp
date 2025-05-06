@@ -157,8 +157,13 @@ input[type=file][data-direct-upload-url][disabled] {
 
 .my-h-100 {
   height: calc(100vh - 180px);
+  overflow-y: auto;
 }
 
+.my-paginate {
+  border: 2px solid red; 
+  height: 50px;
+}
 // @media (min-width: 1350px) and (max-width: 1439px) {
 //   .fixed-header {
 //     height: 422px; 

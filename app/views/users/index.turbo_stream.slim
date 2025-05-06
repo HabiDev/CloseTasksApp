@@ -1,5 +1,7 @@
 = turbo_stream.append "body-users"
   = render @users
 = turbo_stream.replace :pagination
-  - if @pagy.next.present?
-    = turbo_frame_tag :pagination, loading: :lazy, src: users_path(format: :turbo_stream, page: @pagy.next)
+  - if @pagy&.next
+    = turbo_frame_tag :pagination, loading: :lazy, 
+       src: url_for(page: @pagy.next, format: :turbo_stream), 
+       data: { turbo_cache: "false" }, class: 'my-paginate'

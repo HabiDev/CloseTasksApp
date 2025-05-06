@@ -1,5 +1,5 @@
 tr id="#{dom_id(division)}"
-  td.align-middle.text-center.m-0.p-0
+  td.align-middle.text-center.m-0.p-0.w-0
     = closed_at(division)
   td.small.fw-semibold.w-25
     = division.name
@@ -15,6 +15,4 @@ tr id="#{dom_id(division)}"
   td.text-end.px-3.align-middle
     span.d-block.font-weight-bold
       = render "divisions/control", division: division
-
-
-
+      

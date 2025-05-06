@@ -4,6 +4,6 @@ h5.text-end
       i.bi.bi-three-dots-vertical
     ul.dropdown-menu.dropdown-menu-end aria-labelledby="dopdownMenuLink"
       li
-        = link_to t('button.edit'), edit_division_path(division), class: "dropdown-item"
+        = link_to t('button.edit'), edit_division_path(division), class: "dropdown-item", data: { turbo_frame: "modal" }
       / li
       /   = link_to t('button.destroy'), division, data: { turbo_confirm: t('notice.confirm'), turbo_method: :delete }, class: "dropdown-item" 

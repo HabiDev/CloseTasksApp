@@ -9,7 +9,7 @@ class DivisionsController < ApplicationController
     # @divisions = @q.result(disinct: true)
     @q = Division.includes(:department).ransack(params[:q])
     @q.sorts = ['name ASC'] if @q.sorts.empty?
-    @pagy, @divisions = pagy_countless(@q.result(disinct: true).includes(:department), items: mobile_device? ? 3 : 12 )
+    @pagy, @divisions = pagy_countless(@q.result(disinct: true).includes(:department), items: mobile_device? ? 3 : 10 )
     respond_to do |format|
       format.html
       format.turbo_stream
