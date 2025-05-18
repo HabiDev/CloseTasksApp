@@ -15,6 +15,8 @@ module CloseTasksApp
 
     config.active_storage.replace_on_assign_to_many = false
 
+    # config.active_job.queue_adapter = :sidekiq
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -30,6 +32,6 @@ module CloseTasksApp
 
     config.time_zone = 'Moscow'
 
-
+    config.active_job.queue_adapter = :sidekiq
   end
 end

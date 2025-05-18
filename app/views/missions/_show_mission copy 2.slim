@@ -88,22 +88,12 @@
           .row
             = render 'missions/btn_executor'
         .row
-          .col-12.mt-2.lh-1 
-            - if @executor_tree.present? 
+          .col-12.mt-2.lh-1          
+            = turbo_frame_tag MissionExecutor.new 
+            - if @parent_executors.present? 
               .card.shadow-sm.p-0.mt-4.mb-3.bg-white.rounded-9
                 .card-body.pt-3.pb-3
                   span.h5.d-block.fw-bold.text-primary.p-1.mt-1.mb-3.text-decoration-underline
                     = t('caption.mission_executors')                 
                   = turbo_frame_tag "mission_executors"
-                    / = render 'missions/tree_executor', collection: @executor_tree, as: :node
-                    = render partial: 'missions/tree_executor', collection: @executor_tree, as: :mission_executor
-
-
-            / = turbo_frame_tag MissionExecutor.new 
-            / - if @parent_executors.present? 
-            /   .card.shadow-sm.p-0.mt-4.mb-3.bg-white.rounded-9
-            /     .card-body.pt-3.pb-3
-            /       span.h5.d-block.fw-bold.text-primary.p-1.mt-1.mb-3.text-decoration-underline
-            /         = t('caption.mission_executors')                 
-            /       = turbo_frame_tag "mission_executors"
-            /         = render 'missions/tree_executor', parent_executors: @parent_executors, replies_executors: @replies_executors
+                    = render 'missions/tree_executor', parent_executors: @parent_executors, replies_executors: @replies_executors

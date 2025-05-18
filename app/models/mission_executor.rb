@@ -2,8 +2,8 @@ class MissionExecutor < ApplicationRecord
   attr_accessor :new_deadline
 
   before_save :save_of_day
-  before_create :notify_user_of_new_task
-  before_update :notify_user_of_status_change
+  before_create :notify_new_task
+  before_update :notify_change
 
   enum status: { registred: 0, 
     in_work: 1, 
@@ -25,6 +25,8 @@ class MissionExecutor < ApplicationRecord
   has_many :completed_missions, dependent: :destroy
 
   validates :mission_id, :executor_id, :parent_executor_id, :description, presence: true
+
+  validate :limit_at_cannot_exceed_mission_limit
 
   default_scope { order(parent_executor_id: :asc) }
 
@@ -81,7 +83,7 @@ class MissionExecutor < ApplicationRecord
     end
 
     if parent.present? && new_date.to_date >= parent.limit_at.to_date
-      self.errors.add(:new_deadline, :date_more)
+      self.errors.add(:new_deadline, :date_more_parrent)
       return false
     end
 
@@ -90,7 +92,7 @@ class MissionExecutor < ApplicationRecord
         self.errors.add(:new_deadline, :date_more)
         return false
       elsif (coordinator.executor_id != self.executor_id) && (new_date.to_date >= coordinator.limit_at.to_date)
-        self.errors.add(:new_deadline, :date_more)
+        self.errors.add(:new_deadline, :date_more_coordinator)
         return false
       end
     end
@@ -105,29 +107,32 @@ class MissionExecutor < ApplicationRecord
 
   private
 
+  def limit_at_cannot_exceed_mission_limit
+    if limit_at && mission && limit_at > mission.execution_limit_at
+      errors.add(:limit_at, :date_more_mission)
+    end
+  end
+
   def save_of_day
     self.limit_at = self.limit_at.end_of_day if self.limit_at.present?
     self.close_at = self.close_at.end_of_day if self.close_at.present?
   end
 
-  def executor_has_telegram_id?
-    self.executor.telegram_id.present?
+  def notify_new_task
+    text = "У Вас новое задание: \n#{description}\nСрок исполнения: #{I18n.l(limit_at, format: :small)}"
+    TelegramNotifier.new(executor).notify(text)
   end
+  
+  def notify_change
+    return if registred? || in_approval?
+    return unless executor&.telegram_id.present?
 
-  def notify_user_of_new_task
-    return unless executor_has_telegram_id?
-
-    text = "У Вас новое задание: \n#{self.description}\nСрок исполнения: #{I18n.l(self.limit_at, format: :small)}"
-    send_telegramm(executor.telegram_id, text)
-  end
-
-  def notify_user_of_status_change
-    return unless executor_has_telegram_id?
-
-    return if registred? || in_work? || in_approval?
-
-    text = "У Вашего задания: \n#{self.description}\nИзменился статус на: '#{self.human_enum_name(:status, self.status)}'"
-    send_telegramm(executor.telegram_id, text)
+    text = if limit_at_changed?
+            "У Вашего задания:\n#{description}\nИзменён срок исполнения: #{I18n.l(limit_at, format: :small)}"
+           else
+            "У Вашего задания:\n#{description}\nИзменился статус на: '#{human_enum_name(:status, status)}'"
+           end
+    TelegramNotifier.new(executor).notify(text)
   end
 
 end

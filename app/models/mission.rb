@@ -45,6 +45,9 @@ class Mission < ApplicationRecord
                        .or(where(close_at: nil).where('missions.execution_limit_at < ?', Date.today.end_of_day))
                        .distinct 
                      }
+  scope :has_executor, ->(executor) { joins(:mission_executors)
+                     .where(executor_id: executor)
+                   }
   # scope :overdue, -> { joins(:mission_executors)
   #                    .where(:execution_limit_at > :close_at)
   #                    .distinct 
@@ -76,6 +79,42 @@ class Mission < ApplicationRecord
     end
 
     return true
+  end
+
+  def executor_has_mission?(executor)
+    mission_executors.where(executor_id: executor).present?
+  end
+
+  def author_has_telegram_id?
+    self.author.telegram_id.present?
+  end
+
+  def control_executor_has_telegram_id?
+    self.control_executor.telegram_id.present?
+  end
+
+   def build_executor_tree(mission_id)
+    # Загружаем всех исполнителей по миссии и группируем по parent_executor_id
+    grouped = MissionExecutor
+      .where(mission_id: mission_id)
+      .order(responsible: :desc, limit_at: :asc)
+      .includes(executor: :profile)
+      .group_by(&:parent_executor_id)
+  
+    # Рекурсивно строим дерево
+    build_tree_recursive(grouped, 0)
+  end
+  
+  # Рекурсивная сборка дерева
+  def build_tree_recursive(grouped, parent_executor_id)
+    return [] unless grouped[parent_executor_id]
+  
+    grouped[parent_executor_id].map do |executor|
+      {
+        executor: executor,
+        children: build_tree_recursive(grouped, executor.executor_id)
+      }
+    end
   end
 
   # def extend_deadline(period)

@@ -7,7 +7,7 @@ class MissionApproval < ApplicationRecord
   private
 
   def notify_user_of_new_approval
-    text = "Вам поступило инфромация для согласования"
-    send_telegramm(self.coordinator.telegram_id, text) if self.coordinator.telegram_id.present?    
+    text = "Вам поступила инфромация для согласования"
+    TelegramNotifier.new(self.coordinator).notify(text) 
   end
 end

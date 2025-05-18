@@ -1,12 +1,5 @@
-- parent_executors.each do |parent_executor|       
-  = render 'mission_executors/mission_executor', mission_executor: parent_executor
-  - if replies_executors.key?(parent_executor.executor_id)
-    .row
-      .col-12.ps-5
-        - replies_executors[parent_executor.executor_id].each do |replies_executor|
-          = render 'mission_executors/mission_executor', mission_executor: replies_executor
-          - if @replies_executors.key?(replies_executor.executor_id)
-            .row
-              .col-12.ps-5
-                - replies_executors[replies_executor.executor_id].each do |replies_executor_end|
-                  = render 'mission_executors/mission_executor', mission_executor: replies_executor_end
+= render partial: 'mission_executors/mission_executor', locals: { mission_executor: mission_executor[:executor] }
+- if mission_executor[:children].present?
+  .row
+    .col-12.ps-5
+      = render partial: 'missions/tree_executor', collection: mission_executor[:children], as: :mission_executor

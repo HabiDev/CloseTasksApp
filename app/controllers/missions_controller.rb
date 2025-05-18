@@ -247,10 +247,12 @@ class MissionsController < ApplicationController
 
   def set_show_parametrs
     @mission = Mission.find(params[:id])
+    
     @mission_executors = @mission.mission_executors
-    @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
-    @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
+    # @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
+    # @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
     @mission_executor = @mission_executors.where(executor: current_user)
+    @executor_tree = @mission.build_executor_tree(@mission.id)
   end
 
   def update_status(*args) 

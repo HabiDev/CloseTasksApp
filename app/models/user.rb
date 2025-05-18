@@ -38,13 +38,14 @@ class User < ApplicationRecord
   scope :control_user, ->(current_user) { where(manager: current_user.manager).or(where(manager: current_user)).or(where(id: current_user)).and(where(locked_at: nil)) }
   scope :moderator_control_user, ->(current_user) { where(manager: current_user.manager).or(where(id: current_user)).and(where(locked_at: nil)) }
   scope :executor_users, ->(current_user) { where(manager: current_user.manager)
-                                            # .or(where(manager: current_user.manager))
+                                            .or(where(manager: current_user))
                                             .and(where(locked_at: nil))
-                                            .or(where(id: current_user)) 
+                                            .and(where.not(id: current_user)) 
                                           }
   scope :executor_users_yours, ->(current_user) { where(manager: current_user)
                                                   .and(where(locked_at: nil))
-                                                  .or(where(id: current_user)) 
+                                                  # .and(where.not(id: current_user)) 
+                                                  .or(where(id: current_user))
                                                 }
   scope :moderator_executor_users, ->(current_user) { where(manager: current_user.manager)
                                                       .and(where(locked_at: nil))

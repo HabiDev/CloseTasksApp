@@ -23,8 +23,10 @@ class MissionExecutorsController < ApplicationController
   def create
     @mission = Mission.find(mission_executor_params[:mission_id])
     if mission_executor_params[:executor_id].present?
-      if current_user.subordinates_of?(User.find(mission_executor_params[:executor_id]))
-        save_params = mission_executor_params.merge!(parent_executor_id: current_user.id, coordinator_id:  current_user.id)
+      executor = User.find(mission_executor_params[:executor_id])
+      # if current_user.subordinates_of?(User.find(mission_executor_params[:executor_id]))
+      if @mission.executor_has_mission?(executor.manager)
+        save_params = mission_executor_params.merge!(parent_executor_id: executor.manager.id, coordinator_id:  current_user.id)
       else
         save_params = mission_executor_params.merge!(coordinator_id: current_user.id)
       end
@@ -38,9 +40,11 @@ class MissionExecutorsController < ApplicationController
     respond_to do |format|
       if @mission_executor.save
         # format.html { redirect_to task_path(@task), notice: t('notice.record_create') }
-        @parent_executors = MissionExecutor.parent_for_executor(@mission)
-        @replies_executors = MissionExecutor.replies_for_executor(@mission)
+        # @parent_executors = MissionExecutor.parent_for_executor(@mission)
+        # @replies_executors = MissionExecutor.replies_for_executor(@mission)
+        @executor_tree = @mission.build_executor_tree(@mission.id)
         format.turbo_stream { flash.now[:success] = t('notice.record_create') }
+       
       else
         format.html { render :new, status: :unprocessable_entity }
         @executor_lists = executor_list(@mission)
@@ -166,9 +170,10 @@ class MissionExecutorsController < ApplicationController
   def set_show_parametrs
     # @mission = @mission_executor.mission
     @mission_executors = @mission.mission_executors
-    @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
-    @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
+    # @parent_executors = MissionExecutor.includes(:executor).parent_for_executor(@mission)
+    # @replies_executors = MissionExecutor.includes(:executor).replies_for_executor(@mission)
     @mission_executor = @mission_executors.where(executor: current_user)
+    @executor_tree = @mission.build_executor_tree(@mission.id)
   end
 
   def mission_executor_params

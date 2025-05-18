@@ -91,6 +91,10 @@ gem "bcrypt_pbkdf"
 
 gem "telegram-bot-ruby"
 
+gem 'sidekiq'
+
+gem 'sidekiq-scheduler'
+
 # gem 'active_record_extended'
 
 group :development, :test do

@@ -11,7 +11,7 @@ class Task < ApplicationRecord
                  in_rework: 4, 
                  agree: 5, 
                  executed: 6,
-                 not_executed: 7,
+                #  not_executed: 7,
                  delayed: 8,
                  canceled: 9
                 }
@@ -76,11 +76,11 @@ class Task < ApplicationRecord
     if in_rework? || executed? || delayed? || canceled?
       return unless executor_has_telegram_id?
       text = "У Вашей заявки: \n#{self.description}\nИзменился статус на: '#{self.human_enum_name(:status, self.status)}'"
-      send_telegramm(executor.telegram_id, text)
+      TelegramNotifier.new(executor).notify(text)
     elsif in_approval?
       return unless author_has_telegram_id?
-      text = "Вам поступило заявка для согласования"
-      send_telegramm(author.telegram_id, text)  
+      text = "Вам поступила заявка для согласования"
+      TelegramNotifier.new(author).notify(text)
     end
   end
 
@@ -88,6 +88,6 @@ class Task < ApplicationRecord
     return unless executor_has_telegram_id?
 
     text = "У Вас новая заявка: \n#{self.description}\nСрок исполнения: #{I18n.l(self.execution_limit_at, format: :small)}"
-    send_telegramm(executor.telegram_id, text)
+    TelegramNotifier.new(executor).notify(text)
   end
 end

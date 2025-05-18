@@ -1,4 +1,5 @@
-= turbo_stream.update "mission_executors", partial: "missions/tree_executor", locals: { parent_executors: @parent_executors, replies_executors: @replies_executors } 
+/ = turbo_stream.update "mission_executors", partial: "missions/tree_executor", locals: { parent_executors: @parent_executors, replies_executors: @replies_executors } 
+= turbo_stream.update "mission_executors", partial: "missions/tree_executor", collection: @executor_tree, as: :mission_executor 
 / = turbo_stream.update MissionExecutor.new, "" 
 / = turbo_stream.update "performed_btn", partial: "tasks/btn_performed", locals: { task: @task }
 = render_turbo_stream_flash_messages
