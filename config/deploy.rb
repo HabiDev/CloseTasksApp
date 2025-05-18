@@ -31,7 +31,7 @@ append :linked_files,
        'config/database.yml',
        'Procfile.dev',
        '.env',
-       'config/master.key'
+       'config/master.key',
        'config/sidekiq.yml'
 
 # Tell to Capistrano to create symlinks to this directories.
