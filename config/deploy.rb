@@ -32,6 +32,7 @@ append :linked_files,
        'Procfile.dev',
        '.env',
        'config/master.key'
+       'config/sidekiq.yml'
 
 # Tell to Capistrano to create symlinks to this directories.
 # They must be created on the remote server separately
